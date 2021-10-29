@@ -1,41 +1,44 @@
 const express = require("express");
-const mongoose = require('mongoose');
+const dotenv = require("dotenv");
+const morgan = require("morgan");
+const mongoose = require("mongoose");
 
+dotenv.config();
 
-const MongoURI = 'mongodb+srv://alaa:1234@cluster0.6ulyk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+// Connect to DB
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((resolve) => console.log("Connected to MongoDB Successfully"))
+  .catch((err) => console.log(err));
 
-
-//App variables
 const app = express();
-const port = process.env.PORT || "8000";
-const User = require('./models/User');
-// #Importing the userController
-const userController = require('./Routes/userController');
-const routes = require('./Routes/userRoutes');
 
-// configurations
-// Mongo DB
-mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-.then(result =>console.log("MongoDB is now connected") )
-.catch(err => console.log(err));
+// Adding Json parser
+app.use(express.json());
 
-app.get("/Home", (req, res) => {
-    res.status(200).send("You have everything installed !");
-  });
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
-// #Routing to usercontroller here
-//app.use(routes);
+// Add middlewares
 
+// Import Routers
 
-// app.use((req,res)=>{
-//   res.status(404).send('<h1> 404 oops! </h1> <hr> <h2> Page Not Found! </h2>')
-// });
-/*
-                                                    End of your code
-*/
+// Mount Routers to their paths
 
+// Add ErrorHandler middleware here ... 'Must be added after mounting routers'
 
-// Starting server
-app.listen(port, () => {
-    console.log(`Listening to requests on http://localhost:${port}`);
-  });
+// Launch server
+const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, () => {
+  console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}!`);
+});
+
+//Handle unhandled promise rejections
+process.on("unhandledRejection", (err, promise) => {
+  console.log(`Error: ${err.message}`.red);
+  server.close(() => process.exit(1)); //Take down server
+});
