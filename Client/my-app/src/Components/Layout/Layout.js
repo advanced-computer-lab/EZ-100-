@@ -1,5 +1,11 @@
 import React from "react";
+import { Navigation } from "./Navigation";
 
-export const Layout = () => {
-  return <div></div>;
+export const Layout = (props) => {
+  return (
+    <>
+      <Navigation />
+      <main>{props.children}</main>
+    </>
+  );
 };
