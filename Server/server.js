@@ -26,8 +26,10 @@ if (process.env.NODE_ENV === "development") {
 // Add middlewares
 
 // Import Routers
+const flightRoutes = require('./Routes/flightRouter');
 
 // Mount Routers to their paths
+app.use('/api/flights', flightRoutes);
 
 // Add ErrorHandler middleware here ... 'Must be added after mounting routers'
 
