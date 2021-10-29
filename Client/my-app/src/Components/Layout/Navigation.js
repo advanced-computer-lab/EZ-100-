@@ -10,13 +10,18 @@ export const Navigation = () => {
       <nav className={classes.nav}>
         <ul>
           <li>
-            <NavLink activeClassName={classes.active} to="/quotes">
+            <NavLink activeClassName={classes.active} to="/login">
               Login
             </NavLink>
           </li>
           <li>
-            <NavLink activeClassName={classes.active} to="/new-quote">
-              Flights
+            <NavLink activeClassName={classes.active} to="/register">
+              Register
+            </NavLink>
+          </li>
+          <li>
+            <NavLink activeClassName={classes.active} to="/contact-us">
+              Contact us
             </NavLink>
           </li>
         </ul>
