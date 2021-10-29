@@ -6,6 +6,7 @@ export const Layout = (props) => {
     <>
       <Navigation />
       <main>{props.children}</main>
+      <footer></footer>
     </>
   );
 };
