@@ -10,10 +10,19 @@ const createFlight = async (req, res) => {
 };
 
 const updateFlight = async (req,res) => {
+  apiRequest = JSON.parse(req.body);
+  params.append('From', req.body.From);
+  params.append('To',req.body.To);
+  params.append('DepartureDate',req.body.DepartureDate);
+  params.append('ArrivalDate',req.body.ArrivalDate);
+  params.append('EconomySeats',req.body.EconomySeats);
+  params.append('BusinessSeats',req.body.BusinessSeats);
+  params.append('FirstSeats',req.body.FirstSeats);
+
   try {
     const flight = await Flight.updateOne({'FlightNumber':req.params.FlightNumber},{$set:
       {
-      'From':req.params.From,
+      'From':req.param.From,
       'To':req.params.To,
       'DepartureDate':req.params.dDate,
       'ArrivalDate':req.params.aDate,

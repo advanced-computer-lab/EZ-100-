@@ -7,6 +7,6 @@ const router = express.Router();
 //da3k
 
 router.post("/createFlight", flightController.createFlight);
-router.put("/updateFlight", flightController.updateFlight);
+router.put("/updateFlight/:FlightNumber", flightController.updateFlight);
 
 module.exports = router;
