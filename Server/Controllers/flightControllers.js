@@ -58,7 +58,7 @@ const deleteFlight = async (req, res) => {
   }
 };
 
-module.exports = { createFlight, viewFlights, deleteFlight };
+module.exports = { createFlight, viewFlights, updateFlight, deleteFlight };
 
 
 
