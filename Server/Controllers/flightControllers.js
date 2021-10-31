@@ -12,33 +12,36 @@ const createFlight = async (req, res) => {
 const viewFlights = async (req, res) => {
   try {
     const flight = await Flight.find({})
-      .sort({ FlightNumber: 1 })
-      .exec(function (err, docs) {});
+      .sort({ "FlightNumber" : 1 });
     res.status(200).json({ Success: true, data: flight });
   } catch (err) {
     res.status(400).json({ Success: false, error: err });
   }
 };
 const updateFlight = async (req,res) => {
-  apiRequest = JSON.parse(req.body);
-  params.append('From', req.body.From);
+  const data = req.body;
+  //apiRequest = JSON.parse(req.body);
+  /*params.append('From', req.body.From);
   params.append('To',req.body.To);
   params.append('DepartureDate',req.body.DepartureDate);
   params.append('ArrivalDate',req.body.ArrivalDate);
   params.append('EconomySeats',req.body.EconomySeats);
   params.append('BusinessSeats',req.body.BusinessSeats);
-  params.append('FirstSeats',req.body.FirstSeats);
+  params.append('FirstSeats',req.body.FirstSeats);*/
 
   try {
-    const flight = await Flight.updateOne({'FlightNumber':req.params.FlightNumber},{$set:
+    const flight = await Flight.updateOne({'FlightNumber':req.params.FlightNumber},
+    {
+      $set:
       {
-      'From':req.param.From,
+      /*'From':req.param.From,
       'To':req.params.To,
       'DepartureDate':req.params.dDate,
       'ArrivalDate':req.params.aDate,
       'EconomySeats':req.params.eSeats,
       'BusinessSeats':req.params.bSeats,
-      'FirstSeats':req.params.fSeats,
+      'FirstSeats':req.params.fSeats,*/
+      data
     }})
     //const flight = await Flight.update({FlightNumber:req.params.FlightNumber});
     res.status(201).json({ Success: true, data: flight });
