@@ -20,19 +20,18 @@ const flightSchema = new Schema(
     },
     ArrivalDate: {
       type: Date,
-      required: true,
     },
     EconomySeats: {
       type: Number,
-      required: true,
+      default: 80,
     },
     BusinessSeats: {
       type: Number,
-      required: true,
+      default: 15,
     },
     FirstSeats: {
       type: Number,
-      required: true,
+      default: 5,
     },
   },
   { timestamps: true }
@@ -42,6 +41,8 @@ flightSchema.pre("save", function (next) {
   this.FlightNumber = this.FlightNumber
     ? this.FlightNumber
     : this.From + "-" + this.To;
+
+  this.ArrivalDate = this.ArrivalDate ? this.arrivalDate : this.DepartureDate;
   next();
 });
 
