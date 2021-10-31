@@ -5,7 +5,6 @@ const flightSchema = new Schema(
   {
     FlightNumber: {
       type: String,
-      required: true,
     },
     From: {
       type: String,
@@ -38,6 +37,13 @@ const flightSchema = new Schema(
   },
   { timestamps: true }
 );
+
+flightSchema.pre("save", function (next) {
+  this.FlightNumber = this.FlightNumber
+    ? this.FlightNumber
+    : this.From + "-" + this.To;
+  next();
+});
 
 const Flight = mongoose.model("Flight", flightSchema);
 module.exports = Flight;

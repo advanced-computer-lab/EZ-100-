@@ -1,12 +1,16 @@
-// const DOMAIN = ""; // Whatever the API domain is
+const DOMAIN = "http://localhost:5000"; // Whatever the API domain is
 
 export async function getAllFlights() {
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  // const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const response = await fetch(`${DOMAIN}/api/flights/viewFlights`);
+
   const data = await response.json();
+
+  console.log(data.data);
 
   if (!response.ok) {
     throw new Error(data.message || "Could not fetch quotes.");
   }
 
-  return data;
+  return data.data;
 }

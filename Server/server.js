@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -24,12 +25,13 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Add middlewares
+app.use(cors());
 
 // Import Routers
-const flightRoutes = require('./Routes/flightRouter');
+const flightRoutes = require("./Routes/flightRouter");
 
 // Mount Routers to their paths
-app.use('/api/flights', flightRoutes);
+app.use("/api/flights", flightRoutes);
 
 // Add ErrorHandler middleware here ... 'Must be added after mounting routers'
 

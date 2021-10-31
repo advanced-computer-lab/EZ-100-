@@ -1,0 +1,296 @@
+[
+  {
+    "From": "LAX",
+    "To": "JFK",
+    "Flight Date": "12-1-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "20"
+  },
+  {
+    "From": "LAX",
+    "To": "JFK",
+    "Flight Date": "12-1-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "10"
+  },
+  {
+    "From": "LAX",
+    "To": "JFK",
+    "Flight Date": "12-1-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "6"
+  },
+  {
+    "From": "JFK",
+    "To": "LAX",
+    "Flight Date": "22-1-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "30"
+  },
+  {
+    "From": "JFK",
+    "To": "LAX",
+    "Flight Date": "22-1-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "15"
+  },
+  {
+    "From": "JFK",
+    "To": "LAX",
+    "Flight Date": "22-1-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "16"
+  },
+  {
+    "From": "JFK",
+    "To": "LHR",
+    "Flight Date": "21-2-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "22"
+  },
+  {
+    "From": "JFK",
+    "To": "LHR",
+    "Flight Date": "21-2-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "2"
+  },
+  {
+    "From": "JFK",
+    "To": "LHR",
+    "Flight Date": "21-2-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "5"
+  },
+  {
+    "From": "LHR",
+    "To": "JFK",
+    "Flight Date": "6-3-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "43"
+  },
+  {
+    "From": "LHR",
+    "To": "JFK",
+    "Flight Date": "6-3-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "26"
+  },
+  {
+    "From": "LHR",
+    "To": "JFK",
+    "Flight Date": "6-3-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "16"
+  },
+  {
+    "From": "CAI",
+    "To": "DXB",
+    "Flight Date": "10-4-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "50"
+  },
+  {
+    "From": "CAI",
+    "To": "DXB",
+    "Flight Date": "10-4-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "22"
+  },
+  {
+    "From": "CAI",
+    "To": "DXB",
+    "Flight Date": "10-4-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "10"
+  },
+  {
+    "From": "DXB",
+    "To": "CAI",
+    "Flight Date": "18-4-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "50"
+  },
+  {
+    "From": "DXB",
+    "To": "CAI",
+    "Flight Date": "18-4-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "22"
+  },
+  {
+    "From": "DXB",
+    "To": "CAI",
+    "Flight Date": "18-4-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "10"
+  },
+  {
+    "From": "CDG",
+    "To": "MUC",
+    "Flight Date": "25-4-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "43"
+  },
+  {
+    "From": "CDG",
+    "To": "MUC",
+    "Flight Date": "25-4-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "26"
+  },
+  {
+    "From": "CDG",
+    "To": "MUC",
+    "Flight Date": "25-4-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "16"
+  },
+  {
+    "From": "MUC",
+    "To": "CDG",
+    "Flight Date": "2-5-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "43"
+  },
+  {
+    "From": "MUC",
+    "To": "CDG",
+    "Flight Date": "2-5-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "26"
+  },
+  {
+    "From": "MUC",
+    "To": "CDG",
+    "Flight Date": "2-5-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "16"
+  },
+  {
+    "From": "LHR",
+    "To": "CDG",
+    "Flight Date": "6-5-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "30"
+  },
+  {
+    "From": "LHR",
+    "To": "CDG",
+    "Flight Date": "6-5-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "13"
+  },
+  {
+    "From": "LHR",
+    "To": "CDG",
+    "Flight Date": "6-5-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "3"
+  },
+  {
+    "From": "CDG",
+    "To": "LHR",
+    "Flight Date": "17-5-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "60"
+  },
+  {
+    "From": "CDG",
+    "To": "LHR",
+    "Flight Date": "17-5-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "16"
+  },
+  {
+    "From": "CDG",
+    "To": "LHR",
+    "Flight Date": "17-5-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "16"
+  },
+  {
+    "From": "CAI",
+    "To": "RUH",
+    "Flight Date": "6-6-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "43"
+  },
+  {
+    "From": "CAI",
+    "To": "RUH",
+    "Flight Date": "6-6-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "26"
+  },
+  {
+    "From": "CAI",
+    "To": "RUH",
+    "Flight Date": "6-6-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "16"
+  },
+  {
+    "From": "RUH",
+    "To": "CAI",
+    "Flight Date": "16-6-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "22"
+  },
+  {
+    "From": "RUH",
+    "To": "CAI",
+    "Flight Date": "16-6-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "10"
+  },
+  {
+    "From": "RUH",
+    "To": "CAI",
+    "Flight Date": "16-6-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "6"
+  },
+  {
+    "From": "YYZ",
+    "To": "FRA",
+    "Flight Date": "7-7-2020",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "43"
+  },
+  {
+    "From": "YYZ",
+    "To": "FRA",
+    "Flight Date": "7-7-2020",
+    "Cabin": "Business",
+    "Seats Available on Flight": "26"
+  },
+  {
+    "From": "YYZ",
+    "To": "FRA",
+    "Flight Date": "7-7-2020",
+    "Cabin": "First",
+    "Seats Available on Flight": "16"
+  },
+  {
+    "From": "FRA",
+    "To": "YYZ",
+    "Flight Date": "8-8-2022",
+    "Cabin": "Economy",
+    "Seats Available on Flight": "43"
+  },
+  {
+    "From": "FRA",
+    "To": "YYZ",
+    "Flight Date": "8-8-2022",
+    "Cabin": "Business",
+    "Seats Available on Flight": "26"
+  },
+  {
+    "From": "FRA",
+    "To": "YYZ",
+    "Flight Date": "8-8-2022",
+    "Cabin": "First",
+    "Seats Available on Flight": "16"
+  }
+]
