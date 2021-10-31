@@ -11,7 +11,7 @@ function App() {
         <NewFlight></NewFlight>
       </Route>
 
-      <Route path="/all-flights">
+      <Route path="/flights">
         <AllFlights></AllFlights>
       </Route>
     </Layout>
