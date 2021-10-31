@@ -8,9 +8,8 @@ const router = express.Router();
 
 router.post("/createFlight", flightController.createFlight);
 router.get("/viewFlights", flightController.viewFlights);
-router.delete("/deleteFlight/:FlightNumber", flightController.deleteFlight);
-router.put("/updateFlight/:FlightNumber", flightController.updateFlight);
-
+router.delete("/deleteFlight/:id", flightController.deleteFlight);
+router.put("/updateFlight/:id", flightController.updateFlight);
 
 module.exports = router;
 
