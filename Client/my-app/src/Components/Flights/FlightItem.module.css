@@ -3,25 +3,17 @@
   padding: 1rem;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   background-color: #c2e7f0;
 }
 
-.item:last-of-type {
-  border-bottom: none;
-}
-
-.item figure {
+.item .title {
   margin: 0;
-  padding: 0;
-  width: 70%;
-}
-
-.item blockquote {
-  margin: 0;
+  margin-bottom: 0.5rem;
   text-align: left;
+  text-decoration: underline;
   font-size: 1.5rem;
   color: #212929;
 }
@@ -31,7 +23,7 @@
   margin-bottom: 0.25rem;
 }
 
-.item figcaption {
-  font-style: italic;
-  color: #566d6d;
+.description {
+  font-weight: 2rem;
+  font-family: Arial;
 }

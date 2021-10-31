@@ -6,24 +6,36 @@ import { Link } from "react-router-dom";
 export const FlightItem = (props) => {
   const flight = props.flight;
 
-  let departure = new Date(flight.DepartureDate);
-  departure = {
-    date: departure.toLocaleDateString(),
-    time: departure.toLocaleTimeString(),
+  let departureDate = new Date(flight.DepartureDate);
+  let arrivalDate = new Date(
+    new Date(flight.ArrivalDate).getTime() + 270 * 60000
+  );
+
+  const departure = {
+    date: departureDate.toLocaleDateString(),
+    time: departureDate.toLocaleTimeString(),
+  };
+
+  const arrival = {
+    date: arrivalDate.toLocaleDateString(),
+    time: arrivalDate.toLocaleTimeString(),
   };
   return (
     <li className={classes.item}>
-      <figure>
-        <blockquote>
+      <div className={classes.information}>
+        <div className={classes.title}>
           <p>Flight {flight.FlightNumber}</p>
-        </blockquote>
-        <figcaption>
-          Departure from {flight.From} on {departure.date} At {departure.time}
-        </figcaption>
-        <figcaption>
-          Arrive at {flight.To} on {departure.date} At {departure.time}
-        </figcaption>
-      </figure>
+        </div>
+        <div className={classes.description}>
+          <p>
+            <b>Departure:</b> {flight.From} on {departure.date} at{" "}
+            {departure.time}
+          </p>
+          <p>
+            <b>Arrival:</b> {flight.To} on {arrival.date} at {arrival.time}
+          </p>
+        </div>
+      </div>
 
       <Link to={`/flights/${flight._id}`} className="btn">
         Flight Details

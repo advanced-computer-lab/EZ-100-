@@ -8,15 +8,15 @@ const flightSchema = new Schema(
     },
     From: {
       type: String,
-      required: true,
+      required: [true, "A flight must have a [From] field"],
     },
     To: {
       type: String,
-      required: true,
+      required: [true, "A flight must have a [To] field"],
     },
     DepartureDate: {
       type: Date,
-      required: true,
+      required: [true, "A flight must have a [DepartureDate] field"],
     },
     ArrivalDate: {
       type: Date,
