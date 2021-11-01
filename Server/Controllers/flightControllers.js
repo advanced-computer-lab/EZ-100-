@@ -7,7 +7,12 @@ const createFlight = asyncHandler(async (req, res) => {
 });
 
 const viewFlights = asyncHandler(async (req, res) => {
-  const flight = await Flight.find().sort({ DepartureDate: 1 });
+  const flights = await Flight.find().sort({ DepartureDate: 1 });
+  res.status(200).json({ Success: true, data: flights });
+});
+
+const viewFlight = asyncHandler(async (req, res) => {
+  const flight = await Flight.findById(req.params.id);
   res.status(200).json({ Success: true, data: flight });
 });
 
@@ -25,4 +30,10 @@ const deleteFlight = asyncHandler(async (req, res) => {
   res.status(200).json({ Success: true, data: flight });
 });
 
-module.exports = { createFlight, viewFlights, updateFlight, deleteFlight };
+module.exports = {
+  createFlight,
+  viewFlights,
+  viewFlight,
+  updateFlight,
+  deleteFlight,
+};
