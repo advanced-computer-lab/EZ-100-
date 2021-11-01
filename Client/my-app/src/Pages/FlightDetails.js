@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 import LoadingSpinner from "../Components/UI/LoadingSpinner";
+import { FlightInfo } from "../Components/Flights/FlightInfo";
 
 import useHttp from "../hooks/use-http";
 import { getSingleFlight } from "../lib/api";
@@ -22,8 +23,12 @@ export const FlightDetails = () => {
   }, [sendRequest, flightId]);
 
   if (status === "completed" && loadedFlight) {
-    return <div>{loadedFlight.From}</div>;
+    return <FlightInfo flight={loadedFlight} />;
   } else {
-    return <LoadingSpinner />;
+    return (
+      <div className="centered">
+        <LoadingSpinner />
+      </div>
+    );
   }
 };

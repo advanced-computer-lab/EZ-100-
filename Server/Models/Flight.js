@@ -40,7 +40,7 @@ const flightSchema = new Schema(
 flightSchema.pre("save", function (next) {
   this.FlightNumber = this.FlightNumber
     ? this.FlightNumber
-    : this.From + "-" + this.To;
+    : "EZ " + Math.floor(Math.random() * 10000);
 
   this.ArrivalDate = this.ArrivalDate ? this.arrivalDate : this.DepartureDate;
   next();

@@ -9,7 +9,7 @@
   background-color: #c2e7f0;
 }
 
-.item .title {
+.item .title p {
   margin: 0;
   margin-bottom: 0.5rem;
   text-align: left;
@@ -18,12 +18,18 @@
   color: #212929;
 }
 
-.item p {
+.description {
   margin: 0;
-  margin-bottom: 0.25rem;
+  width: 600px;
+  display: flex;
+  justify-content: space-around;
 }
 
-.description {
-  font-weight: 2rem;
-  font-family: Arial;
+.description label {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.content {
+  font-size: 1.3rem;
 }
