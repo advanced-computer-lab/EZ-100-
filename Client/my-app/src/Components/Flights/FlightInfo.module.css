@@ -2,18 +2,44 @@
   background-color: #162b2b;
   color: white;
   border-radius: 6px;
-  padding: 3rem;
-  margin: 3rem auto;
+  padding: 2rem;
+  padding-top: 0.8rem;
+  margin: 4rem auto;
   width: 90%;
-  max-width: 40rem;
+  max-width: 60rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .flight p {
   font-size: 2.5rem;
+  /* margin-top: 0;
+  margin-bottom: 1rem; */
 }
 
-.flight div {
+.flight .details {
   font-style: italic;
   font-size: 1.5rem;
   color: #a1e0e0;
+}
+
+.timing-info {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #a1e0e0;
+}
+
+.cabin-info {
+  padding: 1.5rem;
+}
+
+.cabin-info div {
+  margin: 10px;
+  font-size: 1rem;
+}
+
+.cabin-info h3 {
+  text-decoration: underline;
+  margin-bottom: 10px;
 }

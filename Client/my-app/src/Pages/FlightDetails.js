@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 
 import LoadingSpinner from "../Components/UI/LoadingSpinner";
+// import Modal from "../Components/UI/Modal";
 import { FlightInfo } from "../Components/Flights/FlightInfo";
+// import { UpdateFlight } from "../Components/Flights/UpdateFlight";
 
 import useHttp from "../hooks/use-http";
 import { getSingleFlight } from "../lib/api";

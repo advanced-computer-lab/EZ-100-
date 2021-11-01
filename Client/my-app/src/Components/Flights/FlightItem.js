@@ -2,6 +2,8 @@ import React from "react";
 import classes from "./FlightItem.module.css";
 
 import { Link } from "react-router-dom";
+import { PlaneIcon } from "./PlaneIcon";
+// import { FaPlane } from "react-icons/fa";
 
 export const FlightItem = (props) => {
   const flight = props.flight;
@@ -18,13 +20,19 @@ export const FlightItem = (props) => {
     day: "numeric",
   };
   const departure = {
-    time: departureDate.toLocaleTimeString(),
+    time: departureDate.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
     longDate: departureDate.toLocaleDateString("en-US", options),
   };
 
   const arrival = {
     longDate: arrivalDate.toLocaleDateString("en-US", options),
-    time: arrivalDate.toLocaleTimeString(),
+    time: arrivalDate.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
   };
   return (
     <li className={classes.item}>
@@ -38,15 +46,21 @@ export const FlightItem = (props) => {
             <label>From</label>
             <div className={classes.content}>{flight.From}</div>
           </div>
+
+          <div className={classes.icon}>
+            <PlaneIcon />
+          </div>
+
+          <div>
+            <label>To</label>
+            <div className={classes.content}>{flight.To}</div>
+          </div>
           <div>
             <label>Depart</label>
             <div className={classes.content}>{departure.time}</div>
             <div>{departure.longDate}</div>
           </div>
-          <div>
-            <label>To</label>
-            <div className={classes.content}>{flight.To}</div>
-          </div>
+
           <div>
             <label>Arrive</label>
             <div className={classes.content}>{arrival.time}</div>
