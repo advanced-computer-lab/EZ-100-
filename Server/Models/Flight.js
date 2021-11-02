@@ -37,14 +37,14 @@ const flightSchema = new Schema(
   { timestamps: true }
 );
 
-flightSchema.pre("save", function (next) {
+/*flightSchema.pre("save", function (next) {
   this.FlightNumber = this.FlightNumber
     ? this.FlightNumber
     : "EZ " + Math.floor(Math.random() * 10000);
 
   this.ArrivalDate = this.ArrivalDate ? this.arrivalDate : this.DepartureDate;
   next();
-});
+});*/
 
 const Flight = mongoose.model("Flight", flightSchema);
 module.exports = Flight;
