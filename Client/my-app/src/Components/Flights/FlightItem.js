@@ -3,7 +3,7 @@ import classes from "./FlightItem.module.css";
 
 import { Link } from "react-router-dom";
 import { PlaneIcon } from "./PlaneIcon";
-// import { FaPlane } from "react-icons/fa";
+import { FaPlaneDeparture, FaPlaneArrival } from "react-icons/fa";
 
 export const FlightItem = (props) => {
   const flight = props.flight;
@@ -56,13 +56,17 @@ export const FlightItem = (props) => {
             <div className={classes.content}>{flight.To}</div>
           </div>
           <div>
-            <label>Depart</label>
+            <label>
+              Depart <FaPlaneDeparture />
+            </label>
             <div className={classes.content}>{departure.time}</div>
             <div>{departure.longDate}</div>
           </div>
 
           <div>
-            <label>Arrive</label>
+            <label>
+              Arrive <FaPlaneArrival />
+            </label>
             <div className={classes.content}>{arrival.time}</div>
             <div>{departure.longDate}</div>
           </div>
