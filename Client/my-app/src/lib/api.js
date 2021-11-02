@@ -5,7 +5,7 @@ export async function getAllFlights() {
 
   const data = await response.json();
 
-  console.log(data.data);
+  // console.log(data.data);
 
   if (!response.ok) {
     throw new Error(data.message || "Could not fetch flights.");
