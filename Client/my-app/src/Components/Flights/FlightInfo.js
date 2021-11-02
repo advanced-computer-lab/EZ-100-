@@ -1,6 +1,8 @@
 import React from "react";
 import classes from "./FlightInfo.module.css";
 
+import Button from "@mui/material/Button";
+
 export const FlightInfo = (props) => {
   const { flight } = props;
 
@@ -25,30 +27,62 @@ export const FlightInfo = (props) => {
     time: arrivalDate.toLocaleTimeString(),
   };
 
-  return (
-    <div className={classes.flight}>
-      <div>
-        <p>
-          {flight.FlightNumber} -{" "}
-          <span className={classes.details}>
-            {flight.From} - {flight.To}
-          </span>
-        </p>
+  const updateBtnClickHandler = (event) => {
+    event.preventDefault();
+    props.onUpdateButtonClicked();
 
-        <div className={classes["timing-info"]}>
-          Depart on {departure.longDate} at {departure.time}
+    console.log("Update button clicked");
+  };
+
+  const deleteBtnClicked = (event) => {
+    event.preventDefault();
+
+    console.log("Delete button clicked");
+  };
+
+  return (
+    <div className={classes.container}>
+      <div className={classes.flight}>
+        <div>
+          <p>
+            {flight.FlightNumber} -{" "}
+            <span className={classes.details}>
+              {flight.From} - {flight.To}
+            </span>
+          </p>
+
+          <div className={classes["timing-info"]}>
+            Depart on {departure.longDate} at {departure.time}
+          </div>
+
+          <div className={classes["timing-info"]}>
+            Arrive on {arrival.longDate} at {arrival.time}
+          </div>
         </div>
 
-        <div className={classes["timing-info"]}>
-          Arrive on {arrival.longDate} at {arrival.time}
+        <div className={classes["cabin-info"]}>
+          <div>
+            <label style={{ marginRight: "47px" }}>First class:</label>{" "}
+            {flight.FirstSeats} seats available.
+          </div>
+          <div>
+            <label>Business class:</label> {flight.BusinessSeats} seats
+            available.
+          </div>
+          <div>
+            <label>Economy class:</label> {flight.EconomySeats} seats available.
+          </div>
         </div>
       </div>
 
-      <div className={classes["cabin-info"]}>
-        <h3>Cabin Information</h3>
-        <div>First class Seats: {flight.FirstSeats} seats available.</div>
-        <div>Business class Seats: {flight.BusinessSeats} seats available.</div>
-        <div>Economy class Seats: {flight.EconomySeats} seats available.</div>
+      <div className={classes.actions}>
+        <Button variant="outlined" color="error" onClick={deleteBtnClicked}>
+          Delete
+        </Button>
+
+        <button className="btn" onClick={updateBtnClickHandler}>
+          Update Flight
+        </button>
       </div>
     </div>
   );

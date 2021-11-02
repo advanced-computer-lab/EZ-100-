@@ -1,21 +1,23 @@
-.flight {
+.container {
   background-color: #162b2b;
-  color: white;
-  border-radius: 6px;
-  padding: 2rem;
-  padding-top: 0.8rem;
-  margin: 8rem auto;
   width: 90%;
   max-width: 60rem;
+  margin: 8rem auto;
+  color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  padding-top: 0.8rem;
+}
+
+.flight {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-bottom: 3rem;
 }
 
 .flight p {
   font-size: 2.5rem;
-  /* margin-top: 0;
-  margin-bottom: 1rem; */
 }
 
 .flight .details {
@@ -36,10 +38,22 @@
 
 .cabin-info div {
   margin: 10px;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
-.cabin-info h3 {
-  text-decoration: underline;
-  margin-bottom: 10px;
+.cabin-info label {
+  color: #a1e0e0;
+  font-size: 1.1rem;
+  margin-right: 10px;
+}
+
+.actions {
+  margin: auto;
+  width: 50%;
+  display: flex;
+  justify-content: right;
+}
+
+.actions button {
+  margin-left: 25px;
 }
