@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./FlightInfo.module.css";
 
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 
 export const FlightInfo = (props) => {
   const { flight } = props;
@@ -76,11 +76,23 @@ export const FlightInfo = (props) => {
       </div>
 
       <div className={classes.actions}>
-        <Button variant="outlined" color="error" onClick={deleteBtnClicked}>
+        {/* <Button variant="outlined" color="error" onClick={deleteBtnClicked}>
           Delete
-        </Button>
+        </Button> */}
 
-        <button className="btn" onClick={updateBtnClickHandler}>
+        <button
+          className="del-btn"
+          style={{ fontSize: "1.1rem" }}
+          onClick={deleteBtnClicked}
+        >
+          Delete
+        </button>
+
+        <button
+          style={{ fontSize: "1.1rem" }}
+          className="btn"
+          onClick={updateBtnClickHandler}
+        >
           Update Flight
         </button>
       </div>
