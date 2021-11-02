@@ -1,7 +1,7 @@
 const DOMAIN = "http://localhost:5000"; // Whatever the API domain is
 
-export async function getAllFlights() {
-  const response = await fetch(`${DOMAIN}/api/flights/viewFlights`);
+export async function getAllFlights(query = "") {
+  const response = await fetch(`${DOMAIN}/api/flights/viewFlights${query}`);
 
   const data = await response.json();
 
