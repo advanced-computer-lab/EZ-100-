@@ -9,6 +9,7 @@ import Pagination from "@mui/material/Pagination";
 import useHttp from "../hooks/use-http";
 import { getAllFlights } from "../lib/api";
 import { FlightsList } from "../Components/Flights/FlightsList";
+import { FlightsFilter } from "../Components/Flights/FlightsFilter";
 
 export const AllFlights = () => {
   // const match = useRouteMatch();
@@ -66,6 +67,7 @@ export const AllFlights = () => {
   return (
     <div className="centered">
       <Card>
+        <FlightsFilter flights={loadedFlights} />
         <FlightsList flights={loadedFlights}></FlightsList>
         <div className="centered">
           <Pagination
