@@ -47,6 +47,8 @@ export const FlightsFilter = (props) => {
           <input type="date"></input>
         </div>
       </div>
+
+      <button className="btn--flat">Filter</button>
     </div>
   );
 };
