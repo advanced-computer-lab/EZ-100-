@@ -9,6 +9,7 @@ export const FilterInput = (props) => {
       options={props.options}
       sx={{ width: 160 }}
       renderInput={(params) => <TextField {...params} label={props.label} />}
+      onChange={props.onChange}
     />
   );
 };

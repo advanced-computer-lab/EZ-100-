@@ -12,9 +12,9 @@ import { FlightsList } from "../Components/Flights/FlightsList";
 import { FlightsFilter } from "../Components/Flights/FlightsFilter";
 
 export const AllFlights = () => {
-  // const match = useRouteMatch();
-  // console.log(match);
   const [page, setPage] = useState(1);
+  const [isFlightsFetched, setIsFlightsFetched] = useState(false);
+  const [allFlights, setAllFlights] = useState([]);
 
   const {
     sendRequest,
@@ -25,12 +25,43 @@ export const AllFlights = () => {
 
   useEffect(() => {
     sendRequest();
+    console.log("balabizo");
   }, [sendRequest]);
+
+  if (loadedFlights && !isFlightsFetched) {
+    setIsFlightsFetched(true);
+    setAllFlights([...loadedFlights]);
+  }
 
   let pagesCount = 0;
   if (loadedFlights) {
     pagesCount = Math.ceil(loadedFlights.length / 5); // Pagnition 5 items per page
   }
+
+  const applyFilterHandler = (filter) => {
+    let query = "";
+    if (filter.from) {
+      query += `From=${filter.from}`;
+    }
+
+    if (filter.to) {
+      query += `&To=${filter.to}`;
+    }
+
+    if (filter.flightNumber) {
+      query += `&FlightNumber=${filter.flightNumber}`;
+    }
+
+    if (filter.departure) {
+      query += `&DepartureDate=${filter.departure}`;
+    }
+
+    if (filter.arrive) {
+      query += `&ArrivalDate=${filter.arrive}`;
+    }
+
+    sendRequest("?" + query);
+  };
 
   const paginationChangeHandler = (event, value) => {
     setPage(value);
@@ -67,7 +98,7 @@ export const AllFlights = () => {
   return (
     <div className="centered">
       <Card>
-        <FlightsFilter flights={loadedFlights} />
+        <FlightsFilter flights={allFlights} onFilter={applyFilterHandler} />
         <FlightsList flights={loadedFlights}></FlightsList>
         <div className="centered">
           <Pagination

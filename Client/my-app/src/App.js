@@ -1,5 +1,5 @@
 import { Layout } from "./Components/Layout/Layout";
-import { NewFlight } from "./Pages/NewFlight";
+import NewFlight from "./Pages/NewFlight";
 import { AllFlights } from "./Pages/AllFlights";
 import { FlightDetails } from "./Pages/FlightDetails";
 
