@@ -38,8 +38,6 @@ const viewFlights = asyncHandler(async (req, res) => {
 
   const flights = await query;
 
-  const total2 = flights.length;
-
   const pagination = {};
 
   if (endIndex < total) {
@@ -56,10 +54,16 @@ const viewFlights = asyncHandler(async (req, res) => {
     };
   }
 
+  // If a query was passed
+  if (queryStr.length > 2) {
+    return res
+      .status(200)
+      .json({ success: true, data: flights, count: flights.length });
+  }
+
   res.status(200).json({
     success: true,
     count: total,
-    queryCount: total2,
     pagination,
     data: flights,
   });

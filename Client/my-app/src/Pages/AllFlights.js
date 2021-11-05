@@ -26,7 +26,7 @@ export const AllFlights = () => {
   }
 
   useEffect(() => {
-    sendRequest("?limit=5");
+    sendRequest("?limit=5&page=1");
   }, [sendRequest]);
 
   if (loadedFlights && !isFlightsFetched) {
@@ -35,9 +35,7 @@ export const AllFlights = () => {
   }
 
   let pagesCount = 0;
-  if (allFlights) {
-    pagesCount = Math.ceil(flightsCount / 5); // Pagnition 5 items per page
-  }
+  pagesCount = Math.ceil(flightsCount / 5); // Pagnition 5 items per page
 
   const applyFilterHandler = (filter) => {
     let query = "";

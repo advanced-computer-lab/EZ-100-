@@ -58,6 +58,12 @@ export const FlightsFilter = (props) => {
     });
   };
 
+  const formIsEmpty =
+    (fromValue || toValue || flightNumValue || departValue || arriveValue) ===
+    undefined;
+
+  console.log(formIsEmpty);
+
   let options = {
     from: [],
     to: [],
@@ -113,7 +119,11 @@ export const FlightsFilter = (props) => {
         </div>
       </div>
 
-      <button className="btn--flat" onClick={applyFilterHandler}>
+      <button
+        className="btn--flat"
+        onClick={applyFilterHandler}
+        disabled={formIsEmpty}
+      >
         Filter
       </button>
     </div>
