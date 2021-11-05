@@ -62,8 +62,6 @@ export const FlightsFilter = (props) => {
     (fromValue || toValue || flightNumValue || departValue || arriveValue) ===
     undefined;
 
-  console.log(formIsEmpty);
-
   let options = {
     from: [],
     to: [],

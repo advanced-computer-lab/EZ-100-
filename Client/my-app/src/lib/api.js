@@ -11,7 +11,6 @@ export async function getAllFlights(query = "") {
     throw new Error(data.message || "Could not fetch flights.");
   }
 
-  console.log(data.queryCount);
   return { flights: data.data, count: data.count };
 }
 
