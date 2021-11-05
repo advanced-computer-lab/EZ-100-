@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../Components/Flights/NewFlight.module.css";
+import "../Pages/NewFlight.css";
 import Card from "../Components/UI/Card";
 import LoadingSpinner from "../Components/UI/LoadingSpinner";
 import { createFlight } from "../lib/api";
@@ -182,11 +182,10 @@ class NewFlight extends Component {
   render() {
       const formErrors  = this.state;
     return (
-      <div className="centered">
-         <Card>
+      
     
-    <div className='wrapper'>
-      <div className='form-wrapper'>
+    <div className="wrapper">
+      <div className="form-wrapper">
         <h1>Create Flight</h1>
         <form onSubmit={this.handleSubmit}  >
           <div className='flight_number'>
@@ -252,7 +251,7 @@ class NewFlight extends Component {
             <label htmlFor="business_seats">Business seats</label>
             <input
               type="number"
-           
+              className={formErrors.business_seats.length > -1 ? "error" : null}
               name="business_seats"
               value={this.state.business_seats}
               onChange={this.businessseatshandler}
@@ -265,7 +264,8 @@ class NewFlight extends Component {
           <label htmlFor="economy_seats">Economy seats </label>
           <input
             type="number"
-            
+            className={formErrors.economy_seats.length > -1 ? "error" : null}
+
           name="economy_seats"
             value={this.state.economy_seats}
             onChange={this.economyseatshandler}
@@ -277,6 +277,7 @@ class NewFlight extends Component {
           <label htmlFor="first_seats">First seats </label>
           <input
             type="number"
+            className={formErrors.economy_seats.length > -1 ? "error" : null}
             name="first_seats"
             value={this.state.first_seats}
             onChange={this.firstseatshandler}
@@ -290,8 +291,7 @@ class NewFlight extends Component {
         </form>
       </div>
     </div>
-    </Card>
-      </div>
+    
       
      
   );
