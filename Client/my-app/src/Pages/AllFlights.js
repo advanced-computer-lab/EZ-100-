@@ -16,16 +16,17 @@ export const AllFlights = () => {
   const [isFlightsFetched, setIsFlightsFetched] = useState(false);
   const [allFlights, setAllFlights] = useState([]);
 
-  const {
-    sendRequest,
-    status,
-    error,
-    data: loadedFlights,
-  } = useHttp(getAllFlights, true);
+  const { sendRequest, status, error, data } = useHttp(getAllFlights, true);
+
+  let loadedFlights;
+  let flightsCount = 0;
+  if (data) {
+    loadedFlights = data.flights;
+    flightsCount = data.count;
+  }
 
   useEffect(() => {
-    sendRequest();
-    console.log("balabizo");
+    sendRequest("?limit=5");
   }, [sendRequest]);
 
   if (loadedFlights && !isFlightsFetched) {
@@ -34,8 +35,8 @@ export const AllFlights = () => {
   }
 
   let pagesCount = 0;
-  if (loadedFlights) {
-    pagesCount = Math.ceil(loadedFlights.length / 5); // Pagnition 5 items per page
+  if (allFlights) {
+    pagesCount = Math.ceil(flightsCount / 5); // Pagnition 5 items per page
   }
 
   const applyFilterHandler = (filter) => {
@@ -65,7 +66,7 @@ export const AllFlights = () => {
 
   const paginationChangeHandler = (event, value) => {
     setPage(value);
-    // sendRequest("?limit=5");
+    sendRequest(`?limit=5&page=${value}`);
   };
 
   if (status === "pending") {

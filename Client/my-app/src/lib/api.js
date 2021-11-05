@@ -11,7 +11,8 @@ export async function getAllFlights(query = "") {
     throw new Error(data.message || "Could not fetch flights.");
   }
 
-  return data.data;
+  console.log(data.queryCount);
+  return { flights: data.data, count: data.count, queryCount: data.queryCount };
 }
 
 export async function getSingleFlight(flightId) {
@@ -24,4 +25,17 @@ export async function getSingleFlight(flightId) {
   }
 
   return data.data;
+}
+
+export async function deleteFlight(flightId) {
+  const response = await fetch(
+    `${DOMAIN}/api/flights/deleteFlight/${flightId}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  const data = await response.json();
+
+  return data.Success;
 }

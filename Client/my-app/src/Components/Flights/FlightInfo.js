@@ -1,8 +1,6 @@
 import React from "react";
 import classes from "./FlightInfo.module.css";
 
-// import Button from "@mui/material/Button";
-
 export const FlightInfo = (props) => {
   const { flight } = props;
 
@@ -36,6 +34,7 @@ export const FlightInfo = (props) => {
 
   const deleteBtnClicked = (event) => {
     event.preventDefault();
+    props.onDeleteButtonClicked();
 
     console.log("Delete button clicked");
   };

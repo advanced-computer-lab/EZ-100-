@@ -1,16 +1,31 @@
-import React, { useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { FilterInput } from "../UI/FilterInput";
 
 import classes from "./FlightsFilter.module.css";
 
 export const FlightsFilter = (props) => {
-  const { flights } = props;
+  // const { flights } = props;
 
   const [fromValue, setFromValue] = useState();
   const [toValue, setToValue] = useState();
   const [flightNumValue, setFlightNumValue] = useState();
   const [departValue, setDepartValue] = useState();
   const [arriveValue, setArriveValue] = useState();
+
+  const [flights, setFlights] = useState([]);
+  const fetchFlights = useCallback(async () => {
+    const response = await fetch(
+      "http://localhost:5000/api/flights/viewFlights"
+    );
+    const data = await response.json();
+    setFlights(data.data);
+
+    console.log("Filter fetched Flights");
+  }, []);
+
+  useEffect(() => {
+    fetchFlights();
+  }, [fetchFlights]);
 
   const fromChangeHandler = (event, value) => {
     setFromValue(value);

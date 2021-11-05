@@ -7,61 +7,67 @@ const createFlight = asyncHandler(async (req, res) => {
 });
 
 const viewFlights = asyncHandler(async (req, res) => {
-  let query; 
+  let query;
 
-  const reqQuery = {...req.query};
+  const reqQuery = { ...req.query };
 
-  const removeFields = ['sort', 'page', 'limit'];
-  removeFields.forEach(param => delete reqQuery[param]);
+  const removeFields = ["sort", "page", "limit"];
+  removeFields.forEach((param) => delete reqQuery[param]);
 
   let queryStr = JSON.stringify(reqQuery);
-  
+
   //Query and filters
   query = Flight.find(JSON.parse(queryStr));
 
   //Sort
-  if(req.query.sort){
-    const sortBy = req.query.sort.split(',').join(' ');
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
     query = query.sort(sortBy);
-  }else{
-    query = query.sort('DepartureDate');
+  } else {
+    query = query.sort("DepartureDate");
   }
 
   //Pagination
+  const total = await Flight.countDocuments();
   const page = parseInt(req.query.page, 10) || 1;
-  const limit = parseInt(req.query.limit, 10) || 6;
+  const limit = parseInt(req.query.limit, 10) || total;
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
-  const total = await Flight.countDocuments();
 
   query = query.skip(startIndex).limit(limit);
 
+  const flights = await query;
 
-  const flight = await query;
+  const total2 = flights.length;
 
   const pagination = {};
 
-  if(endIndex < total) {
+  if (endIndex < total) {
     pagination.next = {
       page: page + 1,
-      limit
-    }
+      limit,
+    };
   }
 
-  if(startIndex > 0){
+  if (startIndex > 0) {
     pagination.prev = {
       page: page - 1,
-      limit 
-    }
+      limit,
+    };
   }
 
-
-  res.status(200).json({ success: true, count: flight.length, pagination,  data: flight });
+  res.status(200).json({
+    success: true,
+    count: total,
+    queryCount: total2,
+    pagination,
+    data: flights,
+  });
 });
 
 const viewFlight = asyncHandler(async (req, res) => {
   const flight = await Flight.findById(req.params.id);
-  res.status(200).json({ success: true,count: flight.length, data: flight });
+  res.status(200).json({ success: true, count: flight.length, data: flight });
 });
 
 const updateFlight = asyncHandler(async (req, res) => {
@@ -70,12 +76,12 @@ const updateFlight = asyncHandler(async (req, res) => {
     runValidators: true,
   });
 
-  res.status(200).json({ success: true,count: flight.length, data: flight });
+  res.status(200).json({ success: true, count: flight.length, data: flight });
 });
 
 const deleteFlight = asyncHandler(async (req, res) => {
   const flight = await Flight.findByIdAndDelete(req.params.id);
-  res.status(200).json({ success: true,count: flight.length, data: flight });
+  res.status(200).json({ success: true, count: flight.length, data: flight });
 });
 
 module.exports = {

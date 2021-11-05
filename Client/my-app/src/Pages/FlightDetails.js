@@ -6,14 +6,16 @@ import { FlightInfo } from "../Components/Flights/FlightInfo";
 import { UpdateFlight } from "../Components/Flights/UpdateFlight";
 
 import useHttp from "../hooks/use-http";
-import { getSingleFlight } from "../lib/api";
+import { getSingleFlight, deleteFlight } from "../lib/api";
 
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 export const FlightDetails = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const params = useParams();
+  const history = useHistory();
   const flightId = params.flightId;
 
   const {
@@ -21,6 +23,9 @@ export const FlightDetails = () => {
     status,
     data: loadedFlight,
   } = useHttp(getSingleFlight, true);
+
+  const { status: deleteStatus, sendRequest: sendDeleteRequest } =
+    useHttp(deleteFlight);
 
   useEffect(() => {
     sendRequest(flightId);
@@ -30,6 +35,30 @@ export const FlightDetails = () => {
     setShowUpdateModal((state) => !state);
   };
 
+  const showDeleteModalhandler = () => {
+    setShowDeleteModal((state) => !state);
+  };
+
+  const confirmDeleteHandler = (event) => {
+    event.preventDefault();
+    sendDeleteRequest(flightId);
+    setShowDeleteModal(false);
+  };
+
+  useEffect(() => {
+    if (deleteStatus === "completed") {
+      history.replace("/flights");
+    }
+  }, [deleteStatus, history]);
+
+  if (deleteStatus === "pending") {
+    return (
+      <div className="centered">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
   if (status === "completed" && loadedFlight) {
     return (
       <>
@@ -38,9 +67,32 @@ export const FlightDetails = () => {
             <UpdateFlight></UpdateFlight>
           </Modal>
         ) : null}
+
+        {showDeleteModal ? (
+          <Modal onClose={showDeleteModalhandler}>
+            <div>
+              <h2>
+                Are you sure you want to delete flight{" "}
+                {loadedFlight.FlightNumber} ?
+              </h2>
+              <button onClick={showDeleteModalhandler} className="btn--flat">
+                Cancel
+              </button>
+              <button
+                className="del-btn"
+                style={{ margin: "10px", fontSize: "1rem" }}
+                onClick={confirmDeleteHandler}
+              >
+                Yes
+              </button>
+            </div>
+          </Modal>
+        ) : null}
+
         <FlightInfo
           flight={loadedFlight}
           onUpdateButtonClicked={showUpdateFormHandler}
+          onDeleteButtonClicked={showDeleteModalhandler}
         />
       </>
     );
