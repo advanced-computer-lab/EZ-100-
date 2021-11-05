@@ -1,5 +1,5 @@
 import { Layout } from "./Components/Layout/Layout";
-import { NewFlight } from "./Pages/NewFlight";
+import  NewFlight  from './Pages/NewFlight';
 import { AllFlights } from "./Pages/AllFlights";
 import { FlightDetails } from "./Pages/FlightDetails";
 
@@ -9,7 +9,10 @@ function App() {
   return (
     <Layout>
       <Route path="/new-flight">
-        <NewFlight></NewFlight>
+        <NewFlight>
+         
+
+        </NewFlight>
       </Route>
 
       <Route path="/flights" exact>

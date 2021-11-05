@@ -1,0 +1,153 @@
+.wrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #258ea6;
+}
+
+.form-wrapper {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px;
+  border-radius: 1px;
+  box-shadow: 0px 10px 50px #555;
+  background-color: #ffffff;
+}
+
+form {
+  width:100%;
+  display: flex;
+  flex-wrap: wrap;
+  text-align:center;
+}
+
+h1 {
+  text-align: center;
+  width: 100%;
+  color: #111;
+  font-weight: lighter;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+label {
+  font-size: 1em;
+  margin-bottom: 0.25em;
+  color: #222;
+  font-weight: lighter;
+}
+
+input {
+  padding: 10px 10px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid #cfcfcf;
+}
+
+
+input::placeholder {
+  font-size: 1.2em;
+  font-weight: lighter;
+  color: #999;
+}
+
+input.error {
+  border: 1px solid red;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 0.75em;
+  display: relative;
+}
+
+input::placeholder {
+  font-size: 1.2em;
+  font-weight: lighter;
+  color: #999;
+}
+
+.flight_number {
+  margin-right: 10%;
+}
+.from {
+  margin-right: 20%;
+}
+.to{
+  margin-right: 20%;
+}
+
+
+.departure_date {
+  margin-left: 90%;
+}
+
+.arrival_date {
+  margin-left: 60%;
+}
+
+.economy_seats {
+  margin-left: 80%;
+}
+.business_seats {
+  margin-left: 40%;
+}
+.first_seats {
+  margin-left: 40%;
+}
+
+
+.flight_number,
+.from,
+.to,
+.departure_date,
+.arrival_date,
+.economy_seats,
+.business_seats,
+.first_seats {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.flight_number,
+.from,
+.to{
+  width: 49%;
+}
+
+.business_seats,
+.economy_seats,
+.first_seats {
+  width: 50%;
+}
+
+.Create {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Create button {
+  background-color: #1bc5d1;
+  color: #fff;
+  border: 2px solid #fff;
+  width: 100%;
+  margin-top: 6em;
+  padding: 10px 10px;
+  font-size: 8em;
+  font-weight: lighter;
+  letter-spacing: 1px;
+  margin-bottom: 1em;
+}
+
+.Create button:hover {
+  color: #519e8a;
+  background-color: #fff;
+  border: 2px solid #519e8a;
+}
