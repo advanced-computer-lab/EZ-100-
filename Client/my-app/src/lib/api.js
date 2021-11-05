@@ -1,20 +1,33 @@
 const DOMAIN = "http://localhost:5000"; // Whatever the API domain is
 
-export async function getAllFlights() {
-  // const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-  const response = await fetch(`${DOMAIN}/api/flights/viewFlights`);
+export async function getAllFlights(query = "") {
+  const response = await fetch(`${DOMAIN}/api/flights/viewFlights${query}`);
 
   const data = await response.json();
 
-  console.log(data.data);
+  // console.log(data.data);
 
   if (!response.ok) {
-    throw new Error(data.message || "Could not fetch quotes.");
+    throw new Error(data.message || "Could not fetch flights.");
+  }
+
+  console.log(data.queryCount);
+  return { flights: data.data, count: data.count, queryCount: data.queryCount };
+}
+
+export async function getSingleFlight(flightId) {
+  const response = await fetch(`${DOMAIN}/api/flights/viewFlight/${flightId}`);
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Could not fetch flight.");
   }
 
 
   return data.data;
 }
+
 
 export async function createFlight(newflight){
   const requestOptions = {
@@ -34,3 +47,17 @@ export async function createFlight(newflight){
 
   return data.data;
 }
+
+export async function deleteFlight(flightId) {
+  const response = await fetch(
+    `${DOMAIN}/api/flights/deleteFlight/${flightId}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  const data = await response.json();
+
+  return data.Success;
+}
+

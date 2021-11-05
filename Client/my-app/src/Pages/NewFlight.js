@@ -4,6 +4,7 @@ import Card from "../Components/UI/Card";
 import LoadingSpinner from "../Components/UI/LoadingSpinner";
 import { createFlight } from "../lib/api";
 
+
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
 
@@ -299,3 +300,4 @@ class NewFlight extends Component {
 }
 
 export default NewFlight;
+
