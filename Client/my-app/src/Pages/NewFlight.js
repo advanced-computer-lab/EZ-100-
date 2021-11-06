@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "../Pages/NewFlight.css";
+import "../Pages/NewFlight.module.css";
 import Card from "../Components/UI/Card";
 import LoadingSpinner from "../Components/UI/LoadingSpinner";
 import { createFlight } from "../lib/api";
@@ -55,6 +55,13 @@ export default function NewFlight(props) {
         }
     })
     const flightnumberclasses= formik.touched.flight_number &&formik.errors.flight_number? "error":""
+    const fromclasses= formik.touched.from &&formik.errors.from? "error":""
+    const toclasses= formik.touched.to &&formik.errors.to? "error":""
+    const departuredateclasses= formik.touched.departure_date &&formik.errors.departure_date? "error":""
+    const arrivaldateclasses= formik.touched.arrival_date &&formik.errors.arrival_date? "error":""
+    const businessseatsclasses= formik.touched.business_seats &&formik.errors.business_seats? "error":""
+    const economyseatsclasses= formik.touched.economy_seats &&formik.errors.economy_seats? "error":""
+    const firstseatsclasses= formik.touched.first_seats &&formik.errors.first_seats? "error":""
 
     return (
         <div className="wrapper">
@@ -81,13 +88,13 @@ export default function NewFlight(props) {
                 <input
                   type="text"
                   name="from"
+                  className={fromclasses}
                   value={formik.values.from}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-  
                   placeholder="from"
                 />
-                {formik.touched.from &&formik.errors.from ? <p>{formik.errors.from} </p> : null}
+                {formik.touched.from &&formik.errors.from}
               </div>
   
               <div className="to">
@@ -98,7 +105,8 @@ export default function NewFlight(props) {
                   value={formik.values.to}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-  
+                  className={toclasses}
+
                   placeholder="to"
                 />
                 {formik.touched.to &&formik.errors.to ? <p>{formik.errors.to} </p> : null}
@@ -112,7 +120,8 @@ export default function NewFlight(props) {
                   value={formik.values.departure_date}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-  
+                  className={departuredateclasses}
+
                   placeholder="departure date"
                 />
                 {formik.touched.departure_date &&formik.errors.departure_date ? (
@@ -127,7 +136,8 @@ export default function NewFlight(props) {
                   value={formik.values.arrival_date}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-  
+                  className={arrivaldateclasses}
+
                   placeholder="Arrival date"
                 />
                 {formik.touched.arrival_date &&formik.errors.arrival_date ? (
@@ -143,7 +153,8 @@ export default function NewFlight(props) {
                   value={formik.values.business_seats}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-  
+                  className={businessseatsclasses}
+
                   placeholder="business seats"
                 />
                 {formik.touched.business_seats &&formik.errors.business_seats ? (
@@ -159,7 +170,8 @@ export default function NewFlight(props) {
                   value={formik.values.economy_seats}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-  
+                  className={economyseatsclasses}
+
                   placeholder="economy seats"
                 />
                 {formik.touched.economy_seats &&formik.errors.economy_seats ? (
@@ -174,7 +186,8 @@ export default function NewFlight(props) {
                   value={formik.values.first_seats}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-  
+                  className={firstseatsclasses}
+
                   placeholder="first seats"
                 />
                 {formik.touched.first_seats && formik.errors.first_seats ? (
