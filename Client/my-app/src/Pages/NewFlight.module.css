@@ -1,31 +1,30 @@
 .wrapper {
-  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: top;
   align-items: center;
-  background-color: teal;
+  background-color: #e7f8f8;
 }
 
 .form-wrapper {
-  width: 400px;
+  width: 35%;
   display: flex;
   flex-direction: column;
+  margin-top: 4rem;
   padding: 20px 40px;
-  border-radius: 10px;
-  box-shadow: 0px 10px 50px #555;
+  border-radius: 20px;
+  box-shadow: 0px 5px 5px #555;
   background-color: #ffffff;
 }
 
-form {
-  width:100%;
+.form-wrapper form {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
- 
 }
 
-h1 {
+.form-wrapper h1 {
   text-align: center;
   width: 100%;
   color: #111;
@@ -34,28 +33,27 @@ h1 {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-label {
+.form-wrapper label {
   font-size: 1em;
   margin-bottom: 0.25em;
   color: #222;
   font-weight: lighter;
 }
 
-input {
+.form-wrapper input {
   padding: 10px 10px;
   border-radius: 10px;
   outline: none;
   border: 1px solid #cfcfcf;
 }
 
-
-input::placeholder {
+.form-wrapper input::placeholder {
   font-size: 1.2em;
   font-weight: lighter;
   color: #999;
 }
 
-input.error {
+.form-wrapper input.error {
   border: 1px solid red;
 }
 
@@ -65,7 +63,7 @@ input.error {
   display: relative;
 }
 
-input::placeholder {
+.form-wrapper input::placeholder {
   font-size: 1.2em;
   font-weight: lighter;
   color: #999;
@@ -77,10 +75,9 @@ input::placeholder {
 .from {
   margin-right: 1%;
 }
-.to{
-  margin-right:  1%;
+.to {
+  margin-right: 1%;
 }
-
 
 .departure_date {
   margin-left: 1%;
@@ -100,7 +97,6 @@ input::placeholder {
   margin-left: 1%;
 }
 
-
 .flight_number,
 .from,
 .to,
@@ -114,17 +110,16 @@ input::placeholder {
   margin-bottom: 15px;
 }
 
-.flight_number{
+.flight_number {
   width: 100%;
 }
 
-
 .from,
-.to{
+.to {
   width: 49%;
 }
 .departure_date,
-.arrival_date{
+.arrival_date {
   width: 49%;
 }
 
@@ -145,6 +140,7 @@ input::placeholder {
   background-color: teal;
   color: #fff;
   border: 2px solid #fff;
+  border-radius: 10px;
   width: 100%;
   margin-top: 1em;
   padding: 8px 0px;
@@ -154,8 +150,10 @@ input::placeholder {
   margin-bottom: 0.25em;
 }
 
-.Create button:hover {
+.Create button:hover,
+.create button:active {
   color: #519e8a;
   background-color: #fff;
-  border: 2px solid  teal;
+  border: 2px solid teal;
+  cursor: pointer;
 }

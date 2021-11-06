@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { useRouteMatch } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 import Card from "../Components/UI/Card";
 import LoadingSpinner from "../Components/UI/LoadingSpinner";
@@ -12,9 +12,9 @@ import { FlightsList } from "../Components/Flights/FlightsList";
 import { FlightsFilter } from "../Components/Flights/FlightsFilter";
 
 export const AllFlights = () => {
+  const history = useHistory();
+  const location = useLocation();
   const [page, setPage] = useState(1);
-  const [isFlightsFetched, setIsFlightsFetched] = useState(false);
-  const [allFlights, setAllFlights] = useState([]);
 
   const { sendRequest, status, error, data } = useHttp(getAllFlights, true);
 
@@ -26,18 +26,17 @@ export const AllFlights = () => {
   }
 
   useEffect(() => {
-    sendRequest("?limit=5");
-  }, [sendRequest]);
+    if (!location.search) {
+      sendRequest("?limit=5&page=1");
+    } else {
+      sendRequest(location.search + "&limit=5&page=1");
+    }
 
-  if (loadedFlights && !isFlightsFetched) {
-    setIsFlightsFetched(true);
-    setAllFlights([...loadedFlights]);
-  }
+    console.log("AllFlights fetched Flights");
+  }, [sendRequest, location]);
 
   let pagesCount = 0;
-  if (allFlights) {
-    pagesCount = Math.ceil(flightsCount / 5); // Pagnition 5 items per page
-  }
+  pagesCount = Math.ceil(flightsCount / 5); // Pagnition 5 items per page
 
   const applyFilterHandler = (filter) => {
     let query = "";
@@ -61,12 +60,20 @@ export const AllFlights = () => {
       query += `&ArrivalDate=${filter.arrive}`;
     }
 
+    history.push("?" + query);
     sendRequest("?" + query);
   };
 
   const paginationChangeHandler = (event, value) => {
-    setPage(value);
-    sendRequest(`?limit=5&page=${value}`);
+    if (page !== value) {
+      setPage(value);
+
+      if (!location.search) {
+        sendRequest(`?limit=5&page=${value}`);
+      } else {
+        sendRequest(location.search + `&limit=5&page=${value}`);
+      }
+    }
   };
 
   if (status === "pending") {
@@ -99,7 +106,7 @@ export const AllFlights = () => {
   return (
     <div className="centered">
       <Card>
-        <FlightsFilter flights={allFlights} onFilter={applyFilterHandler} />
+        <FlightsFilter onFilter={applyFilterHandler} />
         <FlightsList flights={loadedFlights}></FlightsList>
         <div className="centered">
           <Pagination

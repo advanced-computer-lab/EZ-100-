@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import "../Pages/NewFlight.css";
 import Card from "../Components/UI/Card";
 import LoadingSpinner from "../Components/UI/LoadingSpinner";
@@ -188,3 +189,4 @@ export default function NewFlight(props) {
         </div>
       );
 }
+
