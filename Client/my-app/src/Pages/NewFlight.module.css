@@ -96,6 +96,9 @@
 .first_seats {
   margin-left: 1%;
 }
+.terminal {
+  margin-left: 1%;
+}
 
 .flight_number,
 .from,
@@ -104,7 +107,8 @@
 .arrival_date,
 .economy_seats,
 .business_seats,
-.first_seats {
+.first_seats,
+.terminal {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
@@ -123,10 +127,16 @@
   width: 49%;
 }
 
+.first_seats,
+.terminal
+{
+  width: 49%;
+}
+
 .business_seats,
-.economy_seats,
-.first_seats {
-  width: 100%;
+.economy_seats
+{
+  width: 49%;
 }
 
 .Create {
