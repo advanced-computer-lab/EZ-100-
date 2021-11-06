@@ -20,68 +20,68 @@ const formValid = ({ formErrors, ...rest }) => {
 
   return valid;
 };
-class NewFlight extends Component {
-  constructor(props) {
-    super(props);
+function NewFlight(props) {
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      flight_number: "",
-      from:"",
-      to:"",
-      departure_date: "",
-      arrival_date: "",
-      economy_seats: "",
-      business_seats: "",
-      first_seats: "",
-    };
+  //   this.state = {
+  //     flight_number: "",
+  //     from:"",
+  //     to:"",
+  //     departure_date: "",
+  //     arrival_date: "",
+  //     economy_seats: "",
+  //     business_seats: "",
+  //     first_seats: "",
+  //   };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  
 
-  flighthandler = (event) => {
+  const flighthandler = (event) => {
     this.setState({
       flight_number: event.target.value,
     });
   };
-  fromhandler = (event) => {
+  const fromhandler = (event) => {
     this.setState({
       from: event.target.value,
     });
   };
-  tohandler = (event) => {
+  const tohandler = (event) => {
     this.setState({
       to: event.target.value,
     });
   };
  
 
-  departuredatehandler = (event) => {
+  const departuredatehandler = (event) => {
     this.setState({
       departure_date: event.target.value,
     });
   };
-  arrivaldatehandler = (event) => {
+  const arrivaldatehandler = (event) => {
     this.setState({
       arrival_date: event.target.value,
     });
   };
 
-  economyseatshandler = (event) => {
+  const economyseatshandler = (event) => {
     this.setState({
       economy_seats: event.target.value,
     });
   };
-  businessseatshandler = (event) => {
+  const businessseatshandler = (event) => {
     this.setState({
       business_seats: event.target.value,
     });
   };
-  firstseatshandler = (event) => {
+  const firstseatshandler = (event) => {
     this.setState({
       first_seats: event.target.value,
     });
   };
-  handleSubmit = async (event)=> {
+  const handleSubmit = async (event)=> {
     event.preventDefault();
     const newflight= {
       FlightNumber: this.state.flight_number,
@@ -115,7 +115,7 @@ class NewFlight extends Component {
   
    };
 
-  handleChange = e => {
+  const handleChange = e => {
     e.preventDefault();
     const { name, value } = e.target;
     let formErrors = { ...this.state.formErrors };
@@ -180,7 +180,7 @@ class NewFlight extends Component {
   //   });
   //   event.preventDefault();
   // };
-  render() {
+  
       const formErrors  = this.state;
     return (
       
@@ -321,8 +321,8 @@ class NewFlight extends Component {
       
      
   );
-}
-}
+
+          }
 
 export default NewFlight;
 
