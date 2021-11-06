@@ -16,6 +16,7 @@ export default function NewFlight(props) {
       economy_seats: "",
       business_seats: "",
       first_seats: "",
+
       terminal: "",
     },
     validationSchema: Yup.object({
@@ -29,7 +30,9 @@ export default function NewFlight(props) {
       economy_seats: Yup.number().min(0, "min 0"),
       business_seats: Yup.number().min(0, "min 0"),
       first_seats: Yup.number().min(0, "min 0"),
+
       terminal: Yup.number().min(0, "min 0").required("Required"),
+
     }),
     onSubmit: async (values) => {
       const newflight = {
@@ -56,6 +59,7 @@ export default function NewFlight(props) {
     formik.touched.flight_number && formik.errors.flight_number
       ? classes.error
       : "";
+
   const fromclasses =
     formik.touched.from && formik.errors.from ? classes.error : "";
   const toclasses = formik.touched.to && formik.errors.to ? classes.error : "";
@@ -99,12 +103,15 @@ export default function NewFlight(props) {
             />
           </div>
 
+
           <div className={classes["to"]}>
             <label htmlFor="to">To </label>
             <input
               type="text"
               name="to"
+
               className={toclasses}
+
               value={formik.values.to}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -117,7 +124,9 @@ export default function NewFlight(props) {
             <input
               type="datetime-local"
               name="departure_date"
+
               className={departureclasses}
+
               value={formik.values.departure_date}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -129,12 +138,15 @@ export default function NewFlight(props) {
             <input
               type="datetime-local"
               name="arrival_date"
+
               className={arrivalclasses}
+
               value={formik.values.arrival_date}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               placeholder="Arrival date"
             />
+
           </div>
 
           <div className={classes["business_seats"]}>
@@ -149,6 +161,7 @@ export default function NewFlight(props) {
               placeholder="business seats"
             />
           </div>
+
 
           <div className={classes["economy_seats"]}>
             <label htmlFor="economy_seats">Economy seats </label>
@@ -174,6 +187,7 @@ export default function NewFlight(props) {
               placeholder="first seats"
             />
           </div>
+
           <div className={classes["terminal"]}>
             <label htmlFor="terminal">Terminal </label>
             <input
@@ -187,6 +201,7 @@ export default function NewFlight(props) {
               placeholder="terminal"
             />
           </div>
+
           <div className={classes["Create"]}>
             <button type="submit">Create Flight</button>
           </div>
