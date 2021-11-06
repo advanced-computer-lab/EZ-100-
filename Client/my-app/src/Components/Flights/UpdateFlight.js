@@ -20,7 +20,10 @@ export const UpdateFlight = (props) => {
   const [ BusinessClassValue, setBusinessClassValue] = useState(flight.BusinessSeats);
   const [ FirstClassValue, setFirstClassValue] = useState(flight.FirstSeats);
 
-
+  function refreshPage(){
+    window.location.reload();
+  }
+  
   async function onUpdateHandler(event){
     event.preventDefault();
     const updatedFlight = {
@@ -41,6 +44,8 @@ export const UpdateFlight = (props) => {
       },
       body: JSON.stringify(updatedFlight)
     })
+
+    refreshPage();
 
   }
 
