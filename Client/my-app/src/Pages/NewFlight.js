@@ -195,10 +195,13 @@ class NewFlight extends Component {
               className={formErrors.flight_number.length > 0 ? "error" : null}
               name="flight_number"
               value={this.state.flight_number}
-              onChange={this.handleChange}
+              onChange={this.flighthandler}
               placeholder="flight number"
               
             />
+             {formErrors.flight_number.length > 0 && (
+                <span className="errorMessage">{formErrors.flight_number}</span>
+              )}
           </div>
           <div className="from">
             <label htmlFor="from">From </label>
@@ -209,6 +212,9 @@ class NewFlight extends Component {
               value={this.state.from}
               onChange={this.fromhandler}
               placeholder="from"/>
+               {formErrors.from.length > 0 && (
+                <span className="errorMessage">{formErrors.from}</span>
+              )}
               </div>
 
             <div className="to">
@@ -220,6 +226,9 @@ class NewFlight extends Component {
               value={this.state.to}
               onChange={this.tohandler}
               placeholder="to"/>
+               {formErrors.to.length > 0 && (
+                <span className="errorMessage">{formErrors.to}</span>
+              )}
               </div>
 
           <div className="departure_date">
@@ -231,8 +240,11 @@ class NewFlight extends Component {
               value={this.state.departure_date}
               onChange={this.departuredatehandler}
               placeholder="departure date"
-             
+              
             />
+            {formErrors.departure_date.length > 0 && (
+                <span className="errorMessage">{formErrors.departure_date}</span>
+              )}
           </div>
           <div className='arrival_date'>
             <label htmlFor="arrival_date">Arrival date </label>
@@ -245,7 +257,11 @@ class NewFlight extends Component {
               placeholder="Arrival date"
              
             />
+            {formErrors.arrival_date.length > 0 && (
+                <span className="errorMessage">{formErrors.arrival_date}</span>
+              )}
           </div>
+
           
           <div className="business_seats">
             <label htmlFor="business_seats">Business seats</label>
@@ -258,6 +274,9 @@ class NewFlight extends Component {
               placeholder="business seats"
             
             />
+            {formErrors.business_seats.value > 0 && (
+                <span className="errorMessage">{formErrors.business_seats}</span>
+              )}
           </div>
 
           <div className="economy_seats">
@@ -272,18 +291,24 @@ class NewFlight extends Component {
             placeholder="economy seats"
             
           />
+          {formErrors.economy_seats.value > -1  && (
+                <span className="errorMessage">{formErrors.economy_seats}</span>
+              )}
          </div>
          <div className="first_seats">
           <label htmlFor="first_seats">First seats </label>
           <input
             type="number"
-            className={formErrors.economy_seats.length > -1 ? "error" : null}
+            className={formErrors.first_seats.length > -1 ? "error" : null}
             name="first_seats"
             value={this.state.first_seats}
             onChange={this.firstseatshandler}
             placeholder="first seats"
             
           />
+          {formErrors.first_seats.length > 0 && (
+                <span className="errorMessage">{formErrors.first_seats}</span>
+              )}
          </div>
          <div className="Create">
           <button type="submit">Create Flight</button> 
