@@ -70,7 +70,7 @@ export const FlightDetails = () => {
 
         {showDeleteModal ? (
           <Modal onClose={showDeleteModalhandler}>
-            <div>
+            <div style={{ padding: "1rem" }}>
               <h2>
                 Are you sure you want to delete flight{" "}
                 {loadedFlight.FlightNumber} ?
