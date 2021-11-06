@@ -35,7 +35,7 @@ export const FlightDetails = () => {
       <>
         {showUpdateModal ? (
           <Modal onClose={showUpdateFormHandler}>
-            <UpdateFlight></UpdateFlight>
+            <UpdateFlight flight={loadedFlight}></UpdateFlight>
           </Modal>
         ) : null}
         <FlightInfo
