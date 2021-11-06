@@ -1,53 +1,51 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 
-* {
-    margin:0;
-    font-family: "Roboto", sans-serif;
-}
 #registrationPage {
-    height:100%;
-    background:#78a7ba; 
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    overflow:scroll;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  height: 100%;
+  background: #78a7ba;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
 }
 .signupForm {
-    flex: 1;
-    max-width: 600px;
-    border-radius: 10px;
-    background-color: #EFF0F1;
-    border: 1px solid #999;
-    margin-top: auto;
-    margin-bottom: auto;
-  }
+  flex: 1;
+  max-width: 600px;
+  border-radius: 10px;
+  background-color: #eff0f1;
+  border: 1px solid #999;
+  margin-top: auto;
+  margin-bottom: auto;
+}
 .formHeader {
-    padding:15px 0;
-    border-bottom:1px solid #cccccc;
+  padding: 15px 0;
+  border-bottom: 1px solid #cccccc;
 }
 .formHeader h1 {
-    font-size: 28px;
-    text-align:center;
-    color:#666;
+  font-size: 28px;
+  text-align: center;
+  color: #666;
 }
 .row {
-    display:flex;
-    flex-direction:row;
+  display: flex;
+  flex-direction: row;
 }
 .inputGroup {
-    flex:1;  
-    display:flex;
-    flex-direction:column; 
-    margin: 10px 5px;
-}
-label {
-    color:#1BBA93;
-    font-size: 17px;
-    font-weight: 500;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 5px;
 }
 
-input[type="text"]
-input[type="datetime-local"] {
+.inputGroup label {
+  color: #1bba93;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.inputGroup input[type="text"] .inputGroup input[type="datetime-local"] {
   font-size: 18px;
   height: 34px;
   padding-left: 10px;
@@ -59,19 +57,19 @@ input[type="datetime-local"] {
   outline: none;
 }
 .formBody {
-    background:white;
-    padding:5px 10px;
+  background: white;
+  padding: 5px 10px;
 }
 .formFooter {
-    display:flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 .btn {
-    padding:10px 20px;
-    background-color: teal;
-    font-size:17px;
-    border:none;
-    border-radius:5px;
-    color:#bcf5e7;
-    cursor:pointer;
+  padding: 10px 20px;
+  background-color: teal;
+  font-size: 17px;
+  border: none;
+  border-radius: 5px;
+  color: #bcf5e7;
+  cursor: pointer;
 }

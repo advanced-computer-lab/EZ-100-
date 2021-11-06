@@ -18,13 +18,13 @@
   background-color: #ffffff;
 }
 
-form {
+.form-wrapper form {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
 
-h1 {
+.form-wrapper h1 {
   text-align: center;
   width: 100%;
   color: #111;
@@ -33,27 +33,27 @@ h1 {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-label {
+.form-wrapper label {
   font-size: 1em;
   margin-bottom: 0.25em;
   color: #222;
   font-weight: lighter;
 }
 
-input {
+.form-wrapper input {
   padding: 10px 10px;
   border-radius: 10px;
   outline: none;
   border: 1px solid #cfcfcf;
 }
 
-input::placeholder {
+.form-wrapper input::placeholder {
   font-size: 1.2em;
   font-weight: lighter;
   color: #999;
 }
 
-input.error {
+.form-wrapper input.error {
   border: 1px solid red;
 }
 
@@ -63,7 +63,7 @@ input.error {
   display: relative;
 }
 
-input::placeholder {
+.form-wrapper input::placeholder {
   font-size: 1.2em;
   font-weight: lighter;
   color: #999;
