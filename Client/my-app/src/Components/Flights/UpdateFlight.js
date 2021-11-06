@@ -3,13 +3,46 @@ import classes from "./UpdateFlight.module.css";
 
 export const UpdateFlight = (props) => {
   const { flight } = props;
-  const [FlightNumberValue , setflightNumberValue] = useState(flight.FlightNumber);
-  const [FlightDepartureTimeValue , setDepartureTimeValue] = useState(flight.DepartureDate);
-  const [FlightArrivalTimeValue, setArrivalTimeValue] = useState(flight.ArrivalDate);
-  const [ EconomyClassValue, setEconomyClassValue] = useState(flight.EconomyClass);
-  const [ BusinessClassValue, setBusinessClassValue] = useState(flight.BusinessClass);
-  const [ FirstClassValue, setFirstClassValue] = useState(flight.FirstClass);
+
+  const dateForDateTimeInputValue = date => new Date(date.getTime() + new Date().getTimezoneOffset() * -60 * 1000).toISOString().slice(0, 19)
+
+  let departureDate = new Date(flight.DepartureDate); 
+  let arrivalDate = new Date(flight.ArrivalDate);
+
+  const localDepartureDate = dateForDateTimeInputValue(departureDate);
+  const localArrivalDate = dateForDateTimeInputValue(arrivalDate);
   
+  
+  const [FlightNumberValue , setflightNumberValue] = useState(flight.FlightNumber);
+  const [FlightDepartureTimeValue , setDepartureTimeValue] = useState(localDepartureDate);
+  const [FlightArrivalTimeValue, setArrivalTimeValue] = useState(localArrivalDate);
+  const [ EconomyClassValue, setEconomyClassValue] = useState(flight.EconomySeats);
+  const [ BusinessClassValue, setBusinessClassValue] = useState(flight.BusinessSeats);
+  const [ FirstClassValue, setFirstClassValue] = useState(flight.FirstSeats);
+
+
+  async function onUpdateHandler(event){
+    event.preventDefault();
+    const updatedFlight = {
+      FlightNumber: FlightNumberValue,
+      DepartureDate: FlightDepartureTimeValue,
+      ArrivalDate: FlightArrivalTimeValue,
+      EconomySeats: EconomyClassValue,
+      BusinessSeats: BusinessClassValue,
+      FirstSeats: FirstClassValue
+
+    }
+    
+    
+    await fetch(`http://localhost:5000/api/flights/updateFlight/${flight._id}`,{
+      method: 'PUT',
+      headers:{
+      'Content-Type':'application/json'
+      },
+      body: JSON.stringify(updatedFlight)
+    })
+
+  }
 
 
   function flightNumberChangeHandler(event) {
@@ -109,7 +142,7 @@ export const UpdateFlight = (props) => {
           </div>
         </div>
         <div className={classes.formFooter}>
-          <button className={classes.btn}>Update</button>
+          <button className={classes.btn} onClick={onUpdateHandler}>Update</button>
         </div>
       </form>
     </section>

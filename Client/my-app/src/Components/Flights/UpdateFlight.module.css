@@ -52,10 +52,10 @@ input[type="datetime-local"] {
   height: 34px;
   padding-left: 10px;
   padding-right: 10px;
-  color: #666;
+  color: teal;
   border: 1px solid #d6d6d6;
   border-radius: 4px;
-  background: white;
+  background: teal;
   outline: none;
 }
 .formBody {
