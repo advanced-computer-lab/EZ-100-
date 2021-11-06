@@ -1,0 +1,9 @@
+.items {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.date {
+  padding: 0.4rem;
+}

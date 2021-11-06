@@ -1,64 +1,93 @@
 const Flight = require("../Models/Flight");
+const asyncHandler = require("../middleware/async");
 
-const createFlight = async (req, res) => {
-  try {
-    const flight = await Flight.create(req.body);
-    res.status(201).json({ Success: true, data: flight });
-  } catch (err) {
-    res.status(400).json({ Success: false, error: err });
+const createFlight = asyncHandler(async (req, res) => {
+  const flight = await Flight.create(req.body);
+  res.status(201).json({ success: true, count: flight.length, data: flight });
+});
+
+const viewFlights = asyncHandler(async (req, res) => {
+  let query;
+
+  const reqQuery = { ...req.query };
+
+  const removeFields = ["sort", "page", "limit"];
+  removeFields.forEach((param) => delete reqQuery[param]);
+
+  let queryStr = JSON.stringify(reqQuery);
+
+  //Query and filters
+  query = Flight.find(JSON.parse(queryStr));
+
+  //Sort
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort("DepartureDate");
   }
-};
 
-const viewFlights = async (req, res) => {
-  try {
-    const flight = await Flight.find().sort({ FlightNumber: 1 });
-    res.status(200).json({ Success: true, data: flight });
-  } catch (err) {
-    res.status(400).json({ Success: false, error: err });
+  //Pagination
+  const total = await Flight.countDocuments();
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || total;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  query = query.skip(startIndex).limit(limit);
+
+  const flights = await query;
+
+  const total2 = flights.length;
+
+  const pagination = {};
+
+  if (endIndex < total) {
+    pagination.next = {
+      page: page + 1,
+      limit,
+    };
   }
-};
 
-const updateFlight = async (req, res) => {
-  apiRequest = JSON.parse(req.body);
-  params.append("From", req.body.From);
-  params.append("To", req.body.To);
-  params.append("DepartureDate", req.body.DepartureDate);
-  params.append("ArrivalDate", req.body.ArrivalDate);
-  params.append("EconomySeats", req.body.EconomySeats);
-  params.append("BusinessSeats", req.body.BusinessSeats);
-  params.append("FirstSeats", req.body.FirstSeats);
-
-  try {
-    const flight = await Flight.updateOne(
-      { FlightNumber: req.params.FlightNumber },
-      {
-        $set: {
-          From: req.param.From,
-          To: req.params.To,
-          DepartureDate: req.params.dDate,
-          ArrivalDate: req.params.aDate,
-          EconomySeats: req.params.eSeats,
-          BusinessSeats: req.params.bSeats,
-          FirstSeats: req.params.fSeats,
-        },
-      }
-    );
-    //const flight = await Flight.update({FlightNumber:req.params.FlightNumber});
-    res.status(200).json({ Success: true, data: flight });
-  } catch (err) {
-    res.status(400).json({ Success: false, error: err });
+  if (startIndex > 0) {
+    pagination.prev = {
+      page: page - 1,
+      limit,
+    };
   }
-};
 
-const deleteFlight = async (req, res) => {
-  try {
-    const flight = await Flight.deleteOne({
-      FlightNumber: req.params.FlightNumber,
-    });
-    res.status(200).json({ Success: true, data: flight });
-  } catch (err) {
-    res.status(400).json({ Success: false, error: err });
-  }
-};
+  res.status(200).json({
+    success: true,
+    count: total,
+    queryCount: total2,
+    pagination,
+    data: flights,
+  });
+});
 
-module.exports = { createFlight, viewFlights, updateFlight, deleteFlight };
+const viewFlight = asyncHandler(async (req, res) => {
+  const flight = await Flight.findById(req.params.id);
+  res.status(200).json({ success: true, count: flight.length, data: flight });
+});
+
+const updateFlight = asyncHandler(async (req, res) => {
+  const flight = await Flight.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({ success: true, count: flight.length, data: flight });
+});
+
+const deleteFlight = asyncHandler(async (req, res) => {
+  const flight = await Flight.findByIdAndDelete(req.params.id);
+  res.status(200).json({ success: true, count: flight.length, data: flight });
+});
+
+module.exports = {
+  createFlight,
+  viewFlights,
+  viewFlight,
+  updateFlight,
+  deleteFlight,
+};

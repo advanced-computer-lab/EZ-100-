@@ -32,6 +32,24 @@ body {
   cursor: pointer;
 }
 
+.del-btn {
+  text-decoration: none;
+  background: transparent;
+  /* background-color: #d0342c; */
+  color: #d0342c;
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #d0342c;
+  cursor: pointer;
+}
+
+.del-btn:hover,
+.del-btn:active {
+  background-color: #ff3344;
+  border-color: #ff3344;
+  color: white;
+}
+
 .btn:hover,
 .btn:active {
   background-color: #11acac;
@@ -53,4 +71,10 @@ body {
 .btn--flat:active {
   background-color: teal;
   color: white;
+}
+
+.mui-notification {
+  width: 20%;
+  margin: auto;
+  margin-top: 30px;
 }
