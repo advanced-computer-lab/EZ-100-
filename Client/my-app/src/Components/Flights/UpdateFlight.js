@@ -48,6 +48,8 @@ export const UpdateFlight = (props) => {
       BusinessSeats: BusinessClassValue,
       FirstSeats: FirstClassValue,
       TerminalNumber: TerminalValue,
+      To: ToNumberValue,
+      From: FromNumberValue,
     };
 
     await fetch(
