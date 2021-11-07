@@ -106,143 +106,137 @@ export const UpdateFlight = (props) => {
   }
 
   return (
-    <section id={classes.regesterationPage}>
-      <form className={classes.signupForm}>
-        <div className={classes.formHeader}>
-          <h1>Update Flight</h1>
+    <form className={classes.signupForm}>
+      <div className={classes.formHeader}>
+        <h1>Update Flight</h1>
+      </div>
+      <div className={classes.formBody}>
+        <div className={classes.row}>
+          <div className={classes.inputGroup}>
+            <label>Flight Number </label>
+            <input
+              type="text"
+              placholder="Enter Flight Number"
+              value={FlightNumberValue}
+              onChange={flightNumberChangeHandler}
+              className={classes.input}
+            />
+          </div>
         </div>
-        <div className={classes.formBody}>
-          <div className={classes.row}>
-            <div className={classes.inputGroup}>
-              <label>Flight Number </label>
-              <input
-                type="text"
-                placholder="Enter Flight Number"
-                value={FlightNumberValue}
-                onChange={flightNumberChangeHandler}
-                className={classes.input}
-              />
-            </div>
+        <div className={classes.row}>
+          <div className={classes.inputGroup}>
+            <label>From </label>
+            <input
+              className={classes.input}
+              type="text"
+              placholder="Enter Flight Number"
+              value={FromNumberValue}
+              onChange={FromHandler}
+            />
           </div>
-          <div className={classes.row}>
-            <div className={classes.inputGroup}>
-              <label>From </label>
-              <input
-                className={classes.input}
-                type="text"
-                placholder="Enter Flight Number"
-                value={FromNumberValue}
-                onChange={FromHandler}
-              />
-            </div>
-            <div className={classes.inputGroup}>
-              <label>To </label>
-              <input
-                className={classes.input}
-                type="text"
-                placholder="Enter Flight Number"
-                value={ToNumberValue}
-                onChange={ToHandler}
-              />
-            </div>
+          <div className={classes.inputGroup}>
+            <label>To </label>
+            <input
+              className={classes.input}
+              type="text"
+              placholder="Enter Flight Number"
+              value={ToNumberValue}
+              onChange={ToHandler}
+            />
           </div>
+        </div>
 
-          <div className={classes.row}>
-            <div className={classes.inputGroup}>
-              <label>Departure Time </label>
-              <input
-                className={classes.input}
-                type="datetime-local"
-                value={FlightDepartureTimeValue}
-                onChange={DepartureDateChangeHandler}
-              />
-            </div>
-            <div className={classes.inputGroup}>
-              <label>Arrival Time </label>
-              <input
-                className={classes.input}
-                type="datetime-local"
-                value={FlightArrivalTimeValue}
-                onChange={ArrivalDateChangeHandler}
-              />
-            </div>
+        <div className={classes.row}>
+          <div className={classes.inputGroup}>
+            <label>Departure Time </label>
+            <input
+              className={classes.input}
+              type="datetime-local"
+              value={FlightDepartureTimeValue}
+              onChange={DepartureDateChangeHandler}
+            />
           </div>
-          <div className={classes.row}>
-            <div className={classes.inputGroup}>
-              <label htmlFor="quantity">
-                Available Seats in Economy Class:
-              </label>
-              <input
-                className={classes.input}
-                type="number"
-                id="quantity"
-                name="quantity"
-                min="0"
-                max="100"
-                step="1"
-                value={EconomyClassValue}
-                onChange={EconomyClassHandler}
-              />
-            </div>
-          </div>
-          <div className={classes.row}>
-            <div className={classes.inputGroup}>
-              <label htmlFor="quantity">
-                Available Seats in Business Class:
-              </label>
-              <input
-                className={classes.input}
-                type="number"
-                id="quantity"
-                name="quantity"
-                min="0"
-                max="100"
-                step="1"
-                value={BusinessClassValue}
-                onChange={BusinessClassHandler}
-              />
-            </div>
-          </div>
-          <div className={classes.row}>
-            <div className={classes.inputGroup}>
-              <label htmlFor="quantity">Available Seats in First Class:</label>
-              <input
-                className={classes.input}
-                type="number"
-                id="quantity"
-                name="quantity"
-                min="0"
-                max="100"
-                step="1"
-                value={FirstClassValue}
-                onChange={FirstClassHandler}
-              />
-            </div>
-          </div>
-          <div className={classes.row}>
-            <div className={classes.inputGroup}>
-              <label>Terminal </label>
-              <input
-                className={classes.input}
-                type="number"
-                min="1"
-                placholder="Terminal"
-                value={TerminalValue}
-                onChange={TerminalHandler}
-              />
-            </div>
+          <div className={classes.inputGroup}>
+            <label>Arrival Time </label>
+            <input
+              className={classes.input}
+              type="datetime-local"
+              value={FlightArrivalTimeValue}
+              onChange={ArrivalDateChangeHandler}
+            />
           </div>
         </div>
-        <div className={classes.formFooter}>
-          <button
-            className={classes.btn}
-            onClick={onUpdateHandler}
-            disabled={!formIsChanged}
-          >
-            Update
-          </button>
+        <div className={classes.row}>
+          <div className={classes.inputGroup}>
+            <label htmlFor="quantity">Available Seats in Economy Class:</label>
+            <input
+              className={classes.input}
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="0"
+              max="100"
+              step="1"
+              value={EconomyClassValue}
+              onChange={EconomyClassHandler}
+            />
+          </div>
         </div>
-      </form>
-    </section>
+        <div className={classes.row}>
+          <div className={classes.inputGroup}>
+            <label htmlFor="quantity">Available Seats in Business Class:</label>
+            <input
+              className={classes.input}
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="0"
+              max="100"
+              step="1"
+              value={BusinessClassValue}
+              onChange={BusinessClassHandler}
+            />
+          </div>
+        </div>
+        <div className={classes.row}>
+          <div className={classes.inputGroup}>
+            <label htmlFor="quantity">Available Seats in First Class:</label>
+            <input
+              className={classes.input}
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="0"
+              max="100"
+              step="1"
+              value={FirstClassValue}
+              onChange={FirstClassHandler}
+            />
+          </div>
+        </div>
+        <div className={classes.row}>
+          <div className={classes.inputGroup}>
+            <label>Terminal </label>
+            <input
+              className={classes.input}
+              type="number"
+              min="1"
+              placholder="Terminal"
+              value={TerminalValue}
+              onChange={TerminalHandler}
+            />
+          </div>
+        </div>
+      </div>
+      <div className={classes.formFooter}>
+        <button
+          className={classes.btn}
+          onClick={onUpdateHandler}
+          disabled={!formIsChanged}
+        >
+          Update
+        </button>
+      </div>
+    </form>
   );
 };
