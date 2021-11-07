@@ -158,6 +158,7 @@ export const UpdateFlight = (props) => {
             <div className={classes.inputGroup}>
               <label>Arrival Time </label>
               <input
+                className={classes.input}
                 type="datetime-local"
                 value={FlightArrivalTimeValue}
                 onChange={ArrivalDateChangeHandler}
