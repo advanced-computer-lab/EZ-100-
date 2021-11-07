@@ -20,8 +20,7 @@
   margin-bottom: auto;
 }
 .formHeader {
-  padding: 15px 0;
-  border-bottom: 1px solid #cccccc;
+  margin: auto;
 }
 .formHeader h1 {
   font-size: 28px;
@@ -45,7 +44,14 @@
   font-weight: 500;
 }
 
-.inputGroup input[type="text"] .inputGroup input[type="datetime-local"] {
+.input {
+  padding: 10px 10px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid #cfcfcf;
+}
+
+/* .inputGroup input[type="text"] .inputGroup input[type="datetime-local"] {
   font-size: 18px;
   height: 34px;
   padding-left: 10px;
@@ -56,7 +62,7 @@
   border-radius: 4px;
   background: teal;
   outline: none;
-}
+} */
 .formBody {
   background: white;
   padding: 5px 10px;
@@ -85,4 +91,8 @@
   background-color: #fff;
   border: 2px solid teal;
   cursor: pointer;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
 }
