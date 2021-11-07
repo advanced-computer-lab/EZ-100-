@@ -30,9 +30,9 @@ export default function NewFlight(props) {
       to: Yup.string().min(2, "min 3 characters").required("Required"),
       departure_date: Yup.date().required("Required"),
       arrival_date: Yup.date().required("Required"),
-      economy_seats: Yup.number().min(0, "min 0"),
-      business_seats: Yup.number().min(0, "min 0"),
-      first_seats: Yup.number().min(0, "min 0"),
+      economy_seats: Yup.number().min(0, "min 0").required(),
+      business_seats: Yup.number().min(0, "min 0").required(),
+      first_seats: Yup.number().min(0, "min 0").required(),
 
       terminal: Yup.number().min(0, "min 0").required("Required"),
     }),
@@ -46,6 +46,7 @@ export default function NewFlight(props) {
         EconomySeats: formik.values.economy_seats,
         BusinessSeats: formik.values.business_seats,
         FirstSeats: formik.values.first_seats,
+        TerminalNumber: formik.values.terminal,
       };
       await fetch("http://localhost:5000/api/flights/createFlight", {
         method: "POST",
@@ -75,6 +76,22 @@ export default function NewFlight(props) {
       : "";
   const terminalclasses =
     formik.touched.terminal && formik.errors.terminal ? classes.error : "";
+
+  const economySeatsClasses =
+    formik.touched.economy_seats && formik.errors.economy_seats
+      ? classes.error
+      : "";
+
+  const businessSeatsClasses =
+    formik.touched.business_seats && formik.errors.business_seats
+      ? classes.error
+      : "";
+
+  const firstSeatsClasses =
+    formik.touched.first_seats && formik.errors.first_seats
+      ? classes.error
+      : "";
+
   return (
     <div className={classes.wrapper}>
       <div className={classes["form-wrapper"]}>
@@ -146,6 +163,7 @@ export default function NewFlight(props) {
           <div className={classes["business_seats"]}>
             <label htmlFor="business_seats">Business seats</label>
             <input
+              className={businessSeatsClasses}
               type="number"
               min="1"
               name="business_seats"
@@ -159,6 +177,7 @@ export default function NewFlight(props) {
           <div className={classes["economy_seats"]}>
             <label htmlFor="economy_seats">Economy seats </label>
             <input
+              className={economySeatsClasses}
               type="number"
               min="1"
               name="economy_seats"
@@ -171,6 +190,7 @@ export default function NewFlight(props) {
           <div className={classes["first_seats"]}>
             <label htmlFor="first_seats">First seats </label>
             <input
+              className={firstSeatsClasses}
               type="number"
               min="1"
               name="first_seats"
