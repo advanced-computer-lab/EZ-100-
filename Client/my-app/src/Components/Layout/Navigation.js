@@ -9,7 +9,7 @@ export const Navigation = () => {
       <div className={classes.logo}>EZ Travel</div>
       <nav className={classes.nav}>
         <ul>
-          <li>
+          {/* <li>
             <NavLink activeClassName={classes.active} to="/login">
               Login
             </NavLink>
@@ -18,7 +18,7 @@ export const Navigation = () => {
             <NavLink activeClassName={classes.active} to="/register">
               Register
             </NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink activeClassName={classes.active} to="/flights">
               Flights
