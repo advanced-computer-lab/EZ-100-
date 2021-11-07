@@ -20,6 +20,11 @@ export const Navigation = () => {
             </NavLink>
           </li> */}
           <li>
+            <NavLink activeClassName={classes.active} to="/" exact>
+              Home
+            </NavLink>
+          </li>
+          <li>
             <NavLink activeClassName={classes.active} to="/flights">
               Flights
             </NavLink>
