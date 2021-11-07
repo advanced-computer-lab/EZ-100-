@@ -20,11 +20,16 @@ const flights = JSON.parse(
 );
 
 //set Date
-const setDate = (d) =>{
-  date = d.split('-');
-  return new Date(date[0],date[1],date[2],Math.floor(Math.random() * 10) + 15,Math.floor(Math.random() * 10) + 51)
+const setDate = (d) => {
+  date = d.split("-");
+  return new Date(
+    date[0],
+    date[1],
+    date[2],
+    Math.floor(Math.random() * 10) + 15,
+    Math.floor(Math.random() * 10) + 51
+  );
 };
-
 
 let transformedFlights = [];
 for (let i = 0; i < flights.length - 2; i += 3) {
@@ -34,8 +39,8 @@ for (let i = 0; i < flights.length - 2; i += 3) {
     BusinessSeats: flights[i + 1]["Seats Available on Flight"],
     FirstSeats: flights[i + 2]["Seats Available on Flight"],
     FlightNumber: "EZ " + Math.floor(Math.random() * 10000),
-    ArrivalDate: setDate(flights[i]["DepartureDate"]) 
-    
+    ArrivalDate: setDate(flights[i]["DepartureDate"]),
+    TerminalNumber: Math.floor(Math.random() * 3) + 1,
   };
   transformedFlights.push(flightObj);
 }
