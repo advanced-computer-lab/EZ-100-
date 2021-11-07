@@ -74,7 +74,7 @@ export const FlightItem = (props) => {
       </div>
 
       <Link to={`/flights/${flight._id}`} className="btn">
-        Flight Details
+        Options
       </Link>
     </li>
   );

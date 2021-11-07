@@ -47,7 +47,10 @@ export const FlightDetails = () => {
 
   useEffect(() => {
     if (deleteStatus === "completed") {
-      history.replace("/flights");
+      history.replace({
+        pathname: "/flights",
+        state: { notification: `Flight deleted successfully !` },
+      });
     }
   }, [deleteStatus, history]);
 
@@ -70,7 +73,7 @@ export const FlightDetails = () => {
 
         {showDeleteModal ? (
           <Modal onClose={showDeleteModalhandler}>
-            <div>
+            <div style={{ padding: "1rem" }}>
               <h2>
                 Are you sure you want to delete flight{" "}
                 {loadedFlight.FlightNumber} ?

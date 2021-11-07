@@ -16,6 +16,28 @@ export const AllFlights = () => {
   const location = useLocation();
   const [page, setPage] = useState(1);
 
+  const [showDelNotification, setShowDelNotification] = useState(false);
+
+  // let historyState;
+  // if (history.location.state) {
+  //   historyState = history.location.state;
+  // }
+  const historyState = history.location.state;
+  useEffect(() => {
+    let timer;
+    if (historyState) {
+      setShowDelNotification(true);
+
+      timer = setTimeout(() => {
+        setShowDelNotification(false);
+      }, 5000);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [historyState]);
+
   const { sendRequest, status, error, data } = useHttp(getAllFlights, true);
 
   let loadedFlights;
@@ -97,8 +119,13 @@ export const AllFlights = () => {
     (!loadedFlights || loadedFlights.length === 0)
   ) {
     return (
-      <div className="mui-notification">
-        <Alert severity="info">No flights available to display!</Alert>
+      <div className="centered">
+        <Card>
+          <FlightsFilter onFilter={applyFilterHandler} />
+          <div className="mui-notification">
+            <Alert severity="info">No flights available to display!</Alert>
+          </div>
+        </Card>
       </div>
     );
   }
@@ -107,6 +134,11 @@ export const AllFlights = () => {
     <div className="centered">
       <Card>
         <FlightsFilter onFilter={applyFilterHandler} />
+
+        {showDelNotification && historyState.notification && (
+          <Alert severity="success">{historyState.notification}</Alert>
+        )}
+
         <FlightsList flights={loadedFlights}></FlightsList>
         <div className="centered">
           <Pagination
