@@ -47,7 +47,10 @@ export const FlightDetails = () => {
 
   useEffect(() => {
     if (deleteStatus === "completed") {
-      history.replace("/flights");
+      history.replace({
+        pathname: "/flights",
+        state: { notification: `Flight deleted successfully !` },
+      });
     }
   }, [deleteStatus, history]);
 

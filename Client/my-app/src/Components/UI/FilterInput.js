@@ -7,7 +7,7 @@ export const FilterInput = (props) => {
     <Autocomplete
       id="combo-box-demo"
       options={props.options}
-      sx={{ width: 160 }}
+      sx={{ width: 150 }}
       renderInput={(params) => <TextField {...params} label={props.label} />}
       onChange={props.onChange}
     />
