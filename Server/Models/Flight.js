@@ -33,6 +33,10 @@ const flightSchema = new Schema(
       type: Number,
       default: 5,
     },
+    TerminalNumber: {
+      type: Number,
+      default: 3,
+    },
   },
   { timestamps: true }
 );
