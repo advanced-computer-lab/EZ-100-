@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const errorHandler = require("./middleware/error");
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ const flightRoutes = require("./Routes/flightRouter");
 app.use("/api/flights", flightRoutes);
 
 // Add ErrorHandler middleware here ... 'Must be added after mounting routers'
+app.use(errorHandler);
 
 // Launch server
 const PORT = process.env.PORT || 5000;

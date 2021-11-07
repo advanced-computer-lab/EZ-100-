@@ -1,5 +1,6 @@
 const Flight = require("../Models/Flight");
 const asyncHandler = require("../middleware/async");
+const ErrorResponce = require("../utils/ErrorResponce");
 
 const createFlight = asyncHandler(async (req, res) => {
   const flight = await Flight.create(req.body);
@@ -69,8 +70,13 @@ const viewFlights = asyncHandler(async (req, res) => {
   });
 });
 
-const viewFlight = asyncHandler(async (req, res) => {
+const viewFlight = asyncHandler(async (req, res, next) => {
   const flight = await Flight.findById(req.params.id);
+
+  if (!flight) {
+    return next(new ErrorResponse("No flight with that Id", 404));
+  }
+
   res.status(200).json({ success: true, count: flight.length, data: flight });
 });
 
