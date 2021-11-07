@@ -11,6 +11,7 @@ export const FlightsFilter = (props) => {
   const [flightNumValue, setFlightNumValue] = useState();
   const [departValue, setDepartValue] = useState();
   const [arriveValue, setArriveValue] = useState();
+  const [terminalValue, setTerminalValue] = useState();
 
   const [flights, setFlights] = useState([]);
   const fetchFlights = useCallback(async () => {
@@ -47,20 +48,30 @@ export const FlightsFilter = (props) => {
     setArriveValue(event.target.value);
   };
 
+  const terminalChangeHandler = (event, value) => {
+    setTerminalValue(value);
+  };
+
   const applyFilterHandler = (event) => {
     event.preventDefault();
+    // console.log(terminalValue);
     props.onFilter({
       from: fromValue,
       to: toValue,
       flightNumber: flightNumValue,
       departure: departValue,
       arrive: arriveValue,
+      terminal: terminalValue,
     });
   };
 
   const formIsEmpty =
-    (fromValue || toValue || flightNumValue || departValue || arriveValue) ===
-    undefined;
+    (fromValue ||
+      toValue ||
+      flightNumValue ||
+      departValue ||
+      arriveValue ||
+      terminalValue) === undefined;
 
   let options = {
     from: [],
@@ -94,6 +105,11 @@ export const FlightsFilter = (props) => {
         onChange={fromChangeHandler}
       />
       <FilterInput
+        label="Terminal"
+        options={["1", "2", "3", "4", "5"]}
+        onChange={terminalChangeHandler}
+      />
+      <FilterInput
         label="To"
         options={options.to}
         onChange={toChangeHandler}
@@ -103,6 +119,7 @@ export const FlightsFilter = (props) => {
         options={options.flightNumber}
         onChange={flightNumberChangeHandler}
       />
+
       <div className={classes.date}>
         <label>Departure date</label>
         <div>

@@ -66,6 +66,10 @@ export const AllFlights = () => {
       query += `From=${filter.from}`;
     }
 
+    if (filter.terminal) {
+      query += `&TerminalNumber=${filter.terminal}`;
+    }
+
     if (filter.to) {
       query += `&To=${filter.to}`;
     }
