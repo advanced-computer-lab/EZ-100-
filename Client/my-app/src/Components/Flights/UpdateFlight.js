@@ -19,6 +19,7 @@ export const UpdateFlight = (props) => {
   const [ EconomyClassValue, setEconomyClassValue] = useState(flight.EconomySeats);
   const [ BusinessClassValue, setBusinessClassValue] = useState(flight.BusinessSeats);
   const [ FirstClassValue, setFirstClassValue] = useState(flight.FirstSeats);
+  const [TerminalValue , setTerminalValue] = useState(flight.Terminal);
 
   function refreshPage(){
     window.location.reload();
@@ -69,6 +70,9 @@ export const UpdateFlight = (props) => {
 
   function FirstClassHandler(event){
     setFirstClassValue(event.target.value)
+  }
+  function TerminalHandler(event){
+    setTerminalValue(event.target.value)
   }
 
 
@@ -143,6 +147,12 @@ export const UpdateFlight = (props) => {
                 onChange={FirstClassHandler}
                
               />
+            </div>
+          </div>
+          <div className={classes.row}>
+            <div className={classes.inputGroup}>
+              <label>Terminal </label>
+              <input type="text" placholder= "Terminal" value={TerminalValue} onChange={TerminalHandler}/>
             </div>
           </div>
         </div>
