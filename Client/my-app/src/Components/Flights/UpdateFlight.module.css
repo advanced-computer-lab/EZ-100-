@@ -40,7 +40,7 @@
 }
 
 .inputGroup label {
-  color: #1bba93;
+  color: black;
   font-size: 17px;
   font-weight: 500;
 }
@@ -50,6 +50,7 @@
   height: 34px;
   padding-left: 10px;
   padding-right: 10px;
+  padding: 10px 10px;
   color: teal;
   border: 1px solid #d6d6d6;
   border-radius: 4px;
@@ -65,11 +66,23 @@
   justify-content: flex-end;
 }
 .btn {
-  padding: 10px 20px;
   background-color: teal;
-  font-size: 17px;
-  border: none;
-  border-radius: 5px;
-  color: #bcf5e7;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 1em;
+  padding: 8px 0px;
+  font-size: 1em;
+  font-weight: lighter;
+  letter-spacing: 1px;
+  margin-bottom: 0.25em;
+}
+
+.btn:hover,
+.btn:active {
+  color: #519e8a;
+  background-color: #fff;
+  border: 2px solid teal;
   cursor: pointer;
 }
