@@ -5,9 +5,10 @@ export const FlightInfo = (props) => {
   const { flight } = props;
 
   let departureDate = new Date(flight.DepartureDate);
-  let arrivalDate = new Date(
-    new Date(flight.ArrivalDate).getTime() + 690 * 60000
-  );
+  let arrivalDate = new Date(flight.ArrivalDate);
+  // let arrivalDate = new Date(
+  //   new Date(flight.ArrivalDate).getTime() + 690 * 60000
+  // );
 
   const options = {
     weekday: "long",
