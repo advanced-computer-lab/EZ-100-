@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 import classes from "./NewFlight.module.css";
 import { useFormik } from "formik";
@@ -6,6 +7,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 export default function NewFlight(props) {
+  const history = useHistory();
+
   const formik = useFormik({
     initialValues: {
       flight_number: "",
@@ -32,7 +35,6 @@ export default function NewFlight(props) {
       first_seats: Yup.number().min(0, "min 0"),
 
       terminal: Yup.number().min(0, "min 0").required("Required"),
-
     }),
     onSubmit: async (values) => {
       const newflight = {
@@ -52,7 +54,7 @@ export default function NewFlight(props) {
           "Content-Type": "application/json",
         },
       });
-      console.log("working");
+      history.push("/flights");
     },
   });
   const flightnumberclasses =
@@ -103,15 +105,12 @@ export default function NewFlight(props) {
             />
           </div>
 
-
           <div className={classes["to"]}>
             <label htmlFor="to">To </label>
             <input
               type="text"
               name="to"
-
               className={toclasses}
-
               value={formik.values.to}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -124,9 +123,7 @@ export default function NewFlight(props) {
             <input
               type="datetime-local"
               name="departure_date"
-
               className={departureclasses}
-
               value={formik.values.departure_date}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -138,22 +135,19 @@ export default function NewFlight(props) {
             <input
               type="datetime-local"
               name="arrival_date"
-
               className={arrivalclasses}
-
               value={formik.values.arrival_date}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               placeholder="Arrival date"
             />
-
           </div>
 
           <div className={classes["business_seats"]}>
             <label htmlFor="business_seats">Business seats</label>
             <input
               type="number"
-              min="0"
+              min="1"
               name="business_seats"
               value={formik.values.business_seats}
               onChange={formik.handleChange}
@@ -162,12 +156,11 @@ export default function NewFlight(props) {
             />
           </div>
 
-
           <div className={classes["economy_seats"]}>
             <label htmlFor="economy_seats">Economy seats </label>
             <input
               type="number"
-              min="0"
+              min="1"
               name="economy_seats"
               value={formik.values.economy_seats}
               onChange={formik.handleChange}
@@ -179,7 +172,7 @@ export default function NewFlight(props) {
             <label htmlFor="first_seats">First seats </label>
             <input
               type="number"
-              min="0"
+              min="1"
               name="first_seats"
               value={formik.values.first_seats}
               onChange={formik.handleChange}
@@ -192,7 +185,8 @@ export default function NewFlight(props) {
             <label htmlFor="terminal">Terminal </label>
             <input
               type="number"
-              min="0"
+              min="1"
+              max="3"
               name="terminal"
               className={terminalclasses}
               value={formik.values.terminal}

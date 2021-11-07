@@ -4,27 +4,41 @@ import classes from "./UpdateFlight.module.css";
 export const UpdateFlight = (props) => {
   const { flight } = props;
 
-  const dateForDateTimeInputValue = date => new Date(date.getTime() + new Date().getTimezoneOffset() * -60 * 1000).toISOString().slice(0, 19)
+  const dateForDateTimeInputValue = (date) =>
+    new Date(date.getTime() + new Date().getTimezoneOffset() * -60 * 1000)
+      .toISOString()
+      .slice(0, 19);
 
-  let departureDate = new Date(flight.DepartureDate); 
+  let departureDate = new Date(flight.DepartureDate);
   let arrivalDate = new Date(flight.ArrivalDate);
 
   const localDepartureDate = dateForDateTimeInputValue(departureDate);
   const localArrivalDate = dateForDateTimeInputValue(arrivalDate);
-  
-  
-  const [FlightNumberValue , setflightNumberValue] = useState(flight.FlightNumber);
-  const [FlightDepartureTimeValue , setDepartureTimeValue] = useState(localDepartureDate);
-  const [FlightArrivalTimeValue, setArrivalTimeValue] = useState(localArrivalDate);
-  const [ EconomyClassValue, setEconomyClassValue] = useState(flight.EconomySeats);
-  const [ BusinessClassValue, setBusinessClassValue] = useState(flight.BusinessSeats);
-  const [ FirstClassValue, setFirstClassValue] = useState(flight.FirstSeats);
 
-  function refreshPage(){
+  const [FlightNumberValue, setflightNumberValue] = useState(
+    flight.FlightNumber
+  );
+  const [FromNumberValue, setFromNumberValue] = useState(flight.From);
+  const [ToNumberValue, setToNumberValue] = useState(flight.To);
+  const [FlightDepartureTimeValue, setDepartureTimeValue] =
+    useState(localDepartureDate);
+  const [FlightArrivalTimeValue, setArrivalTimeValue] =
+    useState(localArrivalDate);
+  const [EconomyClassValue, setEconomyClassValue] = useState(
+    flight.EconomySeats
+  );
+  const [BusinessClassValue, setBusinessClassValue] = useState(
+    flight.BusinessSeats
+  );
+  const [FirstClassValue, setFirstClassValue] = useState(flight.FirstSeats);
+  const [TerminalValue, setTerminalValue] = useState(flight.TerminalNumber);
+  const [formIsChanged, setFromIsChanged] = useState(false);
+
+  function refreshPage() {
     window.location.reload();
   }
-  
-  async function onUpdateHandler(event){
+
+  async function onUpdateHandler(event) {
     event.preventDefault();
     const updatedFlight = {
       FlightNumber: FlightNumberValue,
@@ -32,49 +46,65 @@ export const UpdateFlight = (props) => {
       ArrivalDate: FlightArrivalTimeValue,
       EconomySeats: EconomyClassValue,
       BusinessSeats: BusinessClassValue,
-      FirstSeats: FirstClassValue
+      FirstSeats: FirstClassValue,
+      TerminalNumber: TerminalValue,
+      To: ToNumberValue,
+      From: FromNumberValue,
+    };
 
-    }
-    
-    
-    await fetch(`http://localhost:5000/api/flights/updateFlight/${flight._id}`,{
-      method: 'PUT',
-      headers:{
-      'Content-Type':'application/json'
-      },
-      body: JSON.stringify(updatedFlight)
-    })
+    await fetch(
+      `http://localhost:5000/api/flights/updateFlight/${flight._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedFlight),
+      }
+    );
 
     refreshPage();
-
   }
-
 
   function flightNumberChangeHandler(event) {
-     setflightNumberValue(event.target.value);
-    }
+    setFromIsChanged(true);
+    setflightNumberValue(event.target.value);
+  }
 
-  function DepartureDateChangeHandler(event){
+  function DepartureDateChangeHandler(event) {
+    setFromIsChanged(true);
     setDepartureTimeValue(event.target.value);
   }
-  function ArrivalDateChangeHandler(event){
+  function ArrivalDateChangeHandler(event) {
+    setFromIsChanged(true);
     setArrivalTimeValue(event.target.value);
   }
-  function EconomyClassHandler(event){
-    setEconomyClassValue(event.target.value)
+  function EconomyClassHandler(event) {
+    setFromIsChanged(true);
+    setEconomyClassValue(event.target.value);
   }
-  function BusinessClassHandler(event){
-    setBusinessClassValue(event.target.value)
-  }
-
-  function FirstClassHandler(event){
-    setFirstClassValue(event.target.value)
+  function BusinessClassHandler(event) {
+    setFromIsChanged(true);
+    setBusinessClassValue(event.target.value);
   }
 
+  function FirstClassHandler(event) {
+    setFromIsChanged(true);
+    setFirstClassValue(event.target.value);
+  }
+  function TerminalHandler(event) {
+    setFromIsChanged(true);
+    setTerminalValue(event.target.value);
+  }
+  function FromHandler(event) {
+    setFromIsChanged(true);
+    setFromNumberValue(event.target.value);
+  }
+  function ToHandler(event) {
+    setFromIsChanged(true);
+    setToNumberValue(event.target.value);
+  }
 
- 
-  console.log(FlightNumberValue);
-  
   return (
     <section id={classes.regesterationPage}>
       <form className={classes.signupForm}>
@@ -85,23 +115,65 @@ export const UpdateFlight = (props) => {
           <div className={classes.row}>
             <div className={classes.inputGroup}>
               <label>Flight Number </label>
-              <input type="text" placholder="Enter Flight Number" value={FlightNumberValue} onChange={flightNumberChangeHandler}/>
+              <input
+                type="text"
+                placholder="Enter Flight Number"
+                value={FlightNumberValue}
+                onChange={flightNumberChangeHandler}
+                className={classes.input}
+              />
             </div>
           </div>
+          <div className={classes.row}>
+            <div className={classes.inputGroup}>
+              <label>From </label>
+              <input
+                className={classes.input}
+                type="text"
+                placholder="Enter Flight Number"
+                value={FromNumberValue}
+                onChange={FromHandler}
+              />
+            </div>
+            <div className={classes.inputGroup}>
+              <label>To </label>
+              <input
+                className={classes.input}
+                type="text"
+                placholder="Enter Flight Number"
+                value={ToNumberValue}
+                onChange={ToHandler}
+              />
+            </div>
+          </div>
+
           <div className={classes.row}>
             <div className={classes.inputGroup}>
               <label>Departure Time </label>
-              <input type="datetime-local" value={FlightDepartureTimeValue} onChange={DepartureDateChangeHandler} />
+              <input
+                className={classes.input}
+                type="datetime-local"
+                value={FlightDepartureTimeValue}
+                onChange={DepartureDateChangeHandler}
+              />
             </div>
             <div className={classes.inputGroup}>
               <label>Arrival Time </label>
-              <input type="datetime-local" value={FlightArrivalTimeValue} onChange={ArrivalDateChangeHandler}/>
+              <input
+                className={classes.input}
+                type="datetime-local"
+                value={FlightArrivalTimeValue}
+                onChange={ArrivalDateChangeHandler}
+              />
             </div>
           </div>
           <div className={classes.row}>
             <div className={classes.inputGroup}>
-              <label htmlFor="quantity">Available Seats in Economy Class:</label>
+              <label htmlFor="quantity">
+                Available Seats in Economy Class:
+              </label>
               <input
+                className={classes.input}
                 type="number"
                 id="quantity"
                 name="quantity"
@@ -110,14 +182,16 @@ export const UpdateFlight = (props) => {
                 step="1"
                 value={EconomyClassValue}
                 onChange={EconomyClassHandler}
-              
               />
             </div>
           </div>
           <div className={classes.row}>
             <div className={classes.inputGroup}>
-              <label htmlFor="quantity">Available Seats in Business Class:</label>
+              <label htmlFor="quantity">
+                Available Seats in Business Class:
+              </label>
               <input
+                className={classes.input}
                 type="number"
                 id="quantity"
                 name="quantity"
@@ -133,6 +207,7 @@ export const UpdateFlight = (props) => {
             <div className={classes.inputGroup}>
               <label htmlFor="quantity">Available Seats in First Class:</label>
               <input
+                className={classes.input}
                 type="number"
                 id="quantity"
                 name="quantity"
@@ -141,13 +216,31 @@ export const UpdateFlight = (props) => {
                 step="1"
                 value={FirstClassValue}
                 onChange={FirstClassHandler}
-               
+              />
+            </div>
+          </div>
+          <div className={classes.row}>
+            <div className={classes.inputGroup}>
+              <label>Terminal </label>
+              <input
+                className={classes.input}
+                type="number"
+                min="1"
+                placholder="Terminal"
+                value={TerminalValue}
+                onChange={TerminalHandler}
               />
             </div>
           </div>
         </div>
         <div className={classes.formFooter}>
-          <button className={classes.btn} onClick={onUpdateHandler}>Update</button>
+          <button
+            className={classes.btn}
+            onClick={onUpdateHandler}
+            disabled={!formIsChanged}
+          >
+            Update
+          </button>
         </div>
       </form>
     </section>

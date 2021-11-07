@@ -1,0 +1,13 @@
+.container {
+  margin: 3rem auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.items {
+  margin: 1rem;
+  display: flex;
+}

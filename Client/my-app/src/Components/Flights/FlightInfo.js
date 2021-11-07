@@ -46,7 +46,8 @@ export const FlightInfo = (props) => {
           <p>
             {flight.FlightNumber} -{" "}
             <span className={classes.details}>
-              {flight.From} - {flight.To}
+              {flight.From} : Terminal {flight.TerminalNumber} {"  ---  "}
+              {flight.To}
             </span>
           </p>
 
