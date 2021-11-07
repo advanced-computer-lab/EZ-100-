@@ -14,6 +14,8 @@ export const UpdateFlight = (props) => {
   
   
   const [FlightNumberValue , setflightNumberValue] = useState(flight.FlightNumber);
+  const [FromNumberValue , setFromNumberValue] = useState(flight.From);
+  const [ToNumberValue , setToNumberValue] = useState(flight.To);
   const [FlightDepartureTimeValue , setDepartureTimeValue] = useState(localDepartureDate);
   const [FlightArrivalTimeValue, setArrivalTimeValue] = useState(localArrivalDate);
   const [ EconomyClassValue, setEconomyClassValue] = useState(flight.EconomySeats);
@@ -74,6 +76,12 @@ export const UpdateFlight = (props) => {
   function TerminalHandler(event){
     setTerminalValue(event.target.value)
   }
+  function FromHandler(event){
+    setFromNumberValue(event.target.value)
+  }
+  function ToHandler(event){
+    setToNumberValue(event.target.value)
+  }
 
 
  
@@ -92,6 +100,17 @@ export const UpdateFlight = (props) => {
               <input type="text" placholder="Enter Flight Number" value={FlightNumberValue} onChange={flightNumberChangeHandler}/>
             </div>
           </div>
+          <div className={classes.row}>
+            <div className={classes.inputGroup}>
+              <label>From </label>
+              <input type="text" placholder="Enter Flight Number" value={FromNumberValue} onChange={FromHandler}/>
+            </div>
+            <div className={classes.inputGroup}>
+              <label>To </label>
+              <input type="text" placholder="Enter Flight Number" value={ToNumberValue} onChange={ToHandler}/>
+            </div>
+          </div>
+          
           <div className={classes.row}>
             <div className={classes.inputGroup}>
               <label>Departure Time </label>
