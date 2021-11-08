@@ -6,7 +6,7 @@ dotenv.config();
 
 // load Models
 const Flight = require("./Models/Flight");
-const { stringify } = require("querystring");
+const User = require("./Models/User");
 
 // Connnect to DB
 mongoose.connect(process.env.MONGO_URI, {
@@ -48,6 +48,14 @@ for (let i = 0; i < flights.length - 2; i += 3) {
 // Import data into DB
 const importData = async () => {
   try {
+    const adminstrator = {
+      name: "Adminstrator",
+      email: "mohamedrostom62@gmai.com",
+      role: "admin",
+      password: "123456",
+    };
+    await User.create(adminstrator);
+
     await Flight.create(transformedFlights);
     console.log("Data imported...");
     process.exit();
@@ -59,6 +67,7 @@ const importData = async () => {
 //Delete data
 const deleteData = async () => {
   try {
+    await User.deleteMany();
     await Flight.deleteMany();
     console.log("Data destroyed...");
     process.exit();
