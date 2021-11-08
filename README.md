@@ -7,10 +7,10 @@
   
 ## To run backend:
 - Run in terminal:
-  cd Server
-  npm run dev
+- cd Server
+- npm run dev
   
 ## To run frontend:
 - Run in terminal:
-  cd Client/my-app
-  npm start
+- cd Client/my-app
+- npm start
