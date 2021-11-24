@@ -2,7 +2,8 @@ import { Layout } from "./Components/Layout/Layout";
 
 import NewFlight from "./Pages/NewFlight";
 
-import { AllFlights } from "./Pages/AllFlights";
+// import { AllFlights } from "./Pages/AllFlights";
+import { AllFlightsWrapper } from "./Components/Flights/AllFlightsWrapper";
 import { FlightDetails } from "./Pages/FlightDetails";
 import { Home } from "./Pages/Home";
 
@@ -21,7 +22,7 @@ function App() {
         </Route>
 
         <Route path="/flights" exact>
-          <AllFlights></AllFlights>
+          <AllFlightsWrapper></AllFlightsWrapper>
         </Route>
 
         <Route path="/flights/:flightId">
