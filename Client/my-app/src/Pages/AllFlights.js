@@ -11,7 +11,7 @@ import { getAllFlights } from "../lib/api";
 import { FlightsList } from "../Components/Flights/FlightsList";
 import { FlightsFilter } from "../Components/Flights/FlightsFilter";
 
-export const AllFlights = () => {
+export const AllFlights = (props) => {
   const history = useHistory();
   const location = useLocation();
   const [page, setPage] = useState(1);
@@ -50,25 +50,22 @@ export const AllFlights = () => {
   useEffect(() => {
     if (!location.search) {
       sendRequest("?limit=5&page=1");
-    } else {
-      sendRequest(location.search + "&limit=5&page=1");
+      console.log("AllFlights fetched Flights");
     }
-
-    console.log("AllFlights fetched Flights");
   }, [sendRequest, location]);
 
   let pagesCount = 0;
   pagesCount = Math.ceil(flightsCount / 5); // Pagnition 5 items per page
 
   const applyFilterHandler = (filter) => {
-    let query = "";
+    let query = "?limit=5&page=1";
     if (filter.from) {
-      query += `From=${filter.from}`;
+      query += `&From=${filter.from}`;
     }
 
-    if (filter.terminal) {
-      query += `&TerminalNumber=${filter.terminal}`;
-    }
+    // if (filter.terminal) {
+    //   query += `&TerminalNumber=${filter.terminal}`;
+    // }
 
     if (filter.to) {
       query += `&To=${filter.to}`;
@@ -79,15 +76,25 @@ export const AllFlights = () => {
     }
 
     if (filter.departure) {
-      query += `&DepartureDate=${filter.departure}`;
+      const nextDay = new Date(filter.departure);
+      nextDay.setDate(nextDay.getDate() + 1);
+      query += `&DepartureDate[$gte]=${
+        filter.departure
+      }&DepartureDate[$lt]=${nextDay.toISOString().substring(0, 10)}`;
+      // query += `&DepartureDate=${filter.departure}`;
     }
 
     if (filter.arrive) {
-      query += `&ArrivalDate=${filter.arrive}`;
+      const nextDay = new Date(filter.arrive);
+      nextDay.setDate(nextDay.getDate() + 1);
+      query += `&ArrivalDate[$gte]=${filter.arrive}&ArrivalDate[$lt]=${nextDay
+        .toISOString()
+        .substring(0, 10)}`;
+      // query += `&ArrivalDate=${filter.arrive}`;
     }
 
-    history.push("?" + query);
-    sendRequest("?" + query);
+    history.push(query);
+    sendRequest(query);
   };
 
   const paginationChangeHandler = (event, value) => {
@@ -125,7 +132,10 @@ export const AllFlights = () => {
     return (
       <div className="centered">
         <Card>
-          <FlightsFilter onFilter={applyFilterHandler} />
+          <FlightsFilter
+            onFilter={applyFilterHandler}
+            allFlights={props.allFlights}
+          />
           <div className="mui-notification">
             <Alert severity="info">No flights available to display!</Alert>
           </div>
@@ -137,7 +147,10 @@ export const AllFlights = () => {
   return (
     <div className="centered">
       <Card>
-        <FlightsFilter onFilter={applyFilterHandler} />
+        <FlightsFilter
+          onFilter={applyFilterHandler}
+          allFlights={props.allFlights}
+        />
 
         {showDelNotification && historyState.notification && (
           <Alert severity="success">{historyState.notification}</Alert>
