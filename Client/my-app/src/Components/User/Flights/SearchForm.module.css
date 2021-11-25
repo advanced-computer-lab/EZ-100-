@@ -10,6 +10,19 @@
   margin-bottom: 1rem;
 }
 
+.last-row {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 1rem;
+}
+
+.last-row label {
+  font-weight: bold;
+  font-size: 1.15rem;
+  margin-right: 1rem;
+}
+
 .row-spaceBetween {
   display: flex;
   justify-content: space-between;
@@ -18,10 +31,6 @@
 
 .form-control {
   margin: 1rem;
-}
-
-.mui {
-  margin-left: -20px;
 }
 
 .form-control label {

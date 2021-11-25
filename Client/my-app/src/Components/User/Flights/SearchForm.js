@@ -3,6 +3,9 @@ import classes from "./SearchForm.module.css";
 
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 
 import Card from "../../UI/Card";
 import { FilterInput } from "../../UI/FilterInput";
@@ -21,6 +24,8 @@ export const SearchForm = (props) => {
   const [returnDate, setReturnDate] = useState(todayP5);
   const [adultsNum, setAdultesNum] = useState(1);
   const [childrenNum, setChildrenNum] = useState(0);
+  const [cabin, setCabin] = useState("Economy");
+  const [isFlexible, setIsFlexible] = useState(true);
 
   const [fromHasError, setFromHasError] = useState(false);
   const [toHasError, setToHasError] = useState(false);
@@ -65,6 +70,14 @@ export const SearchForm = (props) => {
     setChildrenNum(event.target.value);
   };
 
+  const cabinChangeHandler = (event) => {
+    setCabin(event.target.value);
+  };
+
+  const flexibleSearchHandler = (event) => {
+    setIsFlexible((state) => !state);
+  };
+
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
@@ -76,6 +89,8 @@ export const SearchForm = (props) => {
         returnDate,
         adultsNum,
         childrenNum,
+        cabin,
+        isFlexible,
       };
 
       props.onFormSubmission(data);
@@ -126,7 +141,7 @@ export const SearchForm = (props) => {
 
           <div className={classes.row}>
             <div className={classes["form-control"]}>
-              <label>Departure date</label>
+              <InputLabel>Departure date</InputLabel>
               <input
                 type="date"
                 value={departureDate}
@@ -135,7 +150,7 @@ export const SearchForm = (props) => {
             </div>
 
             <div className={classes["form-control"]}>
-              <label>Return date</label>
+              <InputLabel>Return date</InputLabel>
               <input
                 type="date"
                 value={returnDate}
@@ -151,11 +166,12 @@ export const SearchForm = (props) => {
             <FormControlLabel
               control={<Checkbox defaultChecked />}
               label="Flexible dates (For better options)"
+              onChange={flexibleSearchHandler}
             />
           </div>
           <div className={classes.row}>
             <div className={classes["form-control"]}>
-              <label>Adult(s)</label>
+              <InputLabel>Adult(s)</InputLabel>
               <input
                 type="number"
                 min="1"
@@ -165,7 +181,7 @@ export const SearchForm = (props) => {
             </div>
 
             <div className={classes["form-control"]}>
-              <label>Children</label>
+              <InputLabel>Children</InputLabel>
               <input
                 type="number"
                 min="0"
@@ -175,15 +191,32 @@ export const SearchForm = (props) => {
             </div>
           </div>
 
+          <div className={classes["last-row"]}>
+            <InputLabel>Cabin</InputLabel>
+            <div style={{ textAlign: "left" }}>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={cabin}
+                label="Age"
+                onChange={cabinChangeHandler}
+              >
+                <MenuItem value="Economy">Economy</MenuItem>
+                <MenuItem value="Business">Business</MenuItem>
+                <MenuItem value="First class">First class</MenuItem>
+              </Select>
+            </div>
+          </div>
+
           {fromHasError && (
             <p style={{ color: "red", textAlign: "left" }}>
-              * From field cannot be empty
+              From field cannot be empty *
             </p>
           )}
 
           {toHasError && (
             <p style={{ color: "red", textAlign: "left", marginTop: "-12px" }}>
-              * To field cannot be empty
+              To field cannot be empty *
             </p>
           )}
 
