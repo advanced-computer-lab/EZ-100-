@@ -6,6 +6,7 @@ import NewFlight from "./Pages/NewFlight";
 import { AllFlightsWrapper } from "./Components/Flights/AllFlightsWrapper";
 import { FlightDetails } from "./Pages/FlightDetails";
 import { Home } from "./Pages/Home";
+import { SearchForm } from "./Components/User/Flights/SearchForm";
 
 import { Route, Switch } from "react-router-dom";
 
@@ -27,6 +28,10 @@ function App() {
 
         <Route path="/flights/:flightId">
           <FlightDetails></FlightDetails>
+        </Route>
+
+        <Route path="/search">
+          <SearchForm></SearchForm>
         </Route>
       </Switch>
     </Layout>
