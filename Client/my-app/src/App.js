@@ -6,9 +6,10 @@ import NewFlight from "./Pages/NewFlight";
 import { AllFlightsWrapper } from "./Components/Flights/AllFlightsWrapper";
 import { FlightDetails } from "./Pages/FlightDetails";
 import { Home } from "./Pages/Home";
-import { SearchForm } from "./Components/User/Flights/SearchForm";
+import { SearchTrip } from "./Pages/User/SearchTrip";
 
 import { Route, Switch } from "react-router-dom";
+import { SearchResults } from "./Pages/User/SearchResults";
 
 function App() {
   return (
@@ -31,7 +32,11 @@ function App() {
         </Route>
 
         <Route path="/search">
-          <SearchForm></SearchForm>
+          <SearchTrip></SearchTrip>
+        </Route>
+
+        <Route path="/results">
+          <SearchResults></SearchResults>
         </Route>
       </Switch>
     </Layout>
