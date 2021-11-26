@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+
+import { UserFlights } from "../../Components/User/Flights/UserFlights";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner";
+import { ItemHeader } from "../../Components/User/Flights/ItemHeader";
 
 import useHttp from "../../hooks/use-http";
 import { getRoundTrip } from "../../lib/api";
@@ -33,17 +36,32 @@ export const SearchResults = () => {
 
   return (
     <>
-      <ul>
-        {departureFlights.map((flight) => (
-          <li key={flight._id}>{flight.FlightNumber}</li>
-        ))}
-      </ul>
+      {/* <div style={{ marginBottom: "-2rem" }} className="centered">
+        <h3>
+          {historyState.fromValue} TO {historyState.toValue}
+        </h3>
+      </div> */}
+      <div className="centered">
+        <ItemHeader
+          title="Departure"
+          from={historyState.fromValue}
+          to={historyState.toValue}
+        />
+      </div>
+      <div className="centered">
+        <UserFlights flights={departureFlights}></UserFlights>
+      </div>
       <hr></hr>
-      <ul>
-        {returnFlights.map((flight) => (
-          <li key={flight._id}>{flight.FlightNumber}</li>
-        ))}
-      </ul>
+      <div className="centered">
+        <ItemHeader
+          title="Return"
+          from={historyState.toValue}
+          to={historyState.fromValue}
+        />
+      </div>
+      <div className="centered">
+        <UserFlights flights={returnFlights}></UserFlights>
+      </div>
     </>
   );
 };

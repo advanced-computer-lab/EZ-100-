@@ -39,11 +39,13 @@ for (let i = 0; i < flights.length - 2; i += 3) {
     BusinessSeats: flights[i + 1]["Seats Available on Flight"],
     FirstSeats: flights[i + 2]["Seats Available on Flight"],
     FlightNumber: "EZ " + Math.floor(Math.random() * 10000),
-    ArrivalDate: setDate(flights[i]["DepartureDate"]),
+    ArrivalDate: new Date(flights[i]["DepartureDate"]).getTime() + 690 * 60000,
     TerminalNumber: Math.floor(Math.random() * 3) + 1,
   };
   transformedFlights.push(flightObj);
 }
+
+// setDate(flights[i]["DepartureDate"]),
 
 // Import data into DB
 const importData = async () => {

@@ -1,0 +1,45 @@
+.item {
+  /* margin: 1rem 0; */
+  margin: auto;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background-color: #c2e7f0;
+}
+
+.item .title p {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  font-family: monospace;
+  /* text-decoration: underline; */
+  font-size: 1.7rem;
+  color: #212929;
+}
+
+.description {
+  margin: 0;
+  width: 1000px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.description label {
+  font-size: 0.97rem;
+  margin-bottom: 10px;
+}
+
+.content {
+  font-size: 1.5rem;
+  font-family: monospace;
+  color: #212929;
+}
+
+.icon {
+  padding-top: 20px;
+  margin-left: -50px;
+  margin-right: -50px;
+}
