@@ -2,7 +2,8 @@ import { Layout } from "./Components/Layout/Layout";
 
 import NewFlight from "./Pages/NewFlight";
 
-// import { AllFlights } from "./Pages/AllFlights";
+import ReservationProvider from "./store/ReservationProvider";
+
 import { AllFlightsWrapper } from "./Components/Flights/AllFlightsWrapper";
 import { FlightDetails } from "./Pages/FlightDetails";
 import { Home } from "./Pages/Home";
@@ -35,8 +36,10 @@ function App() {
           <SearchTrip></SearchTrip>
         </Route>
 
-        <Route path="/results">
-          <SearchResults></SearchResults>
+        <Route path="/results/select">
+          <ReservationProvider>
+            <SearchResults></SearchResults>
+          </ReservationProvider>
         </Route>
       </Switch>
     </Layout>

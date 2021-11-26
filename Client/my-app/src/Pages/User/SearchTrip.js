@@ -27,7 +27,7 @@ export const SearchTrip = () => {
   const formDataHandler = (data) => {
     console.log(data);
     history.push({
-      pathname: "/results",
+      pathname: "/results/select",
       state: data,
     });
   };

@@ -24,7 +24,7 @@
   margin: 0;
   width: 1000px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .description label {
@@ -42,4 +42,32 @@
   padding-top: 20px;
   margin-left: -50px;
   margin-right: -50px;
+}
+
+.btn {
+  font-size: 1.1rem;
+  text-decoration: none;
+  background-color: teal;
+  color: white;
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid teal;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: #11acac;
+  border-color: #11acac;
+}
+
+.selectedBtn {
+  font-size: 1.1rem;
+  text-decoration: none;
+  background-color: #11acac;
+  color: white;
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #11acac;
+  cursor: pointer;
 }

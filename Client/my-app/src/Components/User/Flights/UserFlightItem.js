@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import ReservationContext from "../../../store/reservation-context";
+
 import { useHistory } from "react-router-dom";
 
 import classes from "./UserFlightItem.module.css";
 import { FaPlaneDeparture, FaPlaneArrival } from "react-icons/fa";
 import { GiSandsOfTime } from "react-icons/gi";
-import { MdEventSeat, MdOutlinePriceChange } from "react-icons/md";
+import {
+  MdEventSeat,
+  MdOutlinePriceChange,
+  MdOutlineDoneOutline,
+} from "react-icons/md";
 import { IoBagSharp } from "react-icons/io5";
 
 export const UserFlightItem = (props) => {
@@ -12,14 +18,12 @@ export const UserFlightItem = (props) => {
   const history = useHistory();
   const trip = history.location.state;
 
+  const reservationCtx = useContext(ReservationContext);
+
   let departureDate = new Date(flight.DepartureDate);
   let arrivalDate = new Date(flight.ArrivalDate);
 
-  //   const diffTime = Math.abs(arrivalDate - departureDate); // duration in milliseconds
-  //   const duration = diffTime / (1000 * 60 * 60); // duration in hours
-
   const duration = Math.abs(arrivalDate - departureDate) / 36e5;
-  console.log({ arrivalDate, departureDate });
 
   const options = {
     weekday: "short",
@@ -41,6 +45,30 @@ export const UserFlightItem = (props) => {
       hour: "2-digit",
       minute: "2-digit",
     }),
+  };
+
+  const btnClasses =
+    reservationCtx.departureFlight === flight ||
+    reservationCtx.returnFlight === flight
+      ? classes.selectedBtn
+      : classes.btn;
+
+  const btnContent =
+    reservationCtx.departureFlight === flight ||
+    reservationCtx.returnFlight === flight ? (
+      <MdOutlineDoneOutline />
+    ) : (
+      "Book"
+    );
+
+  const onClickHandler = (event) => {
+    event.preventDefault();
+
+    if (trip.fromValue === flight.From) {
+      reservationCtx.setDepartureFlight(flight);
+    } else {
+      reservationCtx.setReturnFlight(flight);
+    }
   };
 
   return (
@@ -97,7 +125,9 @@ export const UserFlightItem = (props) => {
         </div>
       </div>
 
-      <button className="btn">Book</button>
+      <button type="button" onClick={onClickHandler} className={btnClasses}>
+        {btnContent}
+      </button>
     </li>
   );
 };

@@ -16,6 +16,16 @@ body {
   align-items: center;
 }
 
+.col-70 {
+  width: 70%;
+  padding: 1rem;
+}
+
+.col-30 {
+  width: 30%;
+  padding: 1rem;
+}
+
 .focused {
   font-size: 3rem;
   font-weight: bold;
