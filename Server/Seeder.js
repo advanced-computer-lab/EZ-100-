@@ -7,6 +7,7 @@ dotenv.config();
 // load Models
 const Flight = require("./Models/Flight");
 const User = require("./Models/User");
+const Reservation = require("./Models/Reservation");
 
 // Connnect to DB
 mongoose.connect(process.env.MONGO_URI, {
@@ -55,6 +56,14 @@ const importData = async () => {
       password: "123456",
     };
     await User.create(adminstrator);
+
+    const trialRes = {
+      user: "618a6f7e2ffd5efd0e04a385",
+      flight: "618a6f822ffd5efd0e04a38b",
+      economy: 5
+      };
+
+    await Reservation.create(trialRes);
 
     await Flight.create(transformedFlights);
     console.log("Data imported...");
