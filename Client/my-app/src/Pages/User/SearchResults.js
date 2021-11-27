@@ -35,6 +35,16 @@ export const SearchResults = () => {
     sendRequest(historyState);
   }, [sendRequest, historyState]);
 
+  const departureSeatsHandler = (seats) => {
+    console.log("Departure seats = " + seats);
+    reservationCtx.setDepartureSeats(seats);
+  };
+
+  const returnSeatsHandler = (seats) => {
+    console.log("Return seats = " + seats);
+    reservationCtx.setReturnSeats(seats);
+  };
+
   const onContinueHandler = () => {
     if (
       selector === 1 &&
@@ -72,13 +82,28 @@ export const SearchResults = () => {
   }
 
   if (selector === 2) {
+    const seatsNumber =
+      parseInt(historyState.adultsNum) + parseInt(historyState.childrenNum);
     content = (
       <div className="centered">
-        <SeatPicker />
-        {/* <ChooseSeats
-          trip={historyState}
-          flight={reservationCtx.departureFlight}
-        /> */}
+        <div className="centered-half">
+          <h3>Choose your {seatsNumber} seats in the departure flight:</h3>
+          <SeatPicker
+            trip={historyState}
+            flight={reservationCtx.departureFlight}
+            max={seatsNumber}
+            onSeatsChange={departureSeatsHandler}
+          />
+        </div>
+        <div className="centered-half">
+          <h3>Choose your {seatsNumber} seats in the return flight:</h3>
+          <SeatPicker
+            trip={historyState}
+            flight={reservationCtx.departureFlight}
+            max={seatsNumber}
+            onSeatsChange={returnSeatsHandler}
+          />
+        </div>
       </div>
     );
   }

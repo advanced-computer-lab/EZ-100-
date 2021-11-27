@@ -10,14 +10,16 @@ export const SeatBtn = (props) => {
   const [color, setColor] = useState(initialColor);
 
   const clickHandler = () => {
-    if (reserved) {
+    if (reserved || (props.counter === props.max && color === "green")) {
       return;
     }
 
     if (color === "orange") {
       setColor("green");
+      props.onRemoveSeat(props.id);
     } else if (color === "green") {
       setColor("orange");
+      props.onAddSeat(props.id);
     }
   };
 

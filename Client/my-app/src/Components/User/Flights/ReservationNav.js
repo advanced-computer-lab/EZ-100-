@@ -21,7 +21,7 @@ export const ReservationNav = (props) => {
 
         <li>
           <div className={selector === 2 ? classes.active : ""}>
-            2. Fill in details
+            2. Choose seats
           </div>
         </li>
 
