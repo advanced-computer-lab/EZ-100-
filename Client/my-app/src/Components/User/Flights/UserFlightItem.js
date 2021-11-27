@@ -23,7 +23,8 @@ export const UserFlightItem = (props) => {
   let departureDate = new Date(flight.DepartureDate);
   let arrivalDate = new Date(flight.ArrivalDate);
 
-  const duration = Math.abs(arrivalDate - departureDate) / 36e5;
+  let duration = Math.abs(arrivalDate - departureDate) / 36e5;
+  duration = duration.toFixed(1);
 
   const options = {
     weekday: "short",

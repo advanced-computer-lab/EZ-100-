@@ -1,0 +1,14 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.row-item {
+  width: 25%;
+  margin: 0 0.1rem;
+}
+
+.row-item p {
+  margin-bottom: -3px;
+}

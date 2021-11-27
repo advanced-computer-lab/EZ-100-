@@ -8,6 +8,9 @@ import { UserFlights } from "../../Components/User/Flights/UserFlights";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner";
 import { ItemHeader } from "../../Components/User/Flights/ItemHeader";
 
+// import ChooseSeats from "../../Components/User/Flights/ChooseSeats";
+import { SeatPicker } from "../../Components/User/Flights/SeatPicker";
+
 import useHttp from "../../hooks/use-http";
 import { getRoundTrip } from "../../lib/api";
 
@@ -44,6 +47,42 @@ export const SearchResults = () => {
     }
   };
 
+  let content;
+  if (selector === 1) {
+    content = (
+      <>
+        <div
+          style={{ marginBottom: "-2rem", marginTop: "-2rem" }}
+          className="centered"
+        >
+          <ItemHeader from={historyState.fromValue} to={historyState.toValue} />
+        </div>
+        <div className="centered">
+          <UserFlights flights={departureFlights}></UserFlights>
+        </div>
+        <hr></hr>
+        <div style={{ marginBottom: "-2rem" }} className="centered">
+          <ItemHeader from={historyState.toValue} to={historyState.fromValue} />
+        </div>
+        <div className="centered">
+          <UserFlights flights={returnFlights}></UserFlights>
+        </div>
+      </>
+    );
+  }
+
+  if (selector === 2) {
+    content = (
+      <div className="centered">
+        <SeatPicker />
+        {/* <ChooseSeats
+          trip={historyState}
+          flight={reservationCtx.departureFlight}
+        /> */}
+      </div>
+    );
+  }
+
   if (status === "pending") {
     return (
       <div className="centered">
@@ -60,22 +99,7 @@ export const SearchResults = () => {
           selector={selector}
         ></ReservationNav>
       </div>
-      <div
-        style={{ marginBottom: "-2rem", marginTop: "-2rem" }}
-        className="centered"
-      >
-        <ItemHeader from={historyState.fromValue} to={historyState.toValue} />
-      </div>
-      <div className="centered">
-        <UserFlights flights={departureFlights}></UserFlights>
-      </div>
-      <hr></hr>
-      <div style={{ marginBottom: "-2rem" }} className="centered">
-        <ItemHeader from={historyState.toValue} to={historyState.fromValue} />
-      </div>
-      <div className="centered">
-        <UserFlights flights={returnFlights}></UserFlights>
-      </div>
+      {content}
     </>
   );
 };
