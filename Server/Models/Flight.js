@@ -2,13 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ErrorResponse = require("../utils/ErrorResponse");
 
-
 const flightSchema = new Schema(
   //baggage allowance, 3 prices , array of seats (Taken or not taken)
   {
     FlightNumber: {
       type: String,
-      unique: true
+      unique: true,
     },
     From: {
       type: String,
@@ -54,38 +53,58 @@ const flightSchema = new Schema(
       default: 3,
     },
     BaggageAllowance: {
-      type: Number, 
-      default: 10
+      type: Number,
+      default: 10,
+    },
+    SeatsAvailable: {
+      type: [Boolean],
+      default: [],
     },
     EconomySeatsAvailable: {
       type: [Boolean],
+      default: [],
     },
     BusinessSeatsAvailable: {
       type: [Boolean],
+      default: [],
     },
     FirstSeatsAvailable: {
       type: [Boolean],
-    }
+      default: [],
+    },
   },
   { timestamps: true }
 );
 
 flightSchema.pre("save", function (next) {
-  if(this.ArrivalDate < this.DepartureDate){
-    return next(new ErrorResponse("Arrival Date is before Departure Date", 400));
+  if (this.ArrivalDate < this.DepartureDate) {
+    return next(
+      new ErrorResponse("Arrival Date is before Departure Date", 400)
+    );
+  }
+
+  if (this.SeatsAvailable.length === 0) {
+    const length = this.FirstSeats + this.BusinessSeats + this.EconomySeats;
+    let seats = [];
+
+    for (let i = 0; i < length; i++) {
+      seats.push(false);
+    }
+
+    this.SeatsAvailable = seats;
   }
 
   for (let i = 0; i < this.EconomySeats; i++) {
     this.EconomySeatsAvailable[i] = false;
-  };
+  }
 
   for (let i = 0; i < this.BusinessSeats; i++) {
     this.BusinessSeatsAvailable[i] = false;
-  };
+  }
 
   for (let i = 0; i < this.FirstSeats; i++) {
     this.FirstSeatsAvailable[i] = false;
-  };
+  }
   next();
 });
 
