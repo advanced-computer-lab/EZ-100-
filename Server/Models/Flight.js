@@ -2,71 +2,84 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ErrorResponse = require("../utils/ErrorResponse");
 
-
 const flightSchema = new Schema(
   //baggage allowance, 3 prices , array of seats (Taken or not taken)
   {
-    flightNumber: {
+    FlightNumber: {
       type: String,
-      unique: true
+      unique: true,
     },
-    from: {
+    From: {
       type: String,
       required: [true, "A flight must have a [From] field"],
     },
-    to: {
+    To: {
       type: String,
       required: [true, "A flight must have a [To] field"],
     },
-    departureDate: {
+    DepartureDate: {
       type: Date,
       required: [true, "A flight must have a [DepartureDate] field"],
     },
-    arrivalDate: {
+    ArrivalDate: {
       type: Date,
     },
-    economySeats: {
+    EconomySeats: {
       type: Number,
       default: 80,
     },
-    economyPrice: {
+    EconomyPrice: {
       type: Number,
       default: 80,
     },
-    businessSeats: {
+    BusinessSeats: {
       type: Number,
       default: 15,
     },
-    businessPrice: {
+    BusinessPrice: {
       type: Number,
       default: 100,
     },
-    firstSeats: {
+    FirstSeats: {
       type: Number,
       default: 5,
     },
-    firstPrice: {
+    FirstPrice: {
       type: Number,
       default: 150,
     },
-    terminalNumber: {
+    TerminalNumber: {
       type: Number,
       default: 3,
     },
-    baggageAllowance: {
-      type: Number, 
-      default: 10
+    BaggageAllowance: {
+      type: Number,
+      default: 10,
     },
-    seatsAvailable: {
+    SeatsAvailable: {
       type: [Boolean],
-    }
+      default: [],
+    },
   },
   { timestamps: true }
 );
 
 flightSchema.pre("save", function (next) {
-  if(this.ArrivalDate < this.DepartureDate){
-    return next(new ErrorResponse("Arrival Date is before Departure Date", 400));
+  if (this.ArrivalDate < this.DepartureDate) {
+    return next(
+      new ErrorResponse("Arrival Date is before Departure Date", 400)
+    );
+  }
+
+  if (this.SeatsAvailable.length === 0) {
+    const length = this.FirstSeats + this.BusinessSeats + this.EconomySeats;
+    let seats = [];
+
+    for (let i = 0; i < length; i++) {
+      seats.push(false);
+    }
+
+    this.SeatsAvailable = seats;
   }
   next();
 });

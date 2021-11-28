@@ -34,14 +34,21 @@ const setDate = (d) => {
 
 let transformedFlights = [];
 for (let i = 0; i < flights.length - 2; i += 3) {
+  const randPrice = Math.floor(Math.random() * 1500) + 400;
   const flightObj = {
     ...flights[i],
     EconomySeats: flights[i]["Seats Available on Flight"],
     BusinessSeats: flights[i + 1]["Seats Available on Flight"],
     FirstSeats: flights[i + 2]["Seats Available on Flight"],
     FlightNumber: "EZ " + Math.floor(Math.random() * 10000),
-    ArrivalDate: new Date(flights[i]["DepartureDate"]).getTime() + 690 * 60000,
+    ArrivalDate:
+      new Date(flights[i]["DepartureDate"]).getTime() +
+      (Math.floor(Math.random() * 600) + 100) * 60000,
     TerminalNumber: Math.floor(Math.random() * 3) + 1,
+    FirstPrice: randPrice,
+    EconomyPrice: randPrice - 300,
+    BusinessPrice: randPrice - 100,
+    BaggageAllowance: Math.floor(Math.random() * 50) + 10,
   };
   transformedFlights.push(flightObj);
 }
@@ -59,13 +66,13 @@ const importData = async () => {
     };
     await User.create(adminstrator);
 
-    const trialRes = {
-      user: "618a6f7e2ffd5efd0e04a385",
-      flight: "618a6f822ffd5efd0e04a38b",
-      economy: 5
-      };
+    // const trialRes = {
+    //   user: "618a6f7e2ffd5efd0e04a385",
+    //   flight: "618a6f822ffd5efd0e04a38b",
+    //   economy: 5,
+    // };
 
-    await Reservation.create(trialRes);
+    // await Reservation.create(trialRes);
 
     await Flight.create(transformedFlights);
     console.log("Data imported...");

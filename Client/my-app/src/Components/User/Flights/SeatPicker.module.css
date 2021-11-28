@@ -2,11 +2,12 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  border: 2px solid #ccc;
 }
 
 .row-item {
   width: 25%;
-  margin: 0 0.005rem;
+  /* margin: 0 5; */
 }
 
 .row-item p {

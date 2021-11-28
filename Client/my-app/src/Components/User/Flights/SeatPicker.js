@@ -3,22 +3,11 @@ import { SeatBtn } from "./SeatBtn";
 import classes from "./SeatPicker.module.css";
 
 export const SeatPicker = (props) => {
-  // const { trip, flight } = props;
+  const { flight } = props;
   const [counter, setCounter] = useState(0);
   const [chosenSeats, setChosenSeats] = useState([]);
-  const seats = [
-    true,
-    false,
-    true,
-    true,
-    false,
-    true,
-    false,
-    false,
-    true,
-    true,
-    false,
-  ];
+  const seats = flight.SeatsAvailable;
+  console.log(flight.SeatsAvailable);
 
   const addSeatsHandler = (id) => {
     setCounter((count) => count + 1);
