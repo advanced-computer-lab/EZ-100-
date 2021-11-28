@@ -10,7 +10,11 @@ export const SeatBtn = (props) => {
   const [color, setColor] = useState(initialColor);
 
   const clickHandler = () => {
-    if (reserved || (props.counter === props.max && color === "green")) {
+    if (
+      reserved ||
+      (props.counter === props.max && color === "green") ||
+      props.isGray
+    ) {
       return;
     }
 
@@ -24,7 +28,9 @@ export const SeatBtn = (props) => {
   };
 
   return (
-    <IconContext.Provider value={{ color: color, size: "30px" }}>
+    <IconContext.Provider
+      value={{ color: !props.isGray ? color : "gray", size: "30px" }}
+    >
       <div onClick={clickHandler}>
         <MdEventSeat />
       </div>

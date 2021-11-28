@@ -26,6 +26,17 @@ export const UserFlightItem = (props) => {
   let duration = Math.abs(arrivalDate - departureDate) / 36e5;
   duration = duration.toFixed(1);
 
+  let price;
+  if (trip.cabin === "Economy") {
+    price = flight.EconomyPrice;
+  } else if (trip.cabin === "Business") {
+    price = flight.BusinessPrice;
+  } else {
+    price = flight.FirstPrice;
+  }
+
+  console.log(flight.SeatsAvailable);
+
   const options = {
     weekday: "short",
     year: "numeric",
@@ -114,14 +125,14 @@ export const UserFlightItem = (props) => {
             <label>
               Baggage allowance <IoBagSharp />
             </label>
-            <div className={classes.content}>10 kg</div>
+            <div className={classes.content}>{flight.BaggageAllowance} kg</div>
           </div>
 
           <div>
             <label>
               Price <MdOutlinePriceChange />
             </label>
-            <div className={classes.content}>$450</div>
+            <div className={classes.content}>${price}</div>
           </div>
         </div>
       </div>
