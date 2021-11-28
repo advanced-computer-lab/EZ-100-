@@ -1,13 +1,13 @@
 .row {
+  width: 65%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   border: 2px solid #ccc;
 }
 
 .row-item {
   width: 25%;
-  /* margin: 0 5; */
 }
 
 .row-item p {

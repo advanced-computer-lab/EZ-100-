@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+
 import { useHistory } from "react-router-dom";
 
 import ReservationContext from "../../store/reservation-context";
@@ -8,7 +9,6 @@ import { UserFlights } from "../../Components/User/Flights/UserFlights";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner";
 import { ItemHeader } from "../../Components/User/Flights/ItemHeader";
 
-// import ChooseSeats from "../../Components/User/Flights/ChooseSeats";
 import { SeatPicker } from "../../Components/User/Flights/SeatPicker";
 
 import useHttp from "../../hooks/use-http";
@@ -52,6 +52,7 @@ export const SearchResults = () => {
     ) {
       return;
     }
+
     if (selector < 3) {
       setSelector((state) => state + 1);
     }
