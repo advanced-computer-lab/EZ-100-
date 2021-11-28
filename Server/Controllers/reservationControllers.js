@@ -100,10 +100,10 @@ exports.viewReservation = asyncHandler(async (req,res,next) => {
 
     query = Reservation.findById(req.params.reservationId).populate({
         path: 'departueFlight', 
-        select: 'flightNumber departureDate arrivalDate terminalNumber'
+        select: 'FlightNumber DepartureDate ArrivalDate TerminalNumber'
     }).populate({
         path: 'arrivalFlight',
-        select: 'flightNumber departureDate arrivalDate terminalNumber'
+        select: 'FlightNumber DepartureDate ArrivalDate TerminalNumber'
     });
 
     const reservation = await query;
