@@ -53,10 +53,12 @@ const flightSchema = new Schema(
       default: 3,
     },
     BaggageAllowance: {
+
       type: Number,
       default: 10,
     },
     SeatsAvailable: {
+
       type: [Boolean],
       default: [],
     },
@@ -81,6 +83,18 @@ flightSchema.pre("save", function (next) {
 
     this.SeatsAvailable = seats;
   }
+
+  for (let i = 0; i < this.EconomySeats; i++) {
+    this.EconomySeatsAvailable[i] = false;
+  };
+
+  for (let i = 0; i < this.BusinessSeats; i++) {
+    this.BusinessSeatsAvailable[i] = false;
+  };
+
+  for (let i = 0; i < this.FirstSeats; i++) {
+    this.FirstSeatsAvailable[i] = false;
+  };
   next();
 });
 
