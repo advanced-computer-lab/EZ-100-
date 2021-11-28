@@ -1,5 +1,5 @@
 .container {
-  background-color: #162b2b;
+  background-color: #263238;
   width: 90%;
   max-width: 60rem;
   margin: 8rem auto;
@@ -23,13 +23,13 @@
 .flight .details {
   font-style: italic;
   font-size: 1.5rem;
-  color: #a1e0e0;
+  color: #e1f5fe;
 }
 
 .timing-info {
   font-size: 1.2rem;
   margin-bottom: 10px;
-  color: #a1e0e0;
+  color: #e1f5fe;
 }
 
 .cabin-info {
@@ -42,7 +42,7 @@
 }
 
 .cabin-info label {
-  color: #a1e0e0;
+  color: #e1f5fe;
   font-size: 1.1rem;
   margin-right: 10px;
 }

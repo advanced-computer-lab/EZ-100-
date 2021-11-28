@@ -10,9 +10,20 @@ export const ReservationNav = (props) => {
     props.onContinueClicked();
   };
 
+  const previousHandler = (event) => {
+    event.preventDefault();
+
+    props.onPreviousHandler();
+  };
+
   return (
     <nav className={classes.nav}>
       <ul>
+        <li>
+          <button type="button" className="btn" onClick={previousHandler}>
+            Back
+          </button>
+        </li>
         <li>
           <div className={selector === 1 ? classes.active : ""}>
             1. Select flights

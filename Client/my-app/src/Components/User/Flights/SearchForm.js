@@ -29,6 +29,7 @@ export const SearchForm = (props) => {
 
   const [fromHasError, setFromHasError] = useState(false);
   const [toHasError, setToHasError] = useState(false);
+  const [datesError, setDatesError] = useState(false);
 
   const options = { from: [], to: [] };
   props.allFlights.forEach((flight) => {
@@ -55,10 +56,20 @@ export const SearchForm = (props) => {
   };
 
   const departureChangeHandler = (event) => {
+    if (datesError) {
+      if (new Date(returnDate) > new Date(event.target.value)) {
+        setDatesError(false);
+      }
+    }
     setDepartureDate(event.target.value);
   };
 
   const returnChangeHandler = (event) => {
+    if (datesError) {
+      if (new Date(departureDate) < new Date(event.target.value)) {
+        setDatesError(false);
+      }
+    }
     setReturnDate(event.target.value);
   };
 
@@ -80,6 +91,12 @@ export const SearchForm = (props) => {
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
+
+    if (new Date(departureDate) > new Date(returnDate)) {
+      console.log("dates error");
+      setDatesError(true);
+      return;
+    }
 
     if (fromValue && toValue) {
       const data = {
@@ -209,14 +226,20 @@ export const SearchForm = (props) => {
           </div>
 
           {fromHasError && (
-            <p style={{ color: "red", textAlign: "left" }}>
+            <p style={{ color: "red", textAlign: "left", marginTop: "-10px" }}>
               From field cannot be empty *
             </p>
           )}
 
           {toHasError && (
-            <p style={{ color: "red", textAlign: "left", marginTop: "-12px" }}>
+            <p style={{ color: "red", textAlign: "left", marginTop: "-10px" }}>
               To field cannot be empty *
+            </p>
+          )}
+
+          {datesError && (
+            <p style={{ color: "red", textAlign: "left", marginTop: "-10px" }}>
+              Departure date cannot be before return date *
             </p>
           )}
 

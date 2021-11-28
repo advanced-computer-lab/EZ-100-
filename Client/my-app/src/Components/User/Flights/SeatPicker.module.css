@@ -3,7 +3,9 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  border: 2px solid #ccc;
+  background-color: #eef5ff;
+  border: 2px solid #afc2cb;
+  border-radius: 10px;
 }
 
 .row-item {

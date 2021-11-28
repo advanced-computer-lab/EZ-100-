@@ -45,6 +45,12 @@ export const SearchResults = () => {
     reservationCtx.setReturnSeats(seats);
   };
 
+  const onPreviousHandler = () => {
+    if (selector > 1) {
+      setSelector((state) => state - 1);
+    }
+  };
+
   const onContinueHandler = () => {
     if (
       selector === 1 &&
@@ -121,6 +127,7 @@ export const SearchResults = () => {
     <>
       <div className="centered">
         <ReservationNav
+          onPreviousHandler={onPreviousHandler}
           onContinueClicked={onContinueHandler}
           selector={selector}
         ></ReservationNav>
