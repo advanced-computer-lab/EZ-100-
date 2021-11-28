@@ -6,58 +6,58 @@ const ErrorResponse = require("../utils/ErrorResponse");
 const flightSchema = new Schema(
   //baggage allowance, 3 prices , array of seats (Taken or not taken)
   {
-    flightNumber: {
+    FlightNumber: {
       type: String,
       unique: true
     },
-    from: {
+    From: {
       type: String,
       required: [true, "A flight must have a [From] field"],
     },
-    to: {
+    To: {
       type: String,
       required: [true, "A flight must have a [To] field"],
     },
-    departureDate: {
+    DepartureDate: {
       type: Date,
       required: [true, "A flight must have a [DepartureDate] field"],
     },
-    arrivalDate: {
+    ArrivalDate: {
       type: Date,
     },
-    economySeats: {
+    EconomySeats: {
       type: Number,
       default: 80,
     },
-    economyPrice: {
+    EconomyPrice: {
       type: Number,
       default: 80,
     },
-    businessSeats: {
+    BusinessSeats: {
       type: Number,
       default: 15,
     },
-    businessPrice: {
+    BusinessPrice: {
       type: Number,
       default: 100,
     },
-    firstSeats: {
+    FirstSeats: {
       type: Number,
       default: 5,
     },
-    firstPrice: {
+    FirstPrice: {
       type: Number,
       default: 150,
     },
-    terminalNumber: {
+    TerminalNumber: {
       type: Number,
       default: 3,
     },
-    baggageAllowance: {
+    BaggageAllowance: {
       type: Number, 
       default: 10
     },
-    seatsAvailable: {
+    SeatsAvailable: {
       type: [Boolean],
     }
   },
