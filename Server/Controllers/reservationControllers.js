@@ -9,11 +9,15 @@ exports.createReservation = asyncHandler(async (req,res) =>{
     if(reservation){
         let depSeatsCount;
         let arrSeatsCount;
+        
+        depSeatsCount = req.body.departureSeats.length;
+        arrSeatsCount = req.body.arrivalSeats.length;
+
         const depFlight = await Flight.findById(req.body.departueFlight);
         const arrFlight = await Flight.findById(req.body.arrivalFlight);
 
-        depSeatsCount = req.body.departureSeats.length;
-        arrSeatsCount = req.body.arrivalSeats.length;
+
+        
 
     }
     res.status(201).json({ success: true, data: reservation });
