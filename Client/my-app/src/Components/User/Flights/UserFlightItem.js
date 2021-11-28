@@ -35,8 +35,6 @@ export const UserFlightItem = (props) => {
     price = flight.FirstPrice;
   }
 
-  console.log(flight.SeatsAvailable);
-
   const options = {
     weekday: "short",
     year: "numeric",

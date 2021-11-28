@@ -106,7 +106,7 @@ export const SearchResults = () => {
           <h3>Choose your {seatsNumber} seat(s) in the return flight:</h3>
           <SeatPicker
             trip={historyState}
-            flight={reservationCtx.departureFlight}
+            flight={reservationCtx.returnFlight}
             max={seatsNumber}
             onSeatsChange={returnSeatsHandler}
           />
