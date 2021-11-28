@@ -57,7 +57,13 @@ const flightSchema = new Schema(
       type: Number, 
       default: 10
     },
-    SeatsAvailable: {
+    EconomySeatsAvailable: {
+      type: [Boolean],
+    },
+    BusinessSeatsAvailable: {
+      type: [Boolean],
+    },
+    FirstSeatsAvailable: {
       type: [Boolean],
     }
   },
@@ -68,6 +74,18 @@ flightSchema.pre("save", function (next) {
   if(this.ArrivalDate < this.DepartureDate){
     return next(new ErrorResponse("Arrival Date is before Departure Date", 400));
   }
+
+  for (let i = 0; i < this.EconomySeats; i++) {
+    this.EconomySeatsAvailable[i] = false;
+  };
+
+  for (let i = 0; i < this.BusinessSeats; i++) {
+    this.BusinessSeatsAvailable[i] = false;
+  };
+
+  for (let i = 0; i < this.FirstSeats; i++) {
+    this.FirstSeatsAvailable[i] = false;
+  };
   next();
 });
 
