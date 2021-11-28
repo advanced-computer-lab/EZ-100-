@@ -1,6 +1,6 @@
 const Flight = require("../Models/Flight");
 const asyncHandler = require("../middleware/async");
-const ErrorResponce = require("../utils/ErrorResponce");
+const ErrorResponse = require("../utils/ErrorResponse");
 
 const createFlight = asyncHandler(async (req, res) => {
   const flight = await Flight.create(req.body);

@@ -87,7 +87,7 @@ export const SearchResults = () => {
     content = (
       <div className="centered">
         <div className="centered-half">
-          <h3>Choose your {seatsNumber} seats in the departure flight:</h3>
+          <h3>Choose your {seatsNumber} seat(s) in the departure flight:</h3>
           <SeatPicker
             trip={historyState}
             flight={reservationCtx.departureFlight}
@@ -96,7 +96,7 @@ export const SearchResults = () => {
           />
         </div>
         <div className="centered-half">
-          <h3>Choose your {seatsNumber} seats in the return flight:</h3>
+          <h3>Choose your {seatsNumber} seat(s) in the return flight:</h3>
           <SeatPicker
             trip={historyState}
             flight={reservationCtx.departureFlight}
