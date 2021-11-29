@@ -4,8 +4,8 @@ import ReservationContext from "./reservation-context";
 const defaultState = {
   departureFlight: undefined,
   returnFlight: undefined,
-  departureSeats: undefined,
-  returnSeats: undefined,
+  departureSeats: [],
+  returnSeats: [],
 };
 
 const reducerFn = (state, action) => {

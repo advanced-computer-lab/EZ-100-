@@ -47,7 +47,7 @@ export const ReservationNav = (props) => {
         </li>
 
         <li>
-          <p style={{ color: "red" }}>{errorMessage}</p>
+          <p style={{ color: "red", fontSize: "0.95rem" }}>{errorMessage}</p>
         </li>
       </ul>
     </nav>

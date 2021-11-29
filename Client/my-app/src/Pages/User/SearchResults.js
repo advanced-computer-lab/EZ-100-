@@ -17,6 +17,7 @@ import { getRoundTrip } from "../../lib/api";
 
 export const SearchResults = () => {
   const [selector, setSelector] = useState(1);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const history = useHistory();
   const historyState = history.location.state;
@@ -57,7 +58,30 @@ export const SearchResults = () => {
       selector === 1 &&
       (!reservationCtx.departureFlight || !reservationCtx.returnFlight)
     ) {
+      setErrorMessage("Please select a departure flight and a return flight*");
       return;
+    }
+
+    if (
+      selector === 1 &&
+      reservationCtx.departureFlight &&
+      reservationCtx.returnFlight
+    ) {
+      setErrorMessage("");
+    }
+
+    if (selector === 2) {
+      const seatsNumber =
+        parseInt(historyState.adultsNum) + parseInt(historyState.childrenNum);
+      if (
+        seatsNumber !== reservationCtx.departureSeats.length ||
+        seatsNumber !== reservationCtx.returnSeats.length
+      ) {
+        setErrorMessage(`Please pick ${seatsNumber} seat(s) in BOTH flights *`);
+        return;
+      } else {
+        setErrorMessage("");
+      }
     }
 
     if (selector < 3) {
@@ -132,6 +156,7 @@ export const SearchResults = () => {
     <>
       <div className="centered">
         <ReservationNav
+          errorMessage={errorMessage}
           onPreviousHandler={onPreviousHandler}
           onContinueClicked={onContinueHandler}
           selector={selector}
