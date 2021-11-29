@@ -135,11 +135,14 @@ export const Summary = (props) => {
 
   return (
     <div className={classes.container}>
-      {cartItems}
-      {/* <div className={classes.total}>
-        <span>Total amount: </span>
-        <span>$1200</span>
-      </div> */}
+      <div style={{ width: "100%" }}>
+        {cartItems}
+        <div className={classes.total}>
+          <span>Total price = $1200</span>
+
+          <button className="btn">Book trip</button>
+        </div>
+      </div>
     </div>
   );
 };
