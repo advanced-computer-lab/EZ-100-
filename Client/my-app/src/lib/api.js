@@ -93,3 +93,23 @@ export async function getRoundTrip(trip) {
 
   return { departureFlights: data1.data, returnFlights: data2.data };
 }
+
+export async function createReservation(reservation) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(reservation),
+  };
+
+  const response = await fetch(
+    `${DOMAIN}/api/reservations/createReservation`,
+    requestOptions
+  );
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Could not send data.");
+  }
+
+  return data.data;
+}

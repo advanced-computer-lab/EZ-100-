@@ -5,9 +5,14 @@ import { FaPlaneDeparture } from "react-icons/fa";
 import { MdEventSeat } from "react-icons/md";
 
 import ReservationContext from "../../../store/reservation-context";
+import useHttp from "../../../hooks/use-http";
+import { createReservation } from "../../../lib/api";
 
 export const Summary = (props) => {
   const { trip } = props;
+
+  const { sendRequest } = useHttp(createReservation);
+
   const seatsNumber = parseInt(trip.adultsNum) + parseInt(trip.childrenNum);
 
   const reservationCtx = useContext(ReservationContext);
@@ -53,6 +58,34 @@ export const Summary = (props) => {
   };
 
   const totalPrice = seatsNumber * departurePrice + seatsNumber * returnPrice;
+
+  const onCreateHandler = (event) => {
+    event.preventDefault();
+
+    let depSeats = [];
+    let arrivalSeats = [];
+    for (const seat of departureSeats) {
+      const temp = parseInt(seat.slice(1));
+      depSeats.push(temp);
+    }
+
+    for (const seat of returnSeats) {
+      const temp = parseInt(seat.slice(1));
+      arrivalSeats.push(temp);
+    }
+
+    const reservation = {
+      user: "61a4ff997630339cd3b786ae",
+      totalPrice,
+      cabin: trip.cabin,
+      departureFlight: departureFlight._id,
+      arrivalFlight: returnFlight._id,
+      departureSeats: depSeats,
+      arrivalSeats,
+    };
+
+    sendRequest(reservation);
+  };
 
   const cartItems = (
     <div className={classes["cart-items"]}>
@@ -142,7 +175,9 @@ export const Summary = (props) => {
         <div className={classes.total}>
           <span>Total price = ${totalPrice}</span>
 
-          <button className="btn">Book trip</button>
+          <button onClick={onCreateHandler} type="button" className="btn">
+            Book trip
+          </button>
         </div>
       </div>
     </div>
