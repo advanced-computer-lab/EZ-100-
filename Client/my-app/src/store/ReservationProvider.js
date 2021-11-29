@@ -52,6 +52,8 @@ const ReservationProvider = (props) => {
   const reservationContext = {
     departureFlight: reservationState.departureFlight,
     returnFlight: reservationState.returnFlight,
+    departureSeats: reservationState.departureSeats,
+    returnSeats: reservationState.returnSeats,
     setDepartureFlight,
     setReturnFlight,
     setDepartureSeats,

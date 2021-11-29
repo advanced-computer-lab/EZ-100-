@@ -10,6 +10,7 @@ import LoadingSpinner from "../../Components/UI/LoadingSpinner";
 import { ItemHeader } from "../../Components/User/Flights/ItemHeader";
 
 import { SeatPicker } from "../../Components/User/Flights/SeatPicker";
+import { Summary } from "../../Components/User/Flights/Summary";
 
 import useHttp from "../../hooks/use-http";
 import { getRoundTrip } from "../../lib/api";
@@ -113,6 +114,10 @@ export const SearchResults = () => {
         </div>
       </div>
     );
+  }
+
+  if (selector === 3) {
+    content = <Summary trip={historyState}></Summary>;
   }
 
   if (status === "pending") {
