@@ -67,7 +67,8 @@ const reservationSchema = new Schema(
       },
 
       totalPrice: {
-          type: Number
+          type: Number,
+          default: 0
       },
 
       cabin: {

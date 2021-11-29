@@ -19,22 +19,20 @@ exports.createReservation = asyncHandler(async (req,res) =>{
             if (req.body.cabin === "Economy"){
                 let seat = req.body.departureSeats[i];
                 let up = await Flight.updateOne(
-                    {id : req.body.departureFlight},
+                    {"_id" : req.body.departureFlight},
                      {$set:  {[`EconomySeatsAvailable.${seat}`]  : true}});
-                //let f = await Flight.findOne({ id : req.body.departureFlight});
-                console.log(up);
                 }
                 
             else if (req.body.cabin === "Business"){
                 let seat = req.body.departureSeats[i];
                 await Flight.updateOne(
-                    {id : req.body.departureFlight},
+                    {"_id" : req.body.departureFlight},
                         {$set:  {[`BusinessSeatsAvailable.${seat}`]  : true}});
                 }
             else if (req.body.cabin === "First"){
                 let seat = req.body.departureSeats[i];
                 await Flight.updateOne(
-                    {id : req.body.departureFlight},
+                    {"_id" : req.body.departureFlight},
                         {$set:  {[`FirstSeatsAvailable.${seat}`]  : true}});
                 }  
         }
@@ -42,56 +40,60 @@ exports.createReservation = asyncHandler(async (req,res) =>{
         for (let i = 0; i < arrSeatsCount; i++) {
             if (req.body.cabin === "Economy"){
                 let seat = req.body.arrivalSeats[i];
-                let up = await Flight.updateOne(
-                    {id : req.body.arrivalFlight},
+                await Flight.updateOne(
+                    {"_id" : req.body.arrivalFlight},
                      {$set:  {[`EconomySeatsAvailable.${seat}`]  : true}});
-                     console.log(up);
+                     console.log(req.body.arrivalFlight);
                 }
                 
             else if (req.body.cabin === "Business"){
                 let seat = req.body.arrivalSeats[i];
                 await Flight.updateOne(
-                    {id : req.body.arrivalFlight},
+                    {"_id" : req.body.arrivalFlight},
                         {$set:  {[`BusinessSeatsAvailable.${seat}`]  : true}});
                 }
             else if (req.body.cabin === "First"){
                 let seat = req.body.arrivalSeats[i];
                 await Flight.updateOne(
-                    {id : req.body.arrivalFlight},
+                    {"_id" : req.body.arrivalFlight},
                         {$set:  {[`FirstSeatsAvailable.${seat}`]  : true}});
                 }  
         }
 
-        /*let depPrice;
+        let depPrice;
         let arrPrice;
         let totalPrice;
         
         if(req.body.cabin === "Economy"){
-            var query = await Flight.findById(req.body.departueFlight).select('EconomyPrice');
-            var query2 = await Flight.findById(req.body.arrivalFlight).select('EconomyPrice');
-            console.log(query);
+            var query = await Flight.findOne({"_id" : req.body.departureFlight}).select('EconomyPrice');
+            var query2 = await Flight.findOne({"_id" : req.body.arrivalFlight}).select('EconomyPrice');
             depPrice = depSeatsCount * query.EconomyPrice;
+            console.log(depPrice);
             arrPrice = arrSeatsCount * query2.EconomyPrice;
+            console.log(arrPrice);
         }
 
         if(req.body.cabin === "Business"){
-            var query = await Flight.findById(req.body.departueFlight).select('BusinessPrice');
-            var query2 = await Flight.findById(req.body.arrivalFlight).select('BusinessPrice');
+            var query = await Flight.findOne({"_id" : req.body.departureFlight}).select('BusinessPrice');
+            var query2 = await Flight.findOne({"_id" : req.body.arrivalFlight}).select('BusinessPrice');
             console.log(query);
             depPrice = depSeatsCount * query.BusinessPrice;
             arrPrice = arrSeatsCount * query2.BusinessPrice;
         }
 
         if(req.body.cabin === "First"){
-            var query = await Flight.findById(req.body.departueFlight).select('FirstPrice');
-            var query2 = await Flight.findById(req.body.arrivalFlight).select('FirstPrice');
+            var query = await Flight.findOne({"_id" : req.body.departureFlight}).select('FirstPrice');
+            var query2 = await Flight.findOne({"_id" : req.body.arrivalFlight}).select('FirstPrice');
             console.log(query);
             depPrice = depSeatsCount * query.FirstPrice;
             arrPrice = arrSeatsCount * query2.FirstPrice;
         }
 
         totalPrice = depPrice + arrPrice;
-        var updateRes = await Reservation.findOneAndUpdate({ r }, {$set : {'totalPrice': totalPrice}});*/
+        console.log(totalPrice);
+        var updateRes = await Reservation.updateOne({ r }, {$set : {'totalPrice': totalPrice}});
+        console.log(updateRes);
+        
 
 
     }
