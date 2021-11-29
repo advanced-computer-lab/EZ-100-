@@ -168,7 +168,7 @@ exports.viewReservation = asyncHandler(async (req, res, next) => {
   if (!reservation)
     return next(
       new ErrorResponse(
-        "no reservations with this ${req.params.reservationId} ID",
+        `no reservations with this ${req.params.reservationId} ID`,
         404
       )
     );
