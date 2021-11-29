@@ -52,6 +52,8 @@ export const Summary = (props) => {
     }),
   };
 
+  const totalPrice = seatsNumber * departurePrice + seatsNumber * returnPrice;
+
   const cartItems = (
     <div className={classes["cart-items"]}>
       <div
@@ -138,7 +140,7 @@ export const Summary = (props) => {
       <div style={{ width: "100%" }}>
         {cartItems}
         <div className={classes.total}>
-          <span>Total price = $1200</span>
+          <span>Total price = ${totalPrice}</span>
 
           <button className="btn">Book trip</button>
         </div>
