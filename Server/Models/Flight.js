@@ -56,10 +56,6 @@ const flightSchema = new Schema(
       type: Number,
       default: 10,
     },
-    SeatsAvailable: {
-      type: [Boolean],
-      default: [],
-    },
     EconomySeatsAvailable: {
       type: [Boolean],
       default: [],

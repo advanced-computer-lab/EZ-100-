@@ -18,21 +18,23 @@ exports.createReservation = asyncHandler(async (req,res) =>{
         for (let i = 0; i < depSeatsCount; i++) {
             if (req.body.cabin === "Economy"){
                 let seat = req.body.departureSeats[i];
-                await Flight.updateOne(
-                    {_id : req.body.departueFlight},
+                let up = await Flight.updateOne(
+                    {id : req.body.departureFlight},
                      {$set:  {[`EconomySeatsAvailable.${seat}`]  : true}});
+                //let f = await Flight.findOne({ id : req.body.departureFlight});
+                console.log(up);
                 }
                 
             else if (req.body.cabin === "Business"){
                 let seat = req.body.departureSeats[i];
                 await Flight.updateOne(
-                    {_id : req.body.departueFlight},
+                    {id : req.body.departureFlight},
                         {$set:  {[`BusinessSeatsAvailable.${seat}`]  : true}});
                 }
             else if (req.body.cabin === "First"){
                 let seat = req.body.departureSeats[i];
                 await Flight.updateOne(
-                    {_id : req.body.departueFlight},
+                    {id : req.body.departureFlight},
                         {$set:  {[`FirstSeatsAvailable.${seat}`]  : true}});
                 }  
         }
@@ -40,26 +42,27 @@ exports.createReservation = asyncHandler(async (req,res) =>{
         for (let i = 0; i < arrSeatsCount; i++) {
             if (req.body.cabin === "Economy"){
                 let seat = req.body.arrivalSeats[i];
-                await Flight.updateOne(
-                    {_id : req.body.arrivalFlight},
+                let up = await Flight.updateOne(
+                    {id : req.body.arrivalFlight},
                      {$set:  {[`EconomySeatsAvailable.${seat}`]  : true}});
+                     console.log(up);
                 }
                 
             else if (req.body.cabin === "Business"){
                 let seat = req.body.arrivalSeats[i];
                 await Flight.updateOne(
-                    {_id : req.body.arrivalFlight},
+                    {id : req.body.arrivalFlight},
                         {$set:  {[`BusinessSeatsAvailable.${seat}`]  : true}});
                 }
             else if (req.body.cabin === "First"){
                 let seat = req.body.arrivalSeats[i];
                 await Flight.updateOne(
-                    {_id : req.body.arrivalFlight},
+                    {id : req.body.arrivalFlight},
                         {$set:  {[`FirstSeatsAvailable.${seat}`]  : true}});
                 }  
         }
 
-        let depPrice;
+        /*let depPrice;
         let arrPrice;
         let totalPrice;
         
@@ -88,11 +91,11 @@ exports.createReservation = asyncHandler(async (req,res) =>{
         }
 
         totalPrice = depPrice + arrPrice;
-        var updateRes = await Reservation.findOneAndUpdate({ r }, {$set : {'totalPrice': totalPrice}});
+        var updateRes = await Reservation.findOneAndUpdate({ r }, {$set : {'totalPrice': totalPrice}});*/
 
 
     }
-    res.status(201).json({ success: true, data: updateRes });
+    res.status(201).json({ success: true, data: reservation });
 });
 
 exports.viewReservation = asyncHandler(async (req,res,next) => {
