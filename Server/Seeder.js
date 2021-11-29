@@ -65,6 +65,7 @@ const importData = async () => {
       password: "123456",
     };
     await User.create(adminstrator);
+    
 
 
     /*const trialRes = {

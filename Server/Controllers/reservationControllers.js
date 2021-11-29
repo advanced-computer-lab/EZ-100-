@@ -60,7 +60,7 @@ exports.createReservation = asyncHandler(async (req,res) =>{
                 }  
         }
 
-        let depPrice;
+        /*let depPrice;
         let arrPrice;
         let totalPrice;
         
@@ -68,15 +68,12 @@ exports.createReservation = asyncHandler(async (req,res) =>{
             var query = await Flight.findOne({"_id" : req.body.departureFlight}).select('EconomyPrice');
             var query2 = await Flight.findOne({"_id" : req.body.arrivalFlight}).select('EconomyPrice');
             depPrice = depSeatsCount * query.EconomyPrice;
-            console.log(depPrice);
             arrPrice = arrSeatsCount * query2.EconomyPrice;
-            console.log(arrPrice);
         }
 
         if(req.body.cabin === "Business"){
             var query = await Flight.findOne({"_id" : req.body.departureFlight}).select('BusinessPrice');
             var query2 = await Flight.findOne({"_id" : req.body.arrivalFlight}).select('BusinessPrice');
-            console.log(query);
             depPrice = depSeatsCount * query.BusinessPrice;
             arrPrice = arrSeatsCount * query2.BusinessPrice;
         }
@@ -84,15 +81,12 @@ exports.createReservation = asyncHandler(async (req,res) =>{
         if(req.body.cabin === "First"){
             var query = await Flight.findOne({"_id" : req.body.departureFlight}).select('FirstPrice');
             var query2 = await Flight.findOne({"_id" : req.body.arrivalFlight}).select('FirstPrice');
-            console.log(query);
             depPrice = depSeatsCount * query.FirstPrice;
             arrPrice = arrSeatsCount * query2.FirstPrice;
         }
 
         totalPrice = depPrice + arrPrice;
-        console.log(totalPrice);
-        var updateRes = await Reservation.updateOne({ r }, {$set : {'totalPrice': totalPrice}});
-        console.log(updateRes);
+        var updateRes = await Reservation.updateOne({ r }, {$set : {'totalPrice': totalPrice}});*/
         
 
 
@@ -103,7 +97,7 @@ exports.createReservation = asyncHandler(async (req,res) =>{
 exports.viewReservation = asyncHandler(async (req,res,next) => {
     let query;
 
-    query = Reservation.findById(req.params.reservationId).populate({
+    query = Reservation.findOne({"_id" : req.params.reservationId}).populate({
         path: 'departueFlight', 
         select: 'FlightNumber DepartureDate ArrivalDate TerminalNumber'
     }).populate({
