@@ -77,7 +77,7 @@ export const Summary = (props) => {
     const reservation = {
       user: "61a4ff997630339cd3b786ae",
       totalPrice,
-      cabin: trip.cabin,
+      cabin: trip.cabin !== "First class" ? trip.cabin : "First",
       departureFlight: departureFlight._id,
       arrivalFlight: returnFlight._id,
       departureSeats: depSeats,
