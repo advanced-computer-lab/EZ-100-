@@ -1,19 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import classes from "./Summary.module.css";
 
+import Modal from "../../UI/Modal";
 import { FaPlaneDeparture } from "react-icons/fa";
 import { MdEventSeat } from "react-icons/md";
 
 import ReservationContext from "../../../store/reservation-context";
+import AuthContext from "../../../store/auth-context";
+
 import useHttp from "../../../hooks/use-http";
 import { createReservation } from "../../../lib/api";
+import Login from "../Account/Login";
 
 export const Summary = (props) => {
   const { trip } = props;
+  const [showLogin, setShowLogin] = useState(false);
 
   const { sendRequest } = useHttp(createReservation);
 
   const seatsNumber = parseInt(trip.adultsNum) + parseInt(trip.childrenNum);
+
+  const authCtx = useContext(AuthContext);
 
   const reservationCtx = useContext(ReservationContext);
   const { departureFlight, returnFlight, departureSeats, returnSeats } =
@@ -62,29 +69,33 @@ export const Summary = (props) => {
   const onCreateHandler = (event) => {
     event.preventDefault();
 
-    let depSeats = [];
-    let arrivalSeats = [];
-    for (const seat of departureSeats) {
-      const temp = parseInt(seat.slice(1));
-      depSeats.push(temp);
+    if (authCtx.isLoggedIn) {
+      let depSeats = [];
+      let arrivalSeats = [];
+      for (const seat of departureSeats) {
+        const temp = parseInt(seat.slice(1));
+        depSeats.push(temp);
+      }
+
+      for (const seat of returnSeats) {
+        const temp = parseInt(seat.slice(1));
+        arrivalSeats.push(temp);
+      }
+
+      const reservation = {
+        user: "61a4ff997630339cd3b786ae",
+        totalPrice,
+        cabin: trip.cabin !== "First class" ? trip.cabin : "First",
+        departureFlight: departureFlight._id,
+        arrivalFlight: returnFlight._id,
+        departureSeats: depSeats,
+        arrivalSeats,
+      };
+
+      sendRequest(reservation);
+    } else {
+      setShowLogin(true);
     }
-
-    for (const seat of returnSeats) {
-      const temp = parseInt(seat.slice(1));
-      arrivalSeats.push(temp);
-    }
-
-    const reservation = {
-      user: "61a4ff997630339cd3b786ae",
-      totalPrice,
-      cabin: trip.cabin !== "First class" ? trip.cabin : "First",
-      departureFlight: departureFlight._id,
-      arrivalFlight: returnFlight._id,
-      departureSeats: depSeats,
-      arrivalSeats,
-    };
-
-    sendRequest(reservation);
   };
 
   const cartItems = (
@@ -117,7 +128,7 @@ export const Summary = (props) => {
           </label>
           <div className={classes["wrap-row"]}>
             {departureSeats.map((seat) => (
-              <span>{seat}</span>
+              <span key={seat}>{seat}</span>
             ))}
           </div>
         </div>
@@ -152,7 +163,7 @@ export const Summary = (props) => {
           </label>
           <div className={classes["wrap-row"]}>
             {returnSeats.map((seat) => (
-              <span>{seat}</span>
+              <span key={seat}>{seat}</span>
             ))}
           </div>
         </div>
@@ -168,18 +179,29 @@ export const Summary = (props) => {
     </div>
   );
 
-  return (
-    <div className={classes.container}>
-      <div style={{ width: "100%" }}>
-        {cartItems}
-        <div className={classes.total}>
-          <span>Total price = ${totalPrice}</span>
+  const toggleLoginHandler = () => {
+    setShowLogin(false);
+  };
 
-          <button onClick={onCreateHandler} type="button" className="btn">
-            Book trip
-          </button>
+  return (
+    <>
+      {showLogin && (
+        <Modal onClose={toggleLoginHandler}>
+          <Login onHideModal={toggleLoginHandler}></Login>
+        </Modal>
+      )}
+      <div className={classes.container}>
+        <div style={{ width: "100%" }}>
+          {cartItems}
+          <div className={classes.total}>
+            <span>Total price = ${totalPrice}</span>
+
+            <button onClick={onCreateHandler} type="button" className="btn">
+              Book trip
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
