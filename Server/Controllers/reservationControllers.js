@@ -2,6 +2,8 @@ const Reservation = require("../Models/Reservation");
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/ErrorResponse");
 const Flight = require("../Models/Flight");
+const User = require("../Models/User");
+const sendEmail = require("../utils/sendEmail");
 
 exports.createReservation = asyncHandler(async (req,res) =>{
     let r = req.body;
@@ -140,6 +142,8 @@ exports.createReservation = asyncHandler(async (req,res) =>{
   res.status(201).json({ success: true, data: reservation });
 });
 
+
+
 exports.getReservations = asyncHandler(async (req, res, next) => {
   const reservation = await Reservation.find({ user: req.params.id });
 
@@ -149,6 +153,9 @@ exports.getReservations = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ success: true, data: reservation });
 });
+
+
+
 
 exports.viewReservation = asyncHandler(async (req, res, next) => {
   let query;
@@ -174,4 +181,33 @@ exports.viewReservation = asyncHandler(async (req, res, next) => {
     );
 
   res.status(200).json({ success: true, data: reservation });
+});
+
+
+exports.deleteReservation = asyncHandler(async (req, res, next) => {
+
+    const reservation = await Reservation.findByIdAndDelete(req.params.id);
+    const user = await User.findById(reservation.user);
+
+    let message = `This email to confirm that u cancelled your reservation with a 
+    reservation number: ${reservation._id} and your amount will be 
+    debited with an amount of ${reservation.totalPrice} `
+
+    try{
+        await sendEmail({
+            email: user.email,
+            subject: `Reservation ${reservation._id} cancellation`,
+            text: message
+        });
+        res.status(200).json({ success: true, data: "Email sent"});
+    }catch(err){
+
+        console.log(err);
+        return next(new ErrorResponse("Email could not be send", 500));
+
+
+    }
+
+    res.status(200).json({ success: true, data: reservation });
+
 });

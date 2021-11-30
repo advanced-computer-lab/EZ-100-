@@ -68,15 +68,6 @@ const importData = async () => {
     
 
 
-    /*const trialRes = {
-      user: "618a6f7e2ffd5efd0e04a385",
-      flight: "618a6f822ffd5efd0e04a38b",
-      economy: 5
-      };
-
-    await Reservation.create(trialRes);*/
-
-
     await Flight.create(transformedFlights);
     console.log("Data imported...");
     process.exit();
