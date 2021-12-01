@@ -187,7 +187,6 @@ exports.viewReservation = asyncHandler(async (req, res, next) => {
 
 exports.deleteReservation = asyncHandler(async (req, res, next) => {
   const reservation = await Reservation.findByIdAndDelete(req.params.id);
-  // const reservation = await Reservation.findById(req.params.id);
   const user = await User.findById(reservation.user);
 
   let message = `This email to confirm that u cancelled your reservation with a 
