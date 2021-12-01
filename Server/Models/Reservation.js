@@ -1,18 +1,12 @@
 const mongoose = require("mongoose");
+const asyncHandler = require("../middleware/async");
+const ErrorResponse = require("../utils/ErrorResponse");
+const User = require("./User");
 const Schema = mongoose.Schema;
 
 const userInfoSchema = new Schema({
-  title: {
-    type: String,
-    enum: ["Mr", "Ms", "Mrs"],
-  },
 
-  firstName: {
-    type: String,
-    required: true,
-  },
-
-  lastName: {
+  name: {
     type: String,
     required: true,
   },
@@ -26,7 +20,7 @@ const userInfoSchema = new Schema({
     type: String,
     enum: ["Male", "Female"],
     required: true,
-  },
+  }
 });
 
 const reservationSchema = new Schema(
@@ -75,6 +69,20 @@ const reservationSchema = new Schema(
   },
   { timestamps: true }
 );
+
+/*reservationSchema.post("save",(async(next) =>{
+  user = await User.findById(this.user);
+  console.log(this.user);
+  if(!user){
+    return next(new ErrorResponse(`No user with this ${this.user} ID so the reservation could not be done`, 404));
+  }
+  else{
+    this.userInfo.name = user.name;
+    this.userInfo.dateOfBirth = user.dateOfBirth;
+    this.userInfo.gender = user.gender;
+  }
+  next();
+}));*/
 
 const Reservation = mongoose.model("Reservation", reservationSchema);
 module.exports = Reservation;

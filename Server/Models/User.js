@@ -7,6 +7,18 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Please add a name"],
     },
+
+    dateOfBirth: {
+      type: Date,
+      required: true,
+    },
+
+    gender: {
+      type: String,
+      enum: ["Male", "Female"],
+      required: true,
+    },
+
     email: {
       type: String,
       required: [true, "Please add an email"],
