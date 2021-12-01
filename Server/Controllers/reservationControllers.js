@@ -134,11 +134,14 @@ exports.createReservation = asyncHandler(async (req, res) => {
     console.log(totalPrice);
     var updateRes = await Reservation.updateOne(
       { r },
-      { $set: { totalPrice: totalPrice } }
+      { $set: { totalPrice: totalPrice }},
+      {
+        new: true,
+        runValidators: true,
+      }
     );
-    console.log(updateRes);
   }
-  res.status(201).json({ success: true, data: reservation });
+  res.status(201).json({ success: true, data: updateRes });
 });
 
 exports.getReservations = asyncHandler(async (req, res, next) => {
