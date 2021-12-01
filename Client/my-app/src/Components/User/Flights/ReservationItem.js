@@ -1,19 +1,16 @@
 import classes from "./ReservationItem.module.css";
 import Card from "../../UI/Card";
 import { useState } from "react";
+import Modal from "../../UI/Modal";
 export const ReservationItem = (props) => {
-  
-    const reservation = props.reservation;
-  
-    function CancelReservationHandler() {
-        props.onCancel(reservation._id);
+  const reservation = props.reservation;
 
+  
+
+  function CancelReservationHandler() {
+    props.onCancel(reservation._id);
+    
   }
-
-  
-
-
-
 
   return (
     <div className={classes.flexContainer}>
@@ -24,51 +21,49 @@ export const ReservationItem = (props) => {
             <div className={classes.row}>
               <div className={classes.content}>
                 <label>Flight Number</label>
-                <div className={classes.flexContained1}>EZ-100</div>
+                <div className={classes.flexContained1}>
+                  {reservation.departureFlight.FlightNumber}
+                </div>
               </div>
             </div>
             <div className={classes.row}>
               <div className={classes.content}>
                 <label>Departure Date</label>
-                <div className={classes.flexContained1}>24/10/2021</div>
+                <div className={classes.flexContained1}>{reservation.departureFlight.DepartureDate}</div>
               </div>
               <div className={classes.content}>
                 <label>Arrival Date </label>
-                <div className={classes.flexContained1}>25/10/2021</div>
+                <div className={classes.flexContained1}>{reservation.departureFlight.ArrivalDate}</div>
               </div>
             </div>
             <div className={classes.row}>
               <div className={classes.content}>
-                <label>Cabin</label>
-                <div className={classes.flexContained1}>Economy</div>
-              </div>
-              <div className={classes.content}>
                 <label>Seats</label>
-                <div className={classes.flexContained1}>A1</div>
+                <div className={classes.flexContained1}>{reservation.departureSeats}</div>
               </div>
               <div className={classes.content}>
                 <label>Price</label>
-                <div className={classes.flexContained1}>450$ </div>
+                <div className={classes.flexContained1}>{reservation.totalPrice}$ </div>
               </div>
             </div>
             <div className={classes.row}>
-              <div className={classes.content}>
-                <label>Allowed Baggage</label>
-                <div className={classes.flexContained1}>25kg</div>
+            <div className={classes.content}>
+                <label>Cabin</label>
+                <div className={classes.flexContained1}>{reservation.cabin}</div>
               </div>
               <div className={classes.content}>
-                <label>Terminal</label>
-                <div className={classes.flexContained1}>2</div>
+                <label>Allowed Baggage</label>
+                <div className={classes.flexContained1}>{reservation.baggageAllowance}KG</div>
               </div>
             </div>
             <div className={classes.row}>
               <div className={classes.content}>
                 <label>From</label>
-                <div className={classes.flexContained1}>Cairo</div>
+                <div className={classes.flexContained1}>{reservation.departureFlight.From}</div>
               </div>
               <div className={classes.content}>
                 <label>To</label>
-                <div className={classes.flexContained1}>London</div>
+                <div className={classes.flexContained1}>{reservation.departureFlight.To}</div>
               </div>
             </div>
           </div>
@@ -80,41 +75,37 @@ export const ReservationItem = (props) => {
             <div className={classes.row}>
               <div className={classes.content}>
                 <label>Flight Number</label>
-                <div className={classes.flexContained1}>EZ-101</div>
+                <div className={classes.flexContained1}>{reservation.arrivalFlight.FlightNumber}</div>
               </div>
             </div>
             <div className={classes.row}>
               <div className={classes.content}>
                 <label>Departure Date</label>
-                <div className={classes.flexContained1}>1/11/2021</div>
+                <div className={classes.flexContained1}>{reservation.arrivalFlight.DepartureDate}</div>
               </div>
               <div className={classes.content}>
                 <label>Arrivale Date </label>
-                <div className={classes.flexContained1}>3/11/2021</div>
+                <div className={classes.flexContained1}>{reservation.arrivalFlight.ArrivalDate}</div>
               </div>
             </div>
             <div className={classes.row}>
               <div className={classes.content}>
-                <label>Cabin</label>
-                <div className={classes.flexContained1}>Economy</div>
-              </div>
-              <div className={classes.content}>
                 <label>Seats</label>
-                <div className={classes.flexContained1}>D1</div>
+                <div className={classes.flexContained1}>{reservation.arrivalSeats}</div>
               </div>
               <div className={classes.content}>
                 <label>Price</label>
-                <div className={classes.flexContained1}>450$ </div>
+                <div className={classes.flexContained1}>{reservation.totalPrice}$</div>
               </div>
             </div>
             <div className={classes.row}>
-              <div className={classes.content}>
-                <label>Allowed Baggage</label>
-                <div className={classes.flexContained1}>25kg</div>
+            <div className={classes.content}>
+                <label>Cabin</label>
+                <div className={classes.flexContained1}>{reservation.cabin}</div>
               </div>
               <div className={classes.content}>
-                <label>Terminal</label>
-                <div className={classes.flexContained1}>1</div>
+                <label>Allowed Baggage</label>
+                <div className={classes.flexContained1}>{reservation.baggageAllowance}kg</div>
               </div>
             </div>
             <div className={classes.row}>
@@ -136,6 +127,5 @@ export const ReservationItem = (props) => {
         </div>
       </div>
     </div>
-    
   );
 };

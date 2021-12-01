@@ -5,11 +5,24 @@ import { useState , useEffect } from "react";
 import { Backdrop } from "@mui/material";
 import {ReservationItem} from "../Components/User/Flights/ReservationItem";
 export const ViewReservedFlights = () => {
+  const[deleteId,setDeleteId]=useState("");
+  const [ModalIsOpen, setModalIsOpen] = useState(false);
   //const reservation = ["r1", "r2", "r3"];
 
   function onCancelHandler(id){
     console.log(id);
+    setDeleteId(id);
+    setModalIsOpen(true);
 
+  }
+  async function deleteHandler(){
+     await fetch(
+      `http://localhost:5000/api/reservations/deleteReservation/${deleteId}`,
+      {
+        method: "DELETE",
+      }
+    );
+    setModalIsOpen(false);
   }
   /*const response = await fetch(
     `${DOMAIN}/api/flights/deleteFlight/${flightId}`,
@@ -22,7 +35,7 @@ export const ViewReservedFlights = () => {
 
 
 
-  const [ModalIsOpen, setModalIsOpen] = useState(false);
+
 
   function CancelReservationHandler() {
     setModalIsOpen(true);
@@ -48,12 +61,26 @@ export const ViewReservedFlights = () => {
  
 
   return (
-    <ul>
+    <div>
+      {ModalIsOpen ? (
+  <Modal>
+    <h2>Are you sure you want to Cancel this reservation?</h2>
+    <button onClick={closeModalHandler}>Cancel</button>
+    <button
+      style={{ margin: "10px", fontSize: "1rem" }}
+      onClick={deleteHandler}
+    >
+      Yes
+    </button>
+  </Modal>
+) : null}
+      <ul>
       {reservation.map((reservation) => (
-        <ReservationItem reservation={reservation} onCancel={onCancelHandler}></ReservationItem>
+        <ReservationItem key={reservation._id} reservation={reservation} onCancel={onCancelHandler}></ReservationItem>
         
       ))}
     </ul>
+    </div>
   );
 };
 
