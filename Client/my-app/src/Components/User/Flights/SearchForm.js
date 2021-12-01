@@ -135,7 +135,7 @@ export const SearchForm = (props) => {
             >
               <FilterInput
                 hasError={fromHasError}
-                width={250}
+                width={200}
                 label="From"
                 options={options.from}
                 onChange={fromChangeHandler}
@@ -148,7 +148,7 @@ export const SearchForm = (props) => {
             >
               <FilterInput
                 hasError={toHasError}
-                width={250}
+                width={200}
                 label="To"
                 options={options.to}
                 onChange={toChangeHandler}

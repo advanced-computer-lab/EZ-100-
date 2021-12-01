@@ -24,3 +24,9 @@
 .row-item p {
   margin-bottom: -3px;
 }
+
+@media only screen and (max-width: 800px) {
+  .row {
+    width: 100%;
+  }
+}

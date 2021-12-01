@@ -4,6 +4,7 @@
 }
 
 .nav ul {
+  /* width: 100%; */
   list-style: none;
   display: flex;
   justify-content: left;
@@ -21,4 +22,11 @@
 .active {
   color: #002f6c;
   border-bottom: 4px solid #002f6c;
+}
+
+@media only screen and (max-width: 700px) {
+  .nav li {
+    margin-right: 0;
+    font-size: 1rem;
+  }
 }

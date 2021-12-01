@@ -42,7 +42,8 @@
 }
 
 .form-control input {
-  width: 250px;
+  /* width: 250px; */
+  width: 200px;
   font: inherit;
   padding: 1rem;
   flex: 1;
@@ -50,7 +51,8 @@
 }
 
 .form-control input[type="number"] {
-  width: 250px;
+  /* width: 250px; */
+  width: 200px;
   font: inherit;
   padding: 0.25rem;
   border: none;
@@ -60,7 +62,8 @@
 }
 
 .form-control input[type="date"] {
-  width: 250px;
+  /* width: 250px; */
+  width: 200px;
   font: inherit;
   padding: 0.25rem;
   border: none;
@@ -76,4 +79,12 @@
 .form-control input[type="number"]:focus {
   outline: none;
   border-color: #002f6c;
+}
+
+@media only screen and (max-width: 700px) {
+  .form-control input[type="date"],
+  .form-control input[type="number"],
+  .form-control input {
+    width: 160px;
+  }
 }

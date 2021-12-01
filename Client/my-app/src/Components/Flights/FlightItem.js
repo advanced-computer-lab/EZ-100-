@@ -33,13 +33,13 @@ export const FlightItem = (props) => {
   };
   return (
     <li className={classes.item}>
-      <div>
+      <div className={classes.container}>
         <div className={classes.title}>
           <p>{flight.FlightNumber}</p>
         </div>
 
         <div className={classes.description}>
-          <div>
+          <div className={classes["row-item"]}>
             <label>From</label>
             <div className={classes.content}>{flight.From}</div>
           </div>
@@ -48,11 +48,11 @@ export const FlightItem = (props) => {
             <PlaneIcon />
           </div>
 
-          <div>
+          <div className={classes["row-item"]}>
             <label>To</label>
             <div className={classes.content}>{flight.To}</div>
           </div>
-          <div>
+          <div className={classes["row-item"]}>
             <label>
               Depart <FaPlaneDeparture />
             </label>
@@ -60,7 +60,7 @@ export const FlightItem = (props) => {
             <div>{departure.longDate}</div>
           </div>
 
-          <div>
+          <div className={classes["row-item"]}>
             <label>
               Arrive <FaPlaneArrival />
             </label>

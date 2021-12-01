@@ -83,13 +83,13 @@ export const UserFlightItem = (props) => {
 
   return (
     <li className={classes.item}>
-      <div>
+      <div className={classes.container}>
         <div className={classes.title}>
           <p>{flight.FlightNumber}</p>
         </div>
 
         <div className={classes.description}>
-          <div>
+          <div className={classes["row-item"]}>
             <label>
               Depart <FaPlaneDeparture />
             </label>
@@ -97,7 +97,7 @@ export const UserFlightItem = (props) => {
             <div>{departure.longDate}</div>
           </div>
 
-          <div>
+          <div className={classes["row-item"]}>
             <label>
               Arrive <FaPlaneArrival />
             </label>
@@ -105,28 +105,28 @@ export const UserFlightItem = (props) => {
             <div>{departure.longDate}</div>
           </div>
 
-          <div>
+          <div className={classes["row-item"]}>
             <label>
               Duration <GiSandsOfTime />
             </label>
             <div className={classes.content}>{duration} Hrs</div>
           </div>
 
-          <div>
+          <div className={classes["row-item"]}>
             <label>
               Cabin <MdEventSeat />
             </label>
             <div className={classes.content}>{trip.cabin}</div>
           </div>
 
-          <div>
+          <div className={classes["row-item"]}>
             <label>
               Baggage allowance <IoBagSharp />
             </label>
             <div className={classes.content}>{flight.BaggageAllowance} kg</div>
           </div>
 
-          <div>
+          <div className={classes["row-item"]}>
             <label>
               Price <MdOutlinePriceChange />
             </label>

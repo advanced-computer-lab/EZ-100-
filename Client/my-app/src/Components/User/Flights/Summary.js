@@ -137,9 +137,12 @@ export const Summary = (props) => {
           <label>Price</label>
           <span className={classes.price}>${departurePrice}</span>
         </div>
-        <span style={{ alignSelf: "center" }} className={classes.amount}>
-          x{seatsNumber}
-        </span>
+        <div className={classes["content-col"]}>
+          <label>Amount</label>
+          <span style={{ alignSelf: "center" }} className={classes.amount}>
+            x{seatsNumber}
+          </span>
+        </div>
       </div>
 
       <div className={classes["cart-item"]}>
@@ -172,9 +175,13 @@ export const Summary = (props) => {
           <label>Price</label>
           <span className={classes.price}>${returnPrice}</span>
         </div>
-        <span style={{ alignSelf: "center" }} className={classes.amount}>
-          x{seatsNumber}
-        </span>
+
+        <div className={classes["content-col"]}>
+          <label>Amount</label>
+          <span style={{ alignSelf: "center" }} className={classes.amount}>
+            x{seatsNumber}
+          </span>
+        </div>
       </div>
     </div>
   );
