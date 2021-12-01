@@ -11,6 +11,7 @@ import { SearchTrip } from "./Pages/User/SearchTrip";
 
 import { Route, Switch } from "react-router-dom";
 import { SearchResults } from "./Pages/User/SearchResults";
+import { ViewReservedFlights } from "./Pages/ViewReservedFlights";
 
 function App() {
   return (
@@ -41,6 +42,12 @@ function App() {
             <SearchResults></SearchResults>
           </ReservationProvider>
         </Route>
+        <Route path="/reservation">
+          <ViewReservedFlights></ViewReservedFlights>
+        </Route>
+
+
+
       </Switch>
     </Layout>
   );
