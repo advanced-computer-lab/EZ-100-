@@ -190,6 +190,61 @@ exports.viewReservation = asyncHandler(async (req, res, next) => {
 
 exports.deleteReservation = asyncHandler(async (req, res, next) => {
   const reservation = await Reservation.findByIdAndDelete(req.params.id);
+
+  if (reservation) {
+    let depSeatsCount;
+    let arrSeatsCount;
+
+    depSeatsCount = reservation.departureSeats.length;
+    arrSeatsCount = reservation.arrivalSeats.length;
+
+    for (let i = 0; i < depSeatsCount; i++) {
+      if (reservation.cabin === "Economy") {
+        let seat = reservation.departureSeats[i];
+        let up = await Flight.updateOne(
+          { _id: reservation.departureFlight },
+          { $set: { [`EconomySeatsAvailable.${seat}`]: false } }
+        );
+      } else if (reservation.cabin === "Business") {
+        let seat = reservation.departureSeats[i];
+        await Flight.updateOne(
+          { _id: reservation.departureFlight },
+          { $set: { [`BusinessSeatsAvailable.${seat}`]: false } }
+        );
+      } else if (reservation.cabin === "First") {
+        let seat = reservation.departureSeats[i];
+        await Flight.updateOne(
+          { _id: reservation.departureFlight },
+          { $set: { [`FirstSeatsAvailable.${seat}`]: false } }
+        );
+      }
+    }
+
+    for (let i = 0; i < arrSeatsCount; i++) {
+      if (reservation.cabin === "Economy") {
+        let seat = reservation.arrivalSeats[i];
+        await Flight.updateOne(
+          { _id: reservation.arrivalFlight },
+          { $set: { [`EconomySeatsAvailable.${seat}`]: false } }
+        );
+        console.log(reservation.arrivalFlight);
+      } else if (reservation.cabin === "Business") {
+        let seat = reservation.arrivalSeats[i];
+        await Flight.updateOne(
+          { _id: reservation.arrivalFlight },
+          { $set: { [`BusinessSeatsAvailable.${seat}`]: false } }
+        );
+      } else if (reservation.cabin === "First") {
+        let seat = reservation.arrivalSeats[i];
+        await Flight.updateOne(
+          { _id: reservation.arrivalFlight },
+          { $set: { [`FirstSeatsAvailable.${seat}`]: false } }
+        );
+      }
+    }
+}
+
+
   const user = await User.findById(reservation.user);
 
   let message = `This email to confirm that u have cancelled your reservation with a 
