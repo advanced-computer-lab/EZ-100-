@@ -189,8 +189,8 @@ exports.deleteReservation = asyncHandler(async (req, res, next) => {
   const reservation = await Reservation.findByIdAndDelete(req.params.id);
   const user = await User.findById(reservation.user);
 
-  let message = `This email to confirm that u cancelled your reservation with a 
-    reservation number: ${reservation._id} and your amount will be 
+  let message = `This email to confirm that u have cancelled your reservation with a 
+    reservation number: ${reservation._id} and your account will be 
     debited with an amount of ${reservation.totalPrice} `;
 
   try {
