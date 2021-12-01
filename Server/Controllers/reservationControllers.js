@@ -134,23 +134,28 @@ exports.createReservation = asyncHandler(async (req, res) => {
     console.log(totalPrice);
     var updateRes = await Reservation.updateOne(
       { r },
-      { $set: { totalPrice: totalPrice }},
+      { $set: { totalPrice: totalPrice } },
       {
         new: true,
         runValidators: true,
       }
     );
 
-  user = await User.findById(reservation.user);
-  console.log(reservation.user);
-  if(!user){
-    return next(new ErrorResponse(`No user with this ${reservation.user} ID so the reservation could not be done`, 404));
-  }
-  else{ // update reservation by function not like this
-    reservation.userInfo.name = user.name;
-    reservation.userInfo.dateOfBirth = user.dateOfBirth;
-    reservation.userInfo.gender = user.gender;
-  }
+    user = await User.findById(reservation.user);
+    console.log(reservation.user);
+    if (!user) {
+      return next(
+        new ErrorResponse(
+          `No user with this ${reservation.user} ID so the reservation could not be done`,
+          404
+        )
+      );
+    } else {
+      // update reservation by function not like this
+      reservation.userInfo.name = user.name;
+      reservation.userInfo.dateOfBirth = user.dateOfBirth;
+      reservation.userInfo.gender = user.gender;
+    }
   }
   res.status(201).json({ success: true, data: updateRes });
 });
@@ -159,7 +164,7 @@ exports.getReservations = asyncHandler(async (req, res, next) => {
   const reservation = await Reservation.find({ user: req.params.id })
     .populate({
       path: "departureFlight",
-      select: "FlightNumber DepartureDate ArrivalDate TerminalNumber",
+      select: "FlightNumber From To DepartureDate ArrivalDate TerminalNumber",
     })
     .populate({
       path: "arrivalFlight",
@@ -253,8 +258,7 @@ exports.deleteReservation = asyncHandler(async (req, res, next) => {
         );
       }
     }
-}
-
+  }
 
   const user = await User.findById(reservation.user);
 
