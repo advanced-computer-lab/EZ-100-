@@ -4,24 +4,27 @@ const ErrorResponse = require("../utils/ErrorResponse");
 const User = require("./User");
 const Schema = mongoose.Schema;
 
-const userInfoSchema = new Schema({
+/*const userInfoSchema = new Schema({
 
   name: {
     type: String,
+    default: null,
     required: true,
   },
 
   dateOfBirth: {
     type: Date,
+    default: null,
     required: true,
   },
 
   gender: {
     type: String,
+    default: null,
     enum: ["Male", "Female"],
     required: true,
   }
-});
+});*/
 
 const reservationSchema = new Schema(
   //user , 2 flights, info (either array of objects or 1 object), 2 arrays seats (arrival, departure), total price, cabin
@@ -44,10 +47,10 @@ const reservationSchema = new Schema(
       required: true,
     },
 
-    userInfo: {
+    /*userInfo: {
       type: [userInfoSchema],
       required: true,
-    },
+    },*/
 
     departureSeats: {
       type: [Number],

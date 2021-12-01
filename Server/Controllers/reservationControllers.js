@@ -140,22 +140,6 @@ exports.createReservation = asyncHandler(async (req, res) => {
         runValidators: true,
       }
     );
-
-    user = await User.findById(reservation.user);
-    console.log(reservation.user);
-    if (!user) {
-      return next(
-        new ErrorResponse(
-          `No user with this ${reservation.user} ID so the reservation could not be done`,
-          404
-        )
-      );
-    } else {
-      // update reservation by function not like this
-      reservation.userInfo.name = user.name;
-      reservation.userInfo.dateOfBirth = user.dateOfBirth;
-      reservation.userInfo.gender = user.gender;
-    }
   }
   res.status(201).json({ success: true, data: updateRes });
 });
