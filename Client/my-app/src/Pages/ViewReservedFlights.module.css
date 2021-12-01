@@ -1,0 +1,63 @@
+
+.flexContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 20px;
+    flex-direction: row;
+    margin: 10px;
+    padding: 10px;
+    font-size: 35px;
+  }
+  .flexContained {
+    background-color: #ff0000;
+    width: 50%;
+    text-align: center;
+    margin: 5px;
+    line-height: 40px;
+    font-size: 30px;
+    margin-bottom: 50px;
+  }
+  .content{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+ 
+  
+  #button{
+    text-align: right;
+  }
+
+  
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+  }
+  .btn {
+    background-color: teal;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 100px;
+    width: 30%;
+    margin-top: 1em;
+    padding: 8px 8px;
+    font-size: 1em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 0.25em;
+    
+  }
+  
+  .btn:hover,
+  .btn:active {
+    color: #519e8a;
+    background-color: #fff;
+    border: 2px solid teal;
+    cursor: pointer;
+  }
+  
+  .btn:disabled {
+    cursor: not-allowed;
+  }
