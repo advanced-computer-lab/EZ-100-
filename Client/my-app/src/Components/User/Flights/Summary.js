@@ -1,7 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import classes from "./Summary.module.css";
 
+import { useHistory } from "react-router-dom";
+
 import Modal from "../../UI/Modal";
+import LoadingSpinner from "../../UI/LoadingSpinner";
+
 import { FaPlaneDeparture } from "react-icons/fa";
 import { MdEventSeat } from "react-icons/md";
 
@@ -16,7 +20,7 @@ export const Summary = (props) => {
   const { trip } = props;
   const [showLogin, setShowLogin] = useState(false);
 
-  const { sendRequest } = useHttp(createReservation);
+  const { sendRequest, status, error } = useHttp(createReservation);
 
   const seatsNumber = parseInt(trip.adultsNum) + parseInt(trip.childrenNum);
 
@@ -25,6 +29,8 @@ export const Summary = (props) => {
   const reservationCtx = useContext(ReservationContext);
   const { departureFlight, returnFlight, departureSeats, returnSeats } =
     reservationCtx;
+
+  const history = useHistory();
 
   let departurePrice;
   let returnPrice;
@@ -65,6 +71,12 @@ export const Summary = (props) => {
   };
 
   const totalPrice = seatsNumber * departurePrice + seatsNumber * returnPrice;
+
+  useEffect(() => {
+    if (status === "completed" && !error) {
+      history.push("/reservation");
+    }
+  }, [status, error, history]);
 
   const onCreateHandler = (event) => {
     event.preventDefault();
@@ -189,6 +201,14 @@ export const Summary = (props) => {
   const toggleLoginHandler = () => {
     setShowLogin(false);
   };
+
+  if (status === "pending") {
+    return (
+      <div className="centered">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <>

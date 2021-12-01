@@ -162,13 +162,12 @@ exports.createReservation = asyncHandler(async (req, res) => {
 
 exports.getReservations = asyncHandler(async (req, res, next) => {
   const reservation = await Reservation.find({ user: req.params.id })
+    .sort({ createdAt: -1 })
     .populate({
       path: "departureFlight",
-      select: "FlightNumber From To DepartureDate ArrivalDate TerminalNumber",
     })
     .populate({
       path: "arrivalFlight",
-      select: "FlightNumber DepartureDate ArrivalDate TerminalNumber",
     });
 
   if (!reservation) {
