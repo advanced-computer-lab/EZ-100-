@@ -1,0 +1,32 @@
+.nav {
+  width: 80%;
+  /* margin-right: 1rem; */
+}
+
+.nav ul {
+  /* width: 100%; */
+  list-style: none;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav li {
+  margin-right: 1.5rem;
+  font-size: 1.25rem;
+  padding: 0.6rem;
+}
+
+.active {
+  color: #002f6c;
+  border-bottom: 4px solid #002f6c;
+}
+
+@media only screen and (max-width: 700px) {
+  .nav li {
+    margin-right: 0;
+    font-size: 1rem;
+  }
+}

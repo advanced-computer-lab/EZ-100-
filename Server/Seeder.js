@@ -7,6 +7,7 @@ dotenv.config();
 // load Models
 const Flight = require("./Models/Flight");
 const User = require("./Models/User");
+const Reservation = require("./Models/Reservation");
 
 // Connnect to DB
 mongoose.connect(process.env.MONGO_URI, {
@@ -33,24 +34,37 @@ const setDate = (d) => {
 
 let transformedFlights = [];
 for (let i = 0; i < flights.length - 2; i += 3) {
+  const randPrice = Math.floor(Math.random() * 1500) + 400;
   const flightObj = {
     ...flights[i],
     EconomySeats: flights[i]["Seats Available on Flight"],
     BusinessSeats: flights[i + 1]["Seats Available on Flight"],
     FirstSeats: flights[i + 2]["Seats Available on Flight"],
     FlightNumber: "EZ " + Math.floor(Math.random() * 10000),
-    ArrivalDate: setDate(flights[i]["DepartureDate"]),
+    ArrivalDate:
+      new Date(flights[i]["DepartureDate"]).getTime() +
+      (Math.floor(Math.random() * 600) + 100) * 60000,
     TerminalNumber: Math.floor(Math.random() * 3) + 1,
+    FirstPrice: randPrice,
+    EconomyPrice: randPrice - 300,
+    BusinessPrice: randPrice - 100,
+    BaggageAllowance: Math.floor(Math.random() * 50) + 10,
   };
   transformedFlights.push(flightObj);
 }
+
+// setDate(flights[i]["DepartureDate"]),
 
 // Import data into DB
 const importData = async () => {
   try {
     const adminstrator = {
-      name: "Adminstrator",
+      firstName: "Adminstrator",
+      lastName: "Adminstrator",
       email: "mohamedrostom62@gmai.com",
+      passportNumber: "balabizo",
+      dateOfBirth: new Date(2000, 10, 8),
+      gender: "Male",
       role: "admin",
       password: "123456",
     };

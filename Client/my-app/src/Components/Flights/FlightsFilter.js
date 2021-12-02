@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FilterInput } from "../UI/FilterInput";
 
 import classes from "./FlightsFilter.module.css";
@@ -11,22 +11,8 @@ export const FlightsFilter = (props) => {
   const [flightNumValue, setFlightNumValue] = useState();
   const [departValue, setDepartValue] = useState();
   const [arriveValue, setArriveValue] = useState();
-  const [terminalValue, setTerminalValue] = useState();
 
-  const [flights, setFlights] = useState([]);
-  const fetchFlights = useCallback(async () => {
-    const response = await fetch(
-      "http://localhost:5000/api/flights/viewFlights"
-    );
-    const data = await response.json();
-    setFlights(data.data);
-
-    console.log("Filter fetched Flights");
-  }, []);
-
-  useEffect(() => {
-    fetchFlights();
-  }, [fetchFlights]);
+  const flights = props.allFlights;
 
   const fromChangeHandler = (event, value) => {
     setFromValue(value);
@@ -48,9 +34,9 @@ export const FlightsFilter = (props) => {
     setArriveValue(event.target.value);
   };
 
-  const terminalChangeHandler = (event, value) => {
-    setTerminalValue(value);
-  };
+  // const terminalChangeHandler = (event, value) => {
+  //   setTerminalValue(value);
+  // };
 
   const applyFilterHandler = (event) => {
     event.preventDefault();
@@ -61,17 +47,12 @@ export const FlightsFilter = (props) => {
       flightNumber: flightNumValue,
       departure: departValue,
       arrive: arriveValue,
-      terminal: terminalValue,
     });
   };
 
   const formIsEmpty =
-    (fromValue ||
-      toValue ||
-      flightNumValue ||
-      departValue ||
-      arriveValue ||
-      terminalValue) === undefined;
+    (fromValue || toValue || flightNumValue || departValue || arriveValue) ===
+    undefined;
 
   let options = {
     from: [],
@@ -104,11 +85,11 @@ export const FlightsFilter = (props) => {
         options={options.from}
         onChange={fromChangeHandler}
       />
-      <FilterInput
+      {/* <FilterInput
         label="Terminal"
         options={["1", "2", "3", "4", "5"]}
         onChange={terminalChangeHandler}
-      />
+      /> */}
       <FilterInput
         label="To"
         options={options.to}

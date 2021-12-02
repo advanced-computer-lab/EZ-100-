@@ -1,0 +1,19 @@
+.centered {
+  width: 80%;
+  margin: 1rem auto;
+  text-align: center;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000;
+}
+
+.airport {
+  margin: 10px;
+}

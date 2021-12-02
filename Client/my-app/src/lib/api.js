@@ -59,3 +59,57 @@ export async function deleteFlight(flightId) {
 
   return data.Success;
 }
+
+const getDates = (date, isFlexible) => {
+  let d1 = new Date(date);
+  let d2 = new Date(date);
+
+  if (isFlexible) {
+    d1.setDate(d1.getDate() - 4);
+    d2.setDate(d2.getDate() + 4);
+  } else {
+    d2.setDate(d2.getDate() + 1);
+  }
+
+  d1 = d1.toISOString().substring(0, 10);
+  d2 = d2.toISOString().substring(0, 10);
+
+  return { d1, d2 };
+};
+
+export async function getRoundTrip(trip) {
+  let { d1, d2 } = getDates(trip.departureDate, trip.isFlexible);
+  const query1 = `?From=${trip.fromValue}&To=${trip.toValue}&DepartureDate[$gte]=${d1}&DepartureDate[$lt]=${d2}`;
+
+  const response1 = await fetch(`${DOMAIN}/api/flights/viewFlights${query1}`);
+  const data1 = await response1.json();
+
+  let { d1: d3, d2: d4 } = getDates(trip.returnDate, trip.isFlexible);
+
+  const query2 = `?To=${trip.fromValue}&From=${trip.toValue}&DepartureDate[$gte]=${d3}&DepartureDate[$lt]=${d4}`;
+
+  const response2 = await fetch(`${DOMAIN}/api/flights/viewFlights${query2}`);
+  const data2 = await response2.json();
+
+  return { departureFlights: data1.data, returnFlights: data2.data };
+}
+
+export async function createReservation(reservation) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(reservation),
+  };
+
+  const response = await fetch(
+    `${DOMAIN}/api/reservations/createReservation`,
+    requestOptions
+  );
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Could not send data.");
+  }
+
+  return data.data;
+}

@@ -1,0 +1,32 @@
+.col {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.row {
+  margin: 0.5rem;
+  width: 65%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: #eef5ff;
+  border: 2px solid #afc2cb;
+  border-radius: 10px;
+}
+
+.row-item {
+  width: 25%;
+}
+
+.row-item p {
+  margin-bottom: -3px;
+}
+
+@media only screen and (max-width: 800px) {
+  .row {
+    width: 100%;
+  }
+}

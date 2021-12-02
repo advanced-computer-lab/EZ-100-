@@ -30,9 +30,13 @@ app.use(cors());
 
 // Import Routers
 const flightRoutes = require("./Routes/flightRouter");
+const reservationRoutes = require("./Routes/reservationRouter");
+const userRoutes = require("./Routes/userRouter");
 
 // Mount Routers to their paths
 app.use("/api/flights", flightRoutes);
+app.use("/api/reservations", reservationRoutes);
+app.use("/api/users",userRoutes);
 
 // Add ErrorHandler middleware here ... 'Must be added after mounting routers'
 app.use(errorHandler);

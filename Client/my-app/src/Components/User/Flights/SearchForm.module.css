@@ -1,0 +1,90 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+.last-row {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 1rem;
+}
+
+.last-row label {
+  font-weight: bold;
+  font-size: 1.15rem;
+  margin-right: 1rem;
+}
+
+.row-spaceBetween {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.form-control {
+  margin: 1rem;
+}
+
+.form-control label {
+  display: block;
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-control input {
+  /* width: 250px; */
+  width: 200px;
+  font: inherit;
+  padding: 1rem;
+  flex: 1;
+  margin-right: 2rem;
+}
+
+.form-control input[type="number"] {
+  /* width: 250px; */
+  width: 200px;
+  font: inherit;
+  padding: 0.25rem;
+  border: none;
+  border-bottom: 3px solid #ccc;
+  flex: 1;
+  margin-right: 2rem;
+}
+
+.form-control input[type="date"] {
+  /* width: 250px; */
+  width: 200px;
+  font: inherit;
+  padding: 0.25rem;
+  border: none;
+  border-bottom: 3px solid #ccc;
+  flex: 1;
+  margin-right: 2rem;
+}
+
+.form-control input[type="date"]:focus {
+  outline: none;
+}
+
+.form-control input[type="number"]:focus {
+  outline: none;
+  border-color: #002f6c;
+}
+
+@media only screen and (max-width: 700px) {
+  .form-control input[type="date"],
+  .form-control input[type="number"],
+  .form-control input {
+    width: 160px;
+  }
+}
