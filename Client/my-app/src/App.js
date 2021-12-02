@@ -38,7 +38,6 @@ function App() {
         <Route path="/search">
           <SearchTrip></SearchTrip>
         </Route>
-        
 
         <Route path="/results/select">
           <ReservationProvider>
@@ -48,9 +47,6 @@ function App() {
         <Route path="/reservation">
           <ViewReservedFlights></ViewReservedFlights>
         </Route>
-
-
-
       </Switch>
     </Layout>
   );
