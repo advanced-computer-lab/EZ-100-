@@ -13,7 +13,7 @@ export default function EditUser(props) {
   const formik = useFormik({
     initialValues: {
       firstname: "",
-      lastName: "",
+      lastname: "",
       email: "",
       passport_number: "",
     },
