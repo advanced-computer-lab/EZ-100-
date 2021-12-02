@@ -1,5 +1,5 @@
-import React ,{useState} from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
+// import { useHistory } from "react-router-dom";
 
 import classes from "./EditUser.module.css";
 import { useFormik } from "formik";
@@ -8,23 +8,18 @@ import LoadingSpinner from "../../Components/UI/LoadingSpinner";
 import * as Yup from "yup";
 
 export default function EditUser(props) {
-  const history = useHistory();
- const [ isLoading,setisLoading]= useState(false);
+  // const history = useHistory();
+  const [isLoading, setisLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
-      firstname:"",
-      lastName:"",
-      email:"",
-      passport_number:"",
-      
+      firstname: "",
+      lastName: "",
+      email: "",
+      passport_number: "",
     },
     validationSchema: Yup.object({
-      firstname: Yup.string()
-        .min(3, "min 3 characters")
-        .required("Required"),
-      lastname: Yup.string()
-        .min(3, "min 3 characters")
-        .required("Required"),
+      firstname: Yup.string().min(3, "min 3 characters").required("Required"),
+      lastname: Yup.string().min(3, "min 3 characters").required("Required"),
       email: Yup.string().required("Required"),
       passport_number: Yup.string().required("Required"),
     }),
@@ -34,39 +29,43 @@ export default function EditUser(props) {
         lastName: formik.values.lastname,
         email: formik.values.email,
         passportNumber: formik.values.passport_number,
-        
       };
-  setisLoading(true);
-     const data = await fetch("http://localhost:5000/api/users/updateUser/61a4ff997630339cd3b786ae", {
-        method: "PUT",
-        body: JSON.stringify(user), 
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      setisLoading(true);
+      const data = await fetch(
+        "http://localhost:5000/api/users/updateUser/61a4ff997630339cd3b786ae",
+        {
+          method: "PUT",
+          body: JSON.stringify(user),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(data.json().data);
       setisLoading(false);
     },
   });
 
-  const firstnameclass=
-    formik.touched.firstname && formik.errors.firstname
-      ? classes.error
-      : "";
-      const lastnameclass=
-    formik.touched.lastname && formik.errors.lastname
-      ? classes.error
-      : "";
+  const firstnameclass =
+    formik.touched.firstname && formik.errors.firstname ? classes.error : "";
+  const lastnameclass =
+    formik.touched.lastname && formik.errors.lastname ? classes.error : "";
 
   const emailclass =
     formik.touched.email && formik.errors.email ? classes.error : "";
   const passportclass =
-    formik.touched.passport_number && formik.errors.passport_number ? classes.error : "";
-     
-  
-  if(isLoading==true){
-    return <LoadingSpinner />;
+    formik.touched.passport_number && formik.errors.passport_number
+      ? classes.error
+      : "";
+
+  if (isLoading === true) {
+    return (
+      <div className="centered">
+        <LoadingSpinner />
+      </div>
+    );
   }
-  
+
   return (
     <div className={classes.wrapper}>
       <div className={classes["form-wrapper"]}>
@@ -96,7 +95,7 @@ export default function EditUser(props) {
               placeholder="last name"
             />
           </div>
-         
+
           <div className={classes["email"]}>
             <label htmlFor="email">Email </label>
             <input
@@ -110,7 +109,6 @@ export default function EditUser(props) {
             />
           </div>
 
-
           <div className={classes["passport"]}>
             <label htmlFor="passport_number">Passport Number</label>
             <input
@@ -123,7 +121,6 @@ export default function EditUser(props) {
               placeholder="Passport number"
             />
           </div>
-         
 
           <div className={classes["Save"]}>
             <button type="submit">Save</button>
@@ -132,5 +129,4 @@ export default function EditUser(props) {
       </div>
     </div>
   );
-  }
-  
+}

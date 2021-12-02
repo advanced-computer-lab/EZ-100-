@@ -17,14 +17,13 @@ export default function NewFlight(props) {
       departure_date: "",
       arrival_date: "",
       economy_seats: "",
-      economy_price:"",
+      economy_price: "",
       business_seats: "",
-      business_price:"",
+      business_price: "",
       first_seats: "",
       first_price: "",
-      baggage_allowance:"",
-     terminal: "",
-      
+      baggage_allowance: "",
+      terminal: "",
     },
     validationSchema: Yup.object({
       flight_number: Yup.string()
@@ -60,7 +59,7 @@ export default function NewFlight(props) {
         BusinessPrice: formik.values.business_price,
         EconomyPrice: formik.values.economy_price,
       };
-     const data = await fetch("http://localhost:5000/api/flights/createFlight", {
+      await fetch("http://localhost:5000/api/flights/createFlight", {
         method: "POST",
         body: JSON.stringify(newflight), // convert movie from JS object => JSON
         headers: {
@@ -94,18 +93,18 @@ export default function NewFlight(props) {
       ? classes.error
       : "";
   const economyPriceClasses =
-      formik.touched.economy_price && formik.errors.economy_price
-        ? classes.error
-        : "";
+    formik.touched.economy_price && formik.errors.economy_price
+      ? classes.error
+      : "";
   const businessSeatsClasses =
     formik.touched.business_seats && formik.errors.business_seats
       ? classes.error
       : "";
   const businessPriceClasses =
-      formik.touched.business_price && formik.errors.business_price
-        ? classes.error
-        : "";
-  
+    formik.touched.business_price && formik.errors.business_price
+      ? classes.error
+      : "";
+
   const firstSeatsClasses =
     formik.touched.first_seats && formik.errors.first_seats
       ? classes.error
@@ -236,9 +235,7 @@ export default function NewFlight(props) {
               placeholder="economy price"
             />
           </div>
-          
 
-          
           <div className={classes["first_seats"]}>
             <label htmlFor="first_seats">First seats </label>
             <input

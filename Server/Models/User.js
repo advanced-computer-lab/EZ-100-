@@ -7,14 +7,14 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Please add your first name"],
     },
-    
+
     lastName: {
       type: String,
       required: [true, "Please add your last name"],
     },
 
     passportNumber: {
-      type: Number,
+      type: String,
       unique: true,
       required: [true, "Please add your passport number"],
     },
