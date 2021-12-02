@@ -2,17 +2,25 @@ const User = require("../Models/User");
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/ErrorResponse");
 
+exports.editUserInfo = asyncHandler(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
-exports.editUserInfo = asyncHandler(async(req,res,next) =>{
+  if (!user) {
+    return next(new ErrorResponse(`User with ID ${userID} is not found`, 404));
+  }
 
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true,
-      });
+  res.status(200).JSON({ success: true, data: user });
+});
 
-    if(! user){
-        return next(new ErrorResponse(`User with ID ${userID} is not found`,404));
-    }
+exports.getUserById = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
 
-    res.status(200).JSON({success: true, data: user});
+  if (!user) {
+    return next(new ErrorResponse(`User with ID ${userID} is not found`, 404));
+  }
+
+  res.status(200).JSON({ success: true, data: user });
 });
