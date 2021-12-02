@@ -3,9 +3,20 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    name: {
+    firstName: {
       type: String,
-      required: [true, "Please add a name"],
+      required: [true, "Please add your first name"],
+    },
+    
+    lastName: {
+      type: String,
+      required: [true, "Please add your last name"],
+    },
+
+    passportNumber: {
+      type: Number,
+      unique: true,
+      required: [true, "Please add your passport number"],
     },
 
     dateOfBirth: {
