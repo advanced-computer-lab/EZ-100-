@@ -84,7 +84,7 @@ export const ReservationItem = (props) => {
   }
 
   return (
-    <>
+    <Card>
       <div className={classes["header-row"]}>
         <h3>Reservation id : {reservation._id}</h3>
       </div>
@@ -98,9 +98,73 @@ export const ReservationItem = (props) => {
           Cancel reservation
         </button>
       </div>
+
       <div className={classes.flexContainer}>
         <div className={classes.flexContained}>
-          <Card>
+          <div style={{ justifyContent: "center" }} className={classes.row}>
+            <div
+              style={{ width: "40%", alignItems: "center" }}
+              className={classes.content}
+            >
+              <label>Flight Number</label>
+              <div className={classes.flexContained1}>
+                {reservation.departureFlight.FlightNumber}
+              </div>
+            </div>
+          </div>
+          <div className={classes.row}>
+            <div className={classes.content}>
+              <label>From</label>
+              <div className={classes.flexContained1}>
+                {reservation.departureFlight.From}
+              </div>
+            </div>
+            <div className={classes.content}>
+              <label>To</label>
+              <div className={classes.flexContained1}>
+                {reservation.departureFlight.To}
+              </div>
+            </div>
+          </div>
+          <div className={classes.row}>
+            <div className={classes.content}>
+              <label>Departure Date</label>
+              <div className={classes.flexContained1}>
+                {departureDate.longDate} -- {departureDate.time}
+              </div>
+            </div>
+            <div className={classes.content}>
+              <label>Arrival Date </label>
+              <div className={classes.flexContained1}>
+                {arrivalDate.longDate} -- {arrivalDate.time}
+              </div>
+            </div>
+          </div>
+          <div className={classes.row}>
+            <div className={classes.content}>
+              <label>Seat(s) reserved</label>
+              <div className={classes.flexContained1}>{depSeats}</div>
+            </div>
+            <div className={classes.content}>
+              <label>Price per seat</label>
+              <div className={classes.flexContained1}>${depPrice}</div>
+            </div>
+          </div>
+          <div className={classes.row}>
+            <div className={classes.content}>
+              <label>Cabin</label>
+              <div className={classes.flexContained1}>{cabin}</div>
+            </div>
+            <div className={classes.content}>
+              <label>Allowed Baggage</label>
+              <div className={classes.flexContained1}>
+                {reservation.departureFlight.BaggageAllowance} kg
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={classes.flexContained}>
+          <div className={classes.flexContained1}>
             <div style={{ justifyContent: "center" }} className={classes.row}>
               <div
                 style={{ width: "40%", alignItems: "center" }}
@@ -108,7 +172,7 @@ export const ReservationItem = (props) => {
               >
                 <label>Flight Number</label>
                 <div className={classes.flexContained1}>
-                  {reservation.departureFlight.FlightNumber}
+                  {reservation.arrivalFlight.FlightNumber}
                 </div>
               </div>
             </div>
@@ -116,13 +180,13 @@ export const ReservationItem = (props) => {
               <div className={classes.content}>
                 <label>From</label>
                 <div className={classes.flexContained1}>
-                  {reservation.departureFlight.From}
+                  {reservation.arrivalFlight.From}
                 </div>
               </div>
               <div className={classes.content}>
                 <label>To</label>
                 <div className={classes.flexContained1}>
-                  {reservation.departureFlight.To}
+                  {reservation.arrivalFlight.To}
                 </div>
               </div>
             </div>
@@ -130,24 +194,24 @@ export const ReservationItem = (props) => {
               <div className={classes.content}>
                 <label>Departure Date</label>
                 <div className={classes.flexContained1}>
-                  {departureDate.longDate} -- {departureDate.time}
+                  {departureDate2.longDate} -- {departureDate2.time}
                 </div>
               </div>
               <div className={classes.content}>
                 <label>Arrival Date </label>
                 <div className={classes.flexContained1}>
-                  {arrivalDate.longDate} -- {arrivalDate.time}
+                  {arrivalDate2.longDate} -- {arrivalDate2.time}
                 </div>
               </div>
             </div>
             <div className={classes.row}>
               <div className={classes.content}>
                 <label>Seat(s) reserved</label>
-                <div className={classes.flexContained1}>{depSeats}</div>
+                <div className={classes.flexContained1}>{returnSeats}</div>
               </div>
               <div className={classes.content}>
                 <label>Price per seat</label>
-                <div className={classes.flexContained1}>${depPrice}</div>
+                <div className={classes.flexContained1}>${returnPrice}</div>
               </div>
             </div>
             <div className={classes.row}>
@@ -158,86 +222,13 @@ export const ReservationItem = (props) => {
               <div className={classes.content}>
                 <label>Allowed Baggage</label>
                 <div className={classes.flexContained1}>
-                  {reservation.departureFlight.BaggageAllowance} kg
+                  {reservation.arrivalFlight.BaggageAllowance} kg
                 </div>
               </div>
             </div>
-          </Card>
-        </div>
-        <div className={classes.flexContained}>
-          <Card>
-            <div className={classes.flexContained1}>
-              <div style={{ justifyContent: "center" }} className={classes.row}>
-                <div
-                  style={{ width: "40%", alignItems: "center" }}
-                  className={classes.content}
-                >
-                  <label>Flight Number</label>
-                  <div className={classes.flexContained1}>
-                    {reservation.arrivalFlight.FlightNumber}
-                  </div>
-                </div>
-              </div>
-              <div className={classes.row}>
-                <div className={classes.content}>
-                  <label>From</label>
-                  <div className={classes.flexContained1}>
-                    {reservation.arrivalFlight.From}
-                  </div>
-                </div>
-                <div className={classes.content}>
-                  <label>To</label>
-                  <div className={classes.flexContained1}>
-                    {reservation.arrivalFlight.To}
-                  </div>
-                </div>
-              </div>
-              <div className={classes.row}>
-                <div className={classes.content}>
-                  <label>Departure Date</label>
-                  <div className={classes.flexContained1}>
-                    {departureDate2.longDate} -- {departureDate2.time}
-                  </div>
-                </div>
-                <div className={classes.content}>
-                  <label>Arrival Date </label>
-                  <div className={classes.flexContained1}>
-                    {arrivalDate2.longDate} -- {arrivalDate2.time}
-                  </div>
-                </div>
-              </div>
-              <div className={classes.row}>
-                <div className={classes.content}>
-                  <label>Seat(s) reserved</label>
-                  <div className={classes.flexContained1}>{returnSeats}</div>
-                </div>
-                <div className={classes.content}>
-                  <label>Price per seat</label>
-                  <div className={classes.flexContained1}>${returnPrice}</div>
-                </div>
-              </div>
-              <div className={classes.row}>
-                <div className={classes.content}>
-                  <label>Cabin</label>
-                  <div className={classes.flexContained1}>{cabin}</div>
-                </div>
-                <div className={classes.content}>
-                  <label>Allowed Baggage</label>
-                  <div className={classes.flexContained1}>
-                    {reservation.arrivalFlight.BaggageAllowance} kg
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
-
-          {/* <div id={classes.button}>
-            <button className={classes.btn} onClick={CancelReservationHandler}>
-              Cancel Reservation
-            </button>
-          </div> */}
+          </div>
         </div>
       </div>
-    </>
+    </Card>
   );
 };

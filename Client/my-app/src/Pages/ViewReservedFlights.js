@@ -9,6 +9,11 @@ export const ViewReservedFlights = () => {
   const [ModalIsOpen, setModalIsOpen] = useState(false);
   const [reservations, setReservations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  // const [modalLoading, setModalLoading] = useState(false);
+
+  const [didDelete, setDidDelete] = useState(false);
+
+  const [initialFetch, setInitialFetch] = useState(false);
 
   function onCancelHandler(id) {
     setDeleteId(id);
@@ -16,13 +21,17 @@ export const ViewReservedFlights = () => {
   }
 
   async function deleteHandler() {
+    // setModalLoading(true);
     await fetch(
       `http://localhost:5000/api/reservations/deleteReservation/${deleteId}`,
       {
         method: "DELETE",
       }
     );
+
+    // setModalLoading(true);
     setModalIsOpen(false);
+    setDidDelete(true);
   }
 
   function closeModalHandler() {
@@ -42,10 +51,14 @@ export const ViewReservedFlights = () => {
       setIsLoading(false);
     };
 
-    if (!ModalIsOpen) {
+    if (!initialFetch) {
       fetchData();
+      setInitialFetch(true);
+    } else if (!ModalIsOpen && didDelete) {
+      fetchData();
+      setDidDelete(false);
     }
-  }, [ModalIsOpen]);
+  }, [ModalIsOpen, didDelete, initialFetch]);
 
   const listItems =
     reservations === [] ? null : (

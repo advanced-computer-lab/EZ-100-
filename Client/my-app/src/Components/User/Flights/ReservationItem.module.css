@@ -1,13 +1,10 @@
 .flexContainer {
-  /* background-color: #002f6c; */
   display: flex;
   flex-wrap: nowrap;
-  margin: 20px;
   flex-direction: row;
   margin: 10px;
   padding: 10px;
   font-size: 1rem;
-  border-bottom: 3px solid #002f6c;
 }
 
 .header-row {
@@ -17,7 +14,12 @@
 }
 
 .flexContained {
-  width: 100%;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 47, 108, 0.25);
+  border-radius: 14px;
+  width: 50%;
+  background-color: #e1f5fe;
+  border-radius: 10px;
   text-align: center;
   margin: 2px;
   line-height: 40px;
