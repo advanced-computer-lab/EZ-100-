@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 
 import classes from "./EditUser.module.css";
@@ -10,12 +10,32 @@ import * as Yup from "yup";
 export default function EditUser(props) {
   // const history = useHistory();
   const [isLoading, setisLoading] = useState(false);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setisLoading(true);
+      const response = await fetch(
+        `http://localhost:5000/api/users/61a4ff997630339cd3b786ae`
+      );
+
+      const data = await response.json();
+      console.log(data.data);
+
+      setisLoading(false);
+      setUser(data.data);
+    };
+
+    fetchData();
+  }, []);
+
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      firstname: "",
-      lastname: "",
-      email: "",
-      passport_number: "",
+      firstname: user ? user.firstName : "",
+      lastname: user ? user.lastName : "",
+      email: user ? user.email : "",
+      passport_number: user ? user.passportNumber : "",
     },
     validationSchema: Yup.object({
       firstname: Yup.string().min(3, "min 3 characters").required("Required"),
