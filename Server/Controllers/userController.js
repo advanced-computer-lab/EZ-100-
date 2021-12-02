@@ -12,7 +12,7 @@ exports.editUserInfo = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`User with ID ${userID} is not found`, 404));
   }
 
-  res.status(200).JSON({ success: true, data: user });
+  res.status(200).json({ success: true, data: user });
 });
 
 exports.getUserById = asyncHandler(async (req, res, next) => {
@@ -22,5 +22,5 @@ exports.getUserById = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`User with ID ${userID} is not found`, 404));
   }
 
-  res.status(200).JSON({ success: true, data: user });
+  res.status(200).json({ success: true, data: user });
 });
