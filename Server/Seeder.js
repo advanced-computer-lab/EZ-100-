@@ -59,14 +59,16 @@ for (let i = 0; i < flights.length - 2; i += 3) {
 const importData = async () => {
   try {
     const adminstrator = {
-      name: "Adminstrator",
+      firstName: "Adminstrator",
+      lastName: "Adminstrator",
       email: "mohamedrostom62@gmai.com",
+      passportNumber: "balabizo",
+      dateOfBirth: new Date(2000, 10, 8),
+      gender: "Male",
       role: "admin",
       password: "123456",
     };
     await User.create(adminstrator);
-    
-
 
     await Flight.create(transformedFlights);
     console.log("Data imported...");
