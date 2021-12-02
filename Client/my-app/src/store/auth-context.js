@@ -3,6 +3,7 @@ import React, { useState } from "react";
 const AuthContext = React.createContext({
   token: "",
   isLoggedIn: false,
+  user: undefined,
   login: (token) => {},
   logout: () => {},
 });
@@ -10,9 +11,11 @@ const AuthContext = React.createContext({
 export const AuthContextProvider = (props) => {
   const [token, setToken] = useState(null);
   const userIsLoggedIn = !!token;
+  const [user, setUser] = useState({ role: "admin" });
 
   const loginHandler = (token) => {
     setToken(token);
+    setUser({ role: "user" });
   };
 
   const logoutHandler = () => {
@@ -21,6 +24,7 @@ export const AuthContextProvider = (props) => {
 
   const contextValue = {
     token,
+    user,
     isLoggedIn: userIsLoggedIn,
     login: loginHandler,
     logout: logoutHandler,
