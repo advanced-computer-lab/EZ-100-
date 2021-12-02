@@ -1,7 +1,7 @@
 import { Layout } from "./Components/Layout/Layout";
 
 import NewFlight from "./Pages/NewFlight";
-
+import EditUser from "./Pages/User/EditUser";
 import ReservationProvider from "./store/ReservationProvider";
 
 import { AllFlightsWrapper } from "./Components/Flights/AllFlightsWrapper";
@@ -32,10 +32,13 @@ function App() {
         <Route path="/flights/:flightId">
           <FlightDetails></FlightDetails>
         </Route>
-
+        <Route path="/edit-user">
+          <EditUser></EditUser>
+        </Route>
         <Route path="/search">
           <SearchTrip></SearchTrip>
         </Route>
+        
 
         <Route path="/results/select">
           <ReservationProvider>

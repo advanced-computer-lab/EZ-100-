@@ -93,7 +93,20 @@
 .business_seats {
   margin-left: 1%;
 }
+.business_price {
+  margin-left: 1%;
+}
+.economy_price {
+  margin-left: 1%;
+}
 .first_seats {
+  margin-left: 1%;
+}
+
+.first_price {
+  margin-left: 1%;
+}
+.baggage_allowance {
   margin-left: 1%;
 }
 .terminal {
@@ -108,7 +121,12 @@
 .economy_seats,
 .business_seats,
 .first_seats,
-.terminal {
+.first_price,
+.terminal,
+.economy_price,
+.business_price,
+.baggage_allowance
+ {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
@@ -128,12 +146,19 @@
 }
 
 .first_seats,
-.terminal {
+.first_price {
   width: 49%;
 }
-
+.baggage_allowance,
+.terminal{
+  width: 49%;
+}
 .business_seats,
 .economy_seats {
+  width: 49%;
+}
+.business_price,
+.economy_price{
   width: 49%;
 }
 

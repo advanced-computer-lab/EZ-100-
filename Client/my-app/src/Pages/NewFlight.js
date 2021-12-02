@@ -17,10 +17,14 @@ export default function NewFlight(props) {
       departure_date: "",
       arrival_date: "",
       economy_seats: "",
+      economy_price:"",
       business_seats: "",
+      business_price:"",
       first_seats: "",
-
-      terminal: "",
+      first_price: "",
+      baggage_allowance:"",
+     terminal: "",
+      
     },
     validationSchema: Yup.object({
       flight_number: Yup.string()
@@ -31,8 +35,12 @@ export default function NewFlight(props) {
       departure_date: Yup.date().required("Required"),
       arrival_date: Yup.date().required("Required"),
       economy_seats: Yup.number().min(0, "min 0").required(),
+      economy_price: Yup.number().min(0, "min 0").required(),
+      business_price: Yup.number().min(0, "min 0").required(),
       business_seats: Yup.number().min(0, "min 0").required(),
       first_seats: Yup.number().min(0, "min 0").required(),
+      first_price: Yup.number().min(0, "min 0").required(),
+      baggage_allowance: Yup.number().min(0, "min 0").required(),
 
       terminal: Yup.number().min(0, "min 0").required("Required"),
     }),
@@ -47,8 +55,12 @@ export default function NewFlight(props) {
         BusinessSeats: formik.values.business_seats,
         FirstSeats: formik.values.first_seats,
         TerminalNumber: formik.values.terminal,
+        FirstPrice: formik.values.first_price,
+        BaggageAllowance: formik.values.baggage_allowance,
+        BusinessPrice: formik.values.business_price,
+        EconomyPrice: formik.values.economy_price,
       };
-      await fetch("http://localhost:5000/api/flights/createFlight", {
+     const data = await fetch("http://localhost:5000/api/flights/createFlight", {
         method: "POST",
         body: JSON.stringify(newflight), // convert movie from JS object => JSON
         headers: {
@@ -81,14 +93,25 @@ export default function NewFlight(props) {
     formik.touched.economy_seats && formik.errors.economy_seats
       ? classes.error
       : "";
-
+  const economyPriceClasses =
+      formik.touched.economy_price && formik.errors.economy_price
+        ? classes.error
+        : "";
   const businessSeatsClasses =
     formik.touched.business_seats && formik.errors.business_seats
       ? classes.error
       : "";
-
+  const businessPriceClasses =
+      formik.touched.business_price && formik.errors.business_price
+        ? classes.error
+        : "";
+  
   const firstSeatsClasses =
     formik.touched.first_seats && formik.errors.first_seats
+      ? classes.error
+      : "";
+  const firstPriceClasses =
+    formik.touched.first_price && formik.errors.first_price
       ? classes.error
       : "";
 
@@ -173,6 +196,19 @@ export default function NewFlight(props) {
               placeholder="business seats"
             />
           </div>
+          <div className={classes["business_price"]}>
+            <label htmlFor="business_price">Business price</label>
+            <input
+              className={businessPriceClasses}
+              type="number"
+              min="1"
+              name="business_price"
+              value={formik.values.business_price}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder="business price"
+            />
+          </div>
 
           <div className={classes["economy_seats"]}>
             <label htmlFor="economy_seats">Economy seats </label>
@@ -187,6 +223,22 @@ export default function NewFlight(props) {
               placeholder="economy seats"
             />
           </div>
+          <div className={classes["economy_price"]}>
+            <label htmlFor="economy_price">Economy price </label>
+            <input
+              className={economyPriceClasses}
+              type="number"
+              min="1"
+              name="economy_price"
+              value={formik.values.economy_price}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder="economy price"
+            />
+          </div>
+          
+
+          
           <div className={classes["first_seats"]}>
             <label htmlFor="first_seats">First seats </label>
             <input
@@ -200,9 +252,34 @@ export default function NewFlight(props) {
               placeholder="first seats"
             />
           </div>
-
+          <div className={classes["first_price"]}>
+            <label htmlFor="first_price">First price </label>
+            <input
+              className={firstPriceClasses}
+              type="number"
+              min="1"
+              name="first_price"
+              value={formik.values.first_price}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder="first price"
+            />
+          </div>
+          <div className={classes["baggage_allowance"]}>
+            <label htmlFor="baggage_allowance">Baggage allowance</label>
+            <input
+              type="number"
+              min="1"
+              name="baggage_allowance"
+              className={terminalclasses}
+              value={formik.values.baggage_allowance}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder="baggage allowance"
+            />
+          </div>
           <div className={classes["terminal"]}>
-            <label htmlFor="terminal">Terminal </label>
+            <label htmlFor="terminal">terminal </label>
             <input
               type="number"
               min="1"
