@@ -24,3 +24,28 @@ exports.getUserById = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ success: true, data: user });
 });
+
+// Dummy login --- Delete at sprint 3
+exports.login = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email: email }).select("+password");
+
+  if (!user) {
+    return next(
+      new ErrorResponse(`User with email ${email} is not found`, 404)
+    );
+  }
+
+  // Compare passwords
+  let letMeIn = false;
+  if (password === user.password) {
+    letMeIn = true;
+  }
+
+  if (letMeIn) {
+    return res.status(200).json({ success: true, data: user });
+  } else {
+    return res.status(400).json({ success: false, data: null });
+  }
+});
