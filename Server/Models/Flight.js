@@ -79,16 +79,16 @@ flightSchema.pre("save", function (next) {
     );
   }
 
-  if (this.SeatsAvailable.length === 0) {
-    const length = this.FirstSeats + this.BusinessSeats + this.EconomySeats;
-    let seats = [];
+  // if (this.SeatsAvailable.length === 0) {
+  //   const length = this.FirstSeats + this.BusinessSeats + this.EconomySeats;
+  //   let seats = [];
 
-    for (let i = 0; i < length; i++) {
-      seats.push(false);
-    }
+  //   for (let i = 0; i < length; i++) {
+  //     seats.push(false);
+  //   }
 
-    this.SeatsAvailable = seats;
-  }
+  //   this.SeatsAvailable = seats;
+  // }
 
   for (let i = 0; i < this.EconomySeats; i++) {
     this.EconomySeatsAvailable[i] = false;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import classes from "./NewFlight.module.css";
@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 export default function NewFlight(props) {
+  const [error, setError] = useState("");
   const history = useHistory();
 
   const formik = useFormik({
@@ -59,14 +60,24 @@ export default function NewFlight(props) {
         BusinessPrice: formik.values.business_price,
         EconomyPrice: formik.values.economy_price,
       };
-      await fetch("http://localhost:5000/api/flights/createFlight", {
-        method: "POST",
-        body: JSON.stringify(newflight), // convert movie from JS object => JSON
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      history.push("/flights");
+      const response = await fetch(
+        "http://localhost:5000/api/flights/createFlight",
+        {
+          method: "POST",
+          body: JSON.stringify(newflight), // convert movie from JS object => JSON
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+
+      if (data.success) {
+        setError("");
+        history.push("/flights");
+      } else {
+        setError("A flight with that number already exists!");
+      }
     },
   });
   const flightnumberclasses =
@@ -293,6 +304,8 @@ export default function NewFlight(props) {
           <div className={classes["Create"]}>
             <button type="submit">Create Flight</button>
           </div>
+
+          <div style={{ color: "red" }}>{error}</div>
         </form>
       </div>
     </div>
