@@ -61,7 +61,7 @@ const importData = async () => {
     const adminstrator = {
       firstName: "Adminstrator",
       lastName: "Adminstrator",
-      email: "mohamedrostom62@gmai.com",
+      email: "mohamedrostom62@gmail.com",
       passportNumber: "balabizo",
       dateOfBirth: new Date(2000, 10, 8),
       gender: "Male",
