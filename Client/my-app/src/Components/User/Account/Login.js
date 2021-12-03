@@ -39,22 +39,37 @@ export default function Login(props) {
   const history = useHistory();
   const authCtx = React.useContext(AuthContext);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+
+    const user = { email: data.get("email"), password: data.get("password") };
+
+    const response = await fetch("http://localhost:5000/api/users/login", {
+      method: "POST",
+      body: JSON.stringify(user), // convert movie from JS object => JSON
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+    const resData = await response.json();
 
-    authCtx.login("token");
+    if (resData.success) {
+      authCtx.login("token", resData.data);
 
-    if (props.nextPage) {
-      history.replace(props.nextPage);
-    } else {
-      props.onHideModal();
+      if (props.nextPage) {
+        history.replace(props.nextPage);
+      } else {
+        props.onHideModal();
+      }
     }
+
+    // Else setErroor ....
   };
 
   return (

@@ -94,8 +94,9 @@ export const Summary = (props) => {
         arrivalSeats.push(temp);
       }
 
+      // console.log("user == " + authCtx.user._id);
       const reservation = {
-        user: "61a4ff997630339cd3b786ae",
+        user: authCtx.user._id,
         totalPrice,
         cabin: trip.cabin !== "First class" ? trip.cabin : "First",
         departureFlight: departureFlight._id,

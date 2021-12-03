@@ -1,7 +1,9 @@
 import Modal from "../Components/UI/Modal";
 import LoadingSpinner from "../Components/UI/LoadingSpinner";
 
-import { useState, useEffect } from "react";
+import AuthContext from "../store/auth-context";
+
+import { useState, useEffect, useContext } from "react";
 
 import { ReservationItem } from "../Components/User/Flights/ReservationItem";
 export const ViewReservedFlights = () => {
@@ -12,8 +14,9 @@ export const ViewReservedFlights = () => {
   // const [modalLoading, setModalLoading] = useState(false);
 
   const [didDelete, setDidDelete] = useState(false);
-
   const [initialFetch, setInitialFetch] = useState(false);
+
+  const authCtx = useContext(AuthContext);
 
   function onCancelHandler(id) {
     setDeleteId(id);
@@ -39,26 +42,28 @@ export const ViewReservedFlights = () => {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const response = await fetch(
-        `http://localhost:5000/api/reservations/userReservations/61a4ff997630339cd3b786ae`
-      );
+    if (authCtx.isLoggedIn) {
+      const fetchData = async () => {
+        setIsLoading(true);
+        const response = await fetch(
+          `http://localhost:5000/api/reservations/userReservations/${authCtx.user._id}`
+        );
 
-      const data = await response.json();
+        const data = await response.json();
 
-      setReservations(data.data);
-      setIsLoading(false);
-    };
+        setReservations(data.data);
+        setIsLoading(false);
+      };
 
-    if (!initialFetch) {
-      fetchData();
-      setInitialFetch(true);
-    } else if (!ModalIsOpen && didDelete) {
-      fetchData();
-      setDidDelete(false);
+      if (!initialFetch) {
+        fetchData();
+        setInitialFetch(true);
+      } else if (!ModalIsOpen && didDelete) {
+        fetchData();
+        setDidDelete(false);
+      }
     }
-  }, [ModalIsOpen, didDelete, initialFetch]);
+  }, [ModalIsOpen, didDelete, initialFetch, authCtx]);
 
   const listItems =
     reservations === [] ? null : (

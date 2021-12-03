@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 // import { useHistory } from "react-router-dom";
+import AuthContext from "../../store/auth-context";
 
 import classes from "./EditUser.module.css";
 import { useFormik } from "formik";
@@ -12,11 +13,13 @@ export default function EditUser(props) {
   const [isLoading, setisLoading] = useState(false);
   const [user, setUser] = useState();
 
+  const authCtx = useContext(AuthContext);
+
   useEffect(() => {
     const fetchData = async () => {
       setisLoading(true);
       const response = await fetch(
-        `http://localhost:5000/api/users/61a4ff997630339cd3b786ae`
+        `http://localhost:5000/api/users/${authCtx.user._id}`
       );
 
       const data = await response.json();
@@ -27,7 +30,7 @@ export default function EditUser(props) {
     };
 
     fetchData();
-  }, []);
+  }, [authCtx]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -52,7 +55,7 @@ export default function EditUser(props) {
       };
       setisLoading(true);
       const data = await fetch(
-        "http://localhost:5000/api/users/updateUser/61a4ff997630339cd3b786ae",
+        `http://localhost:5000/api/users/updateUser/${authCtx.user._id}`,
         {
           method: "PUT",
           body: JSON.stringify(user),
