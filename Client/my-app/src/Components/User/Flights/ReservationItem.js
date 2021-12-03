@@ -143,7 +143,11 @@ export const ReservationItem = (props) => {
           <div className={classes.row}>
             <div className={classes.content}>
               <label>Seat(s) reserved</label>
-              <div className={classes.flexContained1}>{depSeats}</div>
+              <div className={classes["seats-row"]}>
+                {depSeats.map((seat) => (
+                  <span>{seat}</span>
+                ))}
+              </div>
             </div>
             <div className={classes.content}>
               <label>Price per seat</label>
@@ -207,7 +211,11 @@ export const ReservationItem = (props) => {
             <div className={classes.row}>
               <div className={classes.content}>
                 <label>Seat(s) reserved</label>
-                <div className={classes.flexContained1}>{returnSeats}</div>
+                <div className={classes["seats-row"]}>
+                  {returnSeats.map((seat) => (
+                    <span>{seat}</span>
+                  ))}
+                </div>
               </div>
               <div className={classes.content}>
                 <label>Price per seat</label>

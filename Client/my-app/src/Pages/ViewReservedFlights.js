@@ -11,7 +11,7 @@ export const ViewReservedFlights = () => {
   const [ModalIsOpen, setModalIsOpen] = useState(false);
   const [reservations, setReservations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  // const [modalLoading, setModalLoading] = useState(false);
+  const [modalLoading, setModalLoading] = useState(false);
 
   const [didDelete, setDidDelete] = useState(false);
   const [initialFetch, setInitialFetch] = useState(false);
@@ -24,7 +24,7 @@ export const ViewReservedFlights = () => {
   }
 
   async function deleteHandler() {
-    // setModalLoading(true);
+    setModalLoading(true);
     await fetch(
       `http://localhost:5000/api/reservations/deleteReservation/${deleteId}`,
       {
@@ -32,7 +32,7 @@ export const ViewReservedFlights = () => {
       }
     );
 
-    // setModalLoading(true);
+    setModalLoading(false);
     setModalIsOpen(false);
     setDidDelete(true);
   }
@@ -90,17 +90,27 @@ export const ViewReservedFlights = () => {
     <div>
       {ModalIsOpen ? (
         <Modal onClose={closeModalHandler}>
-          <h2>Are you sure you want to Cancel this reservation?</h2>
-          <button
-            style={{ margin: "10px" }}
-            className="btn--flat"
-            onClick={closeModalHandler}
-          >
-            Cancel
-          </button>
-          <button className="btn" onClick={deleteHandler}>
-            Yes
-          </button>
+          {!modalLoading && (
+            <>
+              <h2>Are you sure you want to Cancel this reservation?</h2>
+              <button
+                style={{ margin: "10px" }}
+                className="btn--flat"
+                onClick={closeModalHandler}
+              >
+                Cancel
+              </button>
+              <button className="btn" onClick={deleteHandler}>
+                Yes
+              </button>
+            </>
+          )}
+
+          {modalLoading && (
+            <div className="centered">
+              <LoadingSpinner />
+            </div>
+          )}
         </Modal>
       ) : null}
 

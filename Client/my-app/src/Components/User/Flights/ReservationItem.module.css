@@ -36,6 +36,13 @@
   padding: 10px;
 } */
 
+.seats-row {
+  width: 75%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
 .content {
   padding: 0.6rem;
   border-radius: 7px;
