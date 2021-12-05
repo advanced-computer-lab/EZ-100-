@@ -145,7 +145,7 @@ export const ReservationItem = (props) => {
               <label>Seat(s) reserved</label>
               <div className={classes["seats-row"]}>
                 {depSeats.map((seat) => (
-                  <span>{seat}</span>
+                  <span key={seat}>{seat}</span>
                 ))}
               </div>
             </div>
@@ -213,7 +213,7 @@ export const ReservationItem = (props) => {
                 <label>Seat(s) reserved</label>
                 <div className={classes["seats-row"]}>
                   {returnSeats.map((seat) => (
-                    <span>{seat}</span>
+                    <span key={seat}>{seat}</span>
                   ))}
                 </div>
               </div>
