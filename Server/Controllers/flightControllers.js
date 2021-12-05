@@ -71,7 +71,9 @@ const viewFlights = asyncHandler(async (req, res) => {
 });
 
 const viewFlight = asyncHandler(async (req, res, next) => {
-  const flight = await Flight.findById(req.params.id);
+  const flight = await Flight.findById(req.params.id)
+    .populate("departureReservations")
+    .populate("returnReservations");
 
   if (!flight) {
     return next(new ErrorResponse("No flight with that Id", 404));
