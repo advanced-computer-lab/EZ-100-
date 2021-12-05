@@ -24,8 +24,11 @@ export const FlightDetails = () => {
     data: loadedFlight,
   } = useHttp(getSingleFlight, true);
 
-  const { status: deleteStatus, sendRequest: sendDeleteRequest } =
-    useHttp(deleteFlight);
+  const {
+    status: deleteStatus,
+    sendRequest: sendDeleteRequest,
+    data: deletedFlight,
+  } = useHttp(deleteFlight);
 
   useEffect(() => {
     sendRequest(flightId);
@@ -51,8 +54,36 @@ export const FlightDetails = () => {
         pathname: "/flights",
         state: { notification: `Flight deleted successfully !` },
       });
+
+      const deleteReservation = async (id) => {
+        await fetch(
+          `http://localhost:5000/api/reservations/deleteReservation/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
+      };
+      // console.log(deletedFlight);
+      let reservations = deletedFlight.departureReservations;
+      for (let i = 0; i < deletedFlight.returnReservations; i++) {
+        let found = false;
+        for (let reservation of reservations) {
+          if (reservation._id === deletedFlight.returnReservations[i]._id) {
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          reservations.push(deletedFlight.returnReservations[i]);
+        }
+      }
+
+      for (const reservation of reservations) {
+        deleteReservation(reservation._id);
+      }
     }
-  }, [deleteStatus, history]);
+  }, [deleteStatus, deletedFlight, history]);
 
   if (deleteStatus === "pending") {
     return (

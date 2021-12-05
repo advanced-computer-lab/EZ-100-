@@ -92,7 +92,9 @@ const updateFlight = asyncHandler(async (req, res) => {
 });
 
 const deleteFlight = asyncHandler(async (req, res) => {
-  const flight = await Flight.findByIdAndDelete(req.params.id);
+  const flight = await Flight.findByIdAndDelete(req.params.id)
+    .populate("departureReservations")
+    .populate("returnReservations");
   res.status(200).json({ success: true, count: flight.length, data: flight });
 });
 

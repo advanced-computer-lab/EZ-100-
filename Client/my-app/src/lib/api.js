@@ -57,7 +57,7 @@ export async function deleteFlight(flightId) {
 
   const data = await response.json();
 
-  return data.Success;
+  return data.data;
 }
 
 const getDates = (date, isFlexible) => {
