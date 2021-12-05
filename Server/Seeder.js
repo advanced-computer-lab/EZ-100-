@@ -68,7 +68,7 @@ const importData = async () => {
       role: "admin",
       password: "123456",
     };
-    await User.create(adminstrator);
+    //await User.create(adminstrator);
 
     await Flight.create(transformedFlights);
     console.log("Data imported...");
@@ -81,7 +81,7 @@ const importData = async () => {
 //Delete data
 const deleteData = async () => {
   try {
-    await User.deleteMany();
+    //await User.deleteMany();
     await Flight.deleteMany();
     console.log("Data destroyed...");
     process.exit();
