@@ -1,0 +1,26 @@
+Tasks distribution:-
+
+Frontend:
+1) Mohamed Khaled Rostom (Scrum): Requirements 11 to 24
+  - UI for creating a reservation, and sending it to backend to store it in database.
+
+2) Zeina Ahmed: Requirement 29
+  - Editing logged in user information UI.
+  - Add some missing things in the UI of sprint 1.
+
+3) Mohamed Sherif Elokby: Requirements 26, 27, 27.1
+  - Page to display current reservations of the logged in user.
+  - Allow user to delete a reservation after confirming his/her decision.
+
+Backend:
+1) Youssef Yasser:
+  - Create (Reservation) mongoose model.
+  - POST '/createReservation' to create a new reservation in the database.
+  - DELETE '/deleteReservation/:id' to delete a reservation by its id.
+  - Add more fields to (User) mongoose model.
+  - PUT '/users/updateUser/:id' to update the user information with userId == id.
+
+2) Ahmed Mohamed:
+  - Create (Reservation) mongoose model.
+  - GET '/userReservations/:id' to return all reservations of the user with userId == id in the database.
+  - GET '/viewReservation/:id': returns the full details of a single reservation by its id.
