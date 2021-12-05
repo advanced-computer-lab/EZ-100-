@@ -69,7 +69,7 @@ const flightSchema = new Schema(
       default: [],
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 flightSchema.pre("save", function (next) {
@@ -78,17 +78,6 @@ flightSchema.pre("save", function (next) {
       new ErrorResponse("Arrival Date is before Departure Date", 400)
     );
   }
-
-  // if (this.SeatsAvailable.length === 0) {
-  //   const length = this.FirstSeats + this.BusinessSeats + this.EconomySeats;
-  //   let seats = [];
-
-  //   for (let i = 0; i < length; i++) {
-  //     seats.push(false);
-  //   }
-
-  //   this.SeatsAvailable = seats;
-  // }
 
   for (let i = 0; i < this.EconomySeats; i++) {
     this.EconomySeatsAvailable[i] = false;
@@ -103,6 +92,27 @@ flightSchema.pre("save", function (next) {
   }
   next();
 });
+
+flightSchema.virtual("departureReservations", {
+  ref: "Reservation",
+  localField: "_id",
+  foreignField: "departureFlight",
+  justOne: false,
+});
+
+flightSchema.virtual("returnReservations", {
+  ref: "Reservation",
+  localField: "_id",
+  foreignField: "arrivalFlight",
+  justOne: false,
+});
+
+// BootcampSchema.virtual('courses', {
+//   ref: 'Course', // Model
+//   localField: '_id',
+//   foreignField: 'bootcamp', // What field in Course is used to Join
+//   justOne: false // To have all courses
+// })
 
 const Flight = mongoose.model("Flight", flightSchema);
 module.exports = Flight;
