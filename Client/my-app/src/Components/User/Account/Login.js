@@ -50,7 +50,7 @@ export default function Login(props) {
 
     const user = { email: data.get("email"), password: data.get("password") };
 
-    const response = await fetch("http://localhost:5000/api/users/login", {
+    const response = await fetch("http://localhost:5000/api/auth/login", {
       method: "POST",
       body: JSON.stringify(user), // convert movie from JS object => JSON
       headers: {
