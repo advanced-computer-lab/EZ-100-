@@ -56,7 +56,7 @@ export default function Login(props) {
     console.log(resData);
 
     if (resData.success) {
-      authCtx.login("token balabizo", resData.data);
+      authCtx.login(resData.token, resData.data);
 
       if (props.nextPage) {
         history.replace(props.nextPage);
