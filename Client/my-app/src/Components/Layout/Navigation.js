@@ -8,6 +8,10 @@ import classes from "./Navigation.module.css";
 export const Navigation = () => {
   const authCtx = useContext(AuthContext);
 
+  const onLogoutHandler = () => {
+    authCtx.logout();
+  };
+
   return (
     <header className={classes.header}>
       <div className={classes.logo}>EZ Travel</div>
@@ -50,6 +54,12 @@ export const Navigation = () => {
               Contact us
             </NavLink>
           </li>
+
+          {authCtx.isLoggedIn && (
+            <li>
+              <button onClick={onLogoutHandler}>Logout</button>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

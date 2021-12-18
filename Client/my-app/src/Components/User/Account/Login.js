@@ -43,24 +43,20 @@ export default function Login(props) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
-
     const user = { email: data.get("email"), password: data.get("password") };
 
     const response = await fetch("http://localhost:5000/api/auth/login", {
       method: "POST",
-      body: JSON.stringify(user), // convert movie from JS object => JSON
+      body: JSON.stringify(user),
       headers: {
         "Content-Type": "application/json",
       },
     });
     const resData = await response.json();
+    console.log(resData);
 
     if (resData.success) {
-      authCtx.login("token", resData.data);
+      authCtx.login("token balabizo", resData.data);
 
       if (props.nextPage) {
         history.replace(props.nextPage);

@@ -29,6 +29,20 @@
   font-size: 1.25rem;
 }
 
+.nav button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.25rem;
+  border-bottom: 4px solid transparent;
+}
+
+.nav button:hover {
+  color: #e1f5fe;
+  cursor: pointer;
+  border-bottom: 4px solid #e1f5fe;
+}
+
 .nav a {
   text-decoration: none;
   color: #fff;

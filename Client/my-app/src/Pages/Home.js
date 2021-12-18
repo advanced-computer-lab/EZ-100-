@@ -8,11 +8,15 @@ import classes from "./Home.module.css";
 
 export const Home = () => {
   const authCtx = useContext(AuthContext);
-  const role = authCtx.user.role;
+  // const role = authCtx.user.role;
+
+  if (!authCtx.isLoggedIn) {
+    return <></>;
+  }
 
   return (
     <div className={classes.container}>
-      {role === "admin" && (
+      {authCtx.user.role === "admin" && (
         <>
           <h2>Welcome back, Adminstrator!</h2>
           <div className={classes.items}>
@@ -30,7 +34,7 @@ export const Home = () => {
         </>
       )}
 
-      {role === "user" && (
+      {authCtx.user.role === "user" && (
         <>
           <h2>Welcome back, Username!</h2>
           <div className={classes.items}>
