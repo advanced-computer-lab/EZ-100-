@@ -8,6 +8,6 @@ router.put("/updateUser/:id", userController.editUserInfo);
 router.get("/:id", userController.getUserById);
 
 // Dummy login
-// router.post("/login", userController.login);
+router.post("/login", userController.login);
 
 module.exports = router;
