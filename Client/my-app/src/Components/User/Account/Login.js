@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -36,11 +37,14 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login(props) {
+  const [errorMsg, setErrorMsg] = useState("");
   const history = useHistory();
   const authCtx = React.useContext(AuthContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setErrorMsg("");
     const data = new FormData(event.currentTarget);
 
     const user = { email: data.get("email"), password: data.get("password") };
@@ -63,8 +67,13 @@ export default function Login(props) {
       } else {
         props.onHideModal();
       }
-    }
+    } else {
+      setErrorMsg("Incorrect email or password");
 
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 5000);
+    }
     // Else setErroor ....
   };
 
@@ -138,6 +147,7 @@ export default function Login(props) {
             </Grid>
           </Box>
         </Box>
+        <div style={{ color: "red" }}>{errorMsg}</div>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
