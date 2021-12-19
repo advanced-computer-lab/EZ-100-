@@ -123,131 +123,139 @@ export const SearchForm = (props) => {
   };
 
   return (
-    <div className="centered">
-      <Card>
-        <h3>Book your trip !</h3>
-        <hr />
-        <form onSubmit={formSubmitHandler} className={classes.form}>
-          <div className={classes["row"]}>
-            <div
-              style={{ marginLeft: "-20px" }}
-              className={classes["form-control"]}
-            >
-              <FilterInput
-                hasError={fromHasError}
-                width={200}
-                label="From"
-                options={options.from}
-                onChange={fromChangeHandler}
-              />
-            </div>
-
-            <div
-              style={{ marginLeft: "-20px" }}
-              className={classes["form-control"]}
-            >
-              <FilterInput
-                hasError={toHasError}
-                width={200}
-                label="To"
-                options={options.to}
-                onChange={toChangeHandler}
-              />
-            </div>
-          </div>
-
-          <div className={classes.row}>
-            <div className={classes["form-control"]}>
-              <InputLabel>Departure date</InputLabel>
-              <input
-                type="date"
-                value={departureDate}
-                onChange={departureChangeHandler}
-              ></input>
-            </div>
-
-            <div className={classes["form-control"]}>
-              <InputLabel>Return date</InputLabel>
-              <input
-                type="date"
-                value={returnDate}
-                onChange={returnChangeHandler}
-              ></input>
-            </div>
-          </div>
-
-          <div
-            style={{ marginTop: "-20px" }}
-            className={classes["form-control"]}
-          >
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="Flexible dates (For better options)"
-              onChange={flexibleSearchHandler}
-            />
-          </div>
-          <div className={classes.row}>
-            <div className={classes["form-control"]}>
-              <InputLabel>Adult(s)</InputLabel>
-              <input
-                type="number"
-                min="1"
-                value={adultsNum}
-                onChange={adultNumChangeHandler}
-              ></input>
-            </div>
-
-            <div className={classes["form-control"]}>
-              <InputLabel>Children</InputLabel>
-              <input
-                type="number"
-                min="0"
-                value={childrenNum}
-                onChange={childrenNumChangeHandler}
-              ></input>
-            </div>
-          </div>
-
-          <div className={classes["last-row"]}>
-            <InputLabel>Cabin</InputLabel>
-            <div style={{ textAlign: "left" }}>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={cabin}
-                label="Age"
-                onChange={cabinChangeHandler}
+    <div style={{ margin: "0 0" }} className="centered">
+      <div style={{ marginTop: "2rem" }}>
+        <Card>
+          <h3>Book your trip !</h3>
+          <hr />
+          <form onSubmit={formSubmitHandler} className={classes.form}>
+            <div className={classes["row"]}>
+              <div
+                style={{ marginLeft: "-20px" }}
+                className={classes["form-control"]}
               >
-                <MenuItem value="Economy">Economy</MenuItem>
-                <MenuItem value="Business">Business</MenuItem>
-                <MenuItem value="First class">First class</MenuItem>
-              </Select>
+                <FilterInput
+                  hasError={fromHasError}
+                  width={200}
+                  label="From"
+                  options={options.from}
+                  onChange={fromChangeHandler}
+                />
+              </div>
+
+              <div
+                style={{ marginLeft: "-20px" }}
+                className={classes["form-control"]}
+              >
+                <FilterInput
+                  hasError={toHasError}
+                  width={200}
+                  label="To"
+                  options={options.to}
+                  onChange={toChangeHandler}
+                />
+              </div>
             </div>
-          </div>
 
-          {fromHasError && (
-            <p style={{ color: "red", textAlign: "left", marginTop: "-10px" }}>
-              From field cannot be empty *
-            </p>
-          )}
+            <div className={classes.row}>
+              <div className={classes["form-control"]}>
+                <InputLabel>Departure date</InputLabel>
+                <input
+                  type="date"
+                  value={departureDate}
+                  onChange={departureChangeHandler}
+                ></input>
+              </div>
 
-          {toHasError && (
-            <p style={{ color: "red", textAlign: "left", marginTop: "-10px" }}>
-              To field cannot be empty *
-            </p>
-          )}
+              <div className={classes["form-control"]}>
+                <InputLabel>Return date</InputLabel>
+                <input
+                  type="date"
+                  value={returnDate}
+                  onChange={returnChangeHandler}
+                ></input>
+              </div>
+            </div>
 
-          {datesError && (
-            <p style={{ color: "red", textAlign: "left", marginTop: "-10px" }}>
-              Departure date cannot be before return date *
-            </p>
-          )}
+            <div
+              style={{ marginTop: "-20px" }}
+              className={classes["form-control"]}
+            >
+              <FormControlLabel
+                control={<Checkbox defaultChecked />}
+                label="Flexible dates (For better options)"
+                onChange={flexibleSearchHandler}
+              />
+            </div>
+            <div className={classes.row}>
+              <div className={classes["form-control"]}>
+                <InputLabel>Adult(s)</InputLabel>
+                <input
+                  type="number"
+                  min="1"
+                  value={adultsNum}
+                  onChange={adultNumChangeHandler}
+                ></input>
+              </div>
 
-          <button type="submit" className="btn">
-            Search
-          </button>
-        </form>
-      </Card>
+              <div className={classes["form-control"]}>
+                <InputLabel>Children</InputLabel>
+                <input
+                  type="number"
+                  min="0"
+                  value={childrenNum}
+                  onChange={childrenNumChangeHandler}
+                ></input>
+              </div>
+            </div>
+
+            <div className={classes["last-row"]}>
+              <InputLabel>Cabin</InputLabel>
+              <div style={{ textAlign: "left" }}>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={cabin}
+                  label="Age"
+                  onChange={cabinChangeHandler}
+                >
+                  <MenuItem value="Economy">Economy</MenuItem>
+                  <MenuItem value="Business">Business</MenuItem>
+                  <MenuItem value="First class">First class</MenuItem>
+                </Select>
+              </div>
+            </div>
+
+            {fromHasError && (
+              <p
+                style={{ color: "red", textAlign: "left", marginTop: "-10px" }}
+              >
+                From field cannot be empty *
+              </p>
+            )}
+
+            {toHasError && (
+              <p
+                style={{ color: "red", textAlign: "left", marginTop: "-10px" }}
+              >
+                To field cannot be empty *
+              </p>
+            )}
+
+            {datesError && (
+              <p
+                style={{ color: "red", textAlign: "left", marginTop: "-10px" }}
+              >
+                Departure date cannot be before return date *
+              </p>
+            )}
+
+            <button type="submit" className="btn">
+              Search
+            </button>
+          </form>
+        </Card>
+      </div>
     </div>
   );
 };
