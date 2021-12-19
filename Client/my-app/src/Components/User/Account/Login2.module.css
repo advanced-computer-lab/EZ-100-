@@ -15,6 +15,14 @@
   justify-content: center;
 }
 
+.col-75 {
+  margin: 0 4rem;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .form {
   display: flex;
   flex-direction: column;

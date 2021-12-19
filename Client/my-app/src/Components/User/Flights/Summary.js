@@ -14,7 +14,8 @@ import AuthContext from "../../../store/auth-context";
 
 import useHttp from "../../../hooks/use-http";
 import { createReservation } from "../../../lib/api";
-import Login from "../Account/Login";
+// import Login from "../Account/Login";
+import { LoginPage } from "../../../Pages/Auth/LoginPage";
 
 export const Summary = (props) => {
   const { trip } = props;
@@ -215,7 +216,8 @@ export const Summary = (props) => {
     <>
       {showLogin && (
         <Modal onClose={toggleLoginHandler}>
-          <Login onHideModal={toggleLoginHandler}></Login>
+          <LoginPage inModal={true}></LoginPage>
+          {/* <Login onHideModal={toggleLoginHandler}></Login> */}
         </Modal>
       )}
       <div className={classes.container}>

@@ -36,10 +36,13 @@ export const Login2 = (props) => {
   const passwordClasses =
     formik.touched.password && formik.errors.password ? classes.error : "";
 
+  const colClass1 = props.inModal ? classes["col-75"] : classes.col;
+  const containerClass = !props.inModal ? classes.container : "";
+
   return (
-    <div className={classes.container}>
+    <div className={containerClass}>
       <div className={classes.row}>
-        <div className={classes.col}>
+        <div className={colClass1}>
           {props.isLoading && (
             <div className="centered">
               <LoadingSpinner />
@@ -97,9 +100,11 @@ export const Login2 = (props) => {
           )}
         </div>
 
-        <div className={classes.col}>
-          <img style={{ width: "100%" }} src={loginUI} alt="UI" />
-        </div>
+        {!props.inModal && (
+          <div className={classes.col}>
+            <img style={{ width: "100%" }} src={loginUI} alt="UI" />
+          </div>
+        )}
       </div>
     </div>
   );

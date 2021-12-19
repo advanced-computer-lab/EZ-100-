@@ -1,12 +1,14 @@
 import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 import { Login2 } from "../../Components/User/Account/Login2";
 import AuthContext from "../../store/auth-context";
 
-export const LoginPage = () => {
+export const LoginPage = (props) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const history = useHistory();
   const authCtx = useContext(AuthContext);
 
   const loginHandler = async (data) => {
@@ -25,6 +27,7 @@ export const LoginPage = () => {
 
     if (resData.success) {
       authCtx.login(resData.token, resData.data);
+      history.replace("/home");
     } else {
       console.log(resData.error);
       setErrorMsg("Incorrect email or password");
@@ -39,6 +42,7 @@ export const LoginPage = () => {
 
   return (
     <Login2
+      inModal={props.inModal}
       onLogin={loginHandler}
       errorMsg={errorMsg}
       isLoading={isLoading}
