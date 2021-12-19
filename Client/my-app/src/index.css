@@ -5,7 +5,8 @@
 body {
   font-family: sans-serif;
   margin: 0;
-  background-color: #e1f5fe;
+  /* background-color: #e1f5fe; */
+  background-color: #fff;
 }
 
 .centered {
