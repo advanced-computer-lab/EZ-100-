@@ -23,7 +23,7 @@ export default function EditUser(props) {
       );
 
       const data = await response.json();
-      console.log(data.data);
+      // console.log(data.data);
 
       setisLoading(false);
       setUser(data.data);
@@ -64,7 +64,9 @@ export default function EditUser(props) {
           },
         }
       );
-      console.log(data.json().data);
+      const jsonData = await data.json();
+      // console.log();
+      authCtx.userSetter(jsonData.data);
       setisLoading(false);
     },
   });
