@@ -126,7 +126,7 @@ export const SearchForm = (props) => {
     <div style={{ margin: "0 0" }} className="centered">
       <div style={{ marginTop: "2rem" }}>
         <Card>
-          <h3>Book your trip !</h3>
+          <h3>Your next adventure starts here!</h3>
           <hr />
           <form onSubmit={formSubmitHandler} className={classes.form}>
             <div className={classes["row"]}>

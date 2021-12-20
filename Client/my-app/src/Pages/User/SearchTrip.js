@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { SearchForm } from "../../Components/User/Flights/SearchForm";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner";
 
-import skyBG from "../../assets/sky3.jpg";
+import skyBG from "../../assets/sky4.jpg";
 
 export const SearchTrip = () => {
   const [allFlights, setAllFlights] = useState([]);

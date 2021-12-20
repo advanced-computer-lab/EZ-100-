@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 // import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -6,13 +7,35 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
+// import Modal from "@mui/material/Modal";
+// import Typography from "@mui/material/Typography";
+// import Box from "@mui/material/Box";
+
+import Modal from "../../UI/Modal";
+import { SeatPicker } from "../Flights/SeatPicker";
 
 import classes from "./FlightCard.module.css";
 
 import dubaiImg from "../../../assets/dubai2.jpg";
 import cairoImg from "../../../assets/cairo.jpg";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 export default function FlightCard(props) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const { image, flight, cabin, seats } = props;
 
   let usedImg = cairoImg;
@@ -87,36 +110,45 @@ export default function FlightCard(props) {
   }
 
   return (
-    <Card sx={{ width: "45%" }}>
-      <CardHeader
-        title={`${from} - ${to}`}
-        subheader={departureDate.time + " -- " + departureDate.longDate}
-      />
-      <CardMedia
-        component="img"
-        height="150"
-        image={usedImg}
-        alt="Dubai image"
-      />
-      <CardContent>
-        <div className={classes.row}>
-          <p>Number of seats: {seatsNum}</p>
-          <p>Duration: {duration} hr</p>
-        </div>
+    <>
+      {open && (
+        <Modal onClose={handleClose}>
+          <SeatPicker flight={flight} trip={{ cabin: resCabin }}></SeatPicker>
+        </Modal>
+      )}
+      <Card sx={{ width: "45%" }}>
+        <CardHeader
+          title={`${from} - ${to}`}
+          subheader={departureDate.time + " -- " + departureDate.longDate}
+        />
+        <CardMedia
+          component="img"
+          height="170"
+          image={usedImg}
+          alt="Dubai image"
+        />
+        <CardContent>
+          <div className={classes.row}>
+            <p>Number of seats: {seatsNum}</p>
+            <p>Duration: {duration} hr</p>
+          </div>
 
-        <div className={classes.row}>
-          <p>Cabin: {resCabin}</p>
-          <p>Baggage: {baggage} kg</p>
-        </div>
-        <div className={classes.row}>
-          <p>Price (per seat): ${price}</p>
-          <p>Total price: ${totalPrice}</p>
-        </div>
-      </CardContent>
-      <CardActions>
-        <Button size="small">View seats</Button>
-        <Button size="small">Choose another flight</Button>
-      </CardActions>
-    </Card>
+          <div className={classes.row}>
+            <p>Cabin: {resCabin}</p>
+            <p>Baggage: {baggage} kg</p>
+          </div>
+          <div className={classes.row}>
+            <p>Price (per seat): ${price}</p>
+            <p>Total price: ${totalPrice}</p>
+          </div>
+        </CardContent>
+        <CardActions>
+          <Button onClick={handleOpen} size="small">
+            View seats
+          </Button>
+          <Button size="small">Choose another flight</Button>
+        </CardActions>
+      </Card>
+    </>
   );
 }
