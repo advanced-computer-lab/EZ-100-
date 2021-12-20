@@ -1,5 +1,5 @@
 .item {
-  width: 70%;
+  width: 60%;
   margin: 2rem auto;
 }
 
@@ -12,4 +12,15 @@
 
 .title button {
   margin: 0 3rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }

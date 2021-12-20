@@ -2,10 +2,10 @@ import * as React from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import classes from "./AccordionItem.module.css";
+import FlightCard from "./FlightCard";
 
 export const AccordionItem = (props) => {
   const reservation = props.reservation;
@@ -99,19 +99,32 @@ export const AccordionItem = (props) => {
           id="panel1a-header"
         >
           <div className={classes.title}>
-            <h3>
-              {From} - {To} (Round trip)
-            </h3>
+            <div className={classes.col}>
+              <h3 style={{ marginBottom: "0" }}>
+                {From} - {To} (Round trip)
+              </h3>
+              <p>Booking id: {reservation._id}</p>
+            </div>
             <button type="button" className="btn" onClick={onCancelHandler}>
               Cancel reservation
             </button>
           </div>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
+          <div className={classes.row}>
+            <FlightCard
+              image="dubai"
+              flight={reservation.departureFlight}
+              seats={reservation.departureSeats}
+              cabin={reservation.cabin}
+            ></FlightCard>
+
+            <FlightCard
+              flight={reservation.arrivalFlight}
+              seats={reservation.arrivalSeats}
+              cabin={reservation.cabin}
+            ></FlightCard>
+          </div>
         </AccordionDetails>
       </Accordion>
     </div>
