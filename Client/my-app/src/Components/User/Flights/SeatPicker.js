@@ -3,10 +3,17 @@ import { SeatBtn } from "./SeatBtn";
 import classes from "./SeatPicker.module.css";
 
 export const SeatPicker = (props) => {
-  const { flight, trip } = props;
-  const [counter, setCounter] = useState(0);
+  const { flight, trip, editingMode, reservedSeats } = props;
+  const [counter, setCounter] = useState(reservedSeats.length || 0);
   const [chosenSeats, setChosenSeats] = useState([]);
   // const seats = flight.SeatsAvailable;
+
+  let resSeats = [];
+  let maximumSeats = props.max;
+  if (editingMode) {
+    resSeats = reservedSeats;
+    maximumSeats = reservedSeats.length;
+  }
 
   const addSeatsHandler = (id) => {
     setCounter((count) => count + 1);
@@ -35,12 +42,13 @@ export const SeatPicker = (props) => {
               <p>F{index}</p>
               <SeatBtn
                 isGray={isGray}
-                max={props.max}
+                max={maximumSeats}
                 counter={counter}
                 onAddSeat={addSeatsHandler}
                 onRemoveSeat={removeSeatHandler}
                 id={"F" + index}
                 reserved={seat}
+                reservedSeats={resSeats}
               ></SeatBtn>
             </div>
           );
@@ -54,12 +62,13 @@ export const SeatPicker = (props) => {
               <p>B{index}</p>
               <SeatBtn
                 isGray={isGray}
-                max={props.max}
+                max={maximumSeats}
                 counter={counter}
                 onAddSeat={addSeatsHandler}
                 onRemoveSeat={removeSeatHandler}
                 id={"B" + index}
                 reserved={seat}
+                reservedSeats={resSeats}
               ></SeatBtn>
             </div>
           );
@@ -73,12 +82,13 @@ export const SeatPicker = (props) => {
               <p>E{index}</p>
               <SeatBtn
                 isGray={isGray}
-                max={props.max}
+                max={maximumSeats}
                 counter={counter}
                 onAddSeat={addSeatsHandler}
                 onRemoveSeat={removeSeatHandler}
                 id={"E" + index}
                 reserved={seat}
+                reservedSeats={resSeats}
               ></SeatBtn>
             </div>
           );

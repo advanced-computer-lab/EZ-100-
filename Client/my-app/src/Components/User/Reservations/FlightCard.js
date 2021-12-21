@@ -7,9 +7,6 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
-// import Modal from "@mui/material/Modal";
-// import Typography from "@mui/material/Typography";
-// import Box from "@mui/material/Box";
 
 import Modal from "../../UI/Modal";
 import { SeatPicker } from "../Flights/SeatPicker";
@@ -19,19 +16,10 @@ import classes from "./FlightCard.module.css";
 import dubaiImg from "../../../assets/dubai2.jpg";
 import cairoImg from "../../../assets/cairo.jpg";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 export default function FlightCard(props) {
+  const [toBeEditedSeats, setToBeEditedSeats] = useState([]);
+  const [editDisable, setEditDisable] = useState(true);
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -53,6 +41,7 @@ export default function FlightCard(props) {
   let to = "DXB";
   let seatsNum = 1;
   let duration = "";
+  let reservedSeats = [];
 
   if (flight) {
     from = flight.From;
@@ -100,20 +89,61 @@ export default function FlightCard(props) {
       resCabin = "First class";
       price = flight.FirstPrice;
     }
-    let flightSeats = [];
+
     for (const seat of seats) {
-      flightSeats.push(temp + seat);
+      reservedSeats.push(temp + seat);
     }
 
-    seatsNum = flightSeats.length;
+    seatsNum = reservedSeats.length;
     totalPrice = parseInt(price) * seatsNum;
   }
+
+  const compareSeatLists = (X, Y) => {
+    let equal = true;
+    for (const x of X) {
+      if (!Y.includes(x)) {
+        equal = false;
+        break;
+      }
+    }
+    // console.log(X + " " + Y + " " + equal);
+    return equal;
+  };
+
+  const changeSeatsHandler = (chosenSeats) => {
+    setToBeEditedSeats(chosenSeats);
+    setEditDisable(compareSeatLists(reservedSeats, chosenSeats));
+  };
+
+  const onChangeSeatsHandler = () => {
+    console.log(
+      `Reserved seats changed from [${reservedSeats}] to [${toBeEditedSeats}]`
+    );
+    // Send request to backend with new seats
+  };
 
   return (
     <>
       {open && (
         <Modal onClose={handleClose}>
-          <SeatPicker flight={flight} trip={{ cabin: resCabin }}></SeatPicker>
+          <div style={{ justifyContent: "center" }} className={classes.row}>
+            <p>Your {seatsNum} seat(s) reservation.</p>
+            <button
+              disabled={editDisable}
+              className={classes.btn}
+              type="button"
+              onClick={onChangeSeatsHandler}
+            >
+              Confirm changes
+            </button>
+          </div>
+          <SeatPicker
+            flight={flight}
+            trip={{ cabin: resCabin }}
+            onSeatsChange={changeSeatsHandler}
+            editingMode={true}
+            reservedSeats={reservedSeats}
+          ></SeatPicker>
         </Modal>
       )}
       <Card sx={{ width: "45%" }}>

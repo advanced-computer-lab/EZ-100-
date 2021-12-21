@@ -2,3 +2,25 @@
   display: flex;
   justify-content: space-between;
 }
+
+.btn {
+  margin: 0 1rem;
+  font-size: 0.8rem;
+  text-decoration: none;
+  background-color: #002f6c;
+  color: white;
+  border-radius: 6px;
+  padding: 0.25rem 0.8rem;
+  border: 1px solid #002f6c;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: #01579b;
+  border-color: #01579b;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
