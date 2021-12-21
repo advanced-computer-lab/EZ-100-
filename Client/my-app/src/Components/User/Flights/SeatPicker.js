@@ -4,7 +4,12 @@ import classes from "./SeatPicker.module.css";
 
 export const SeatPicker = (props) => {
   const { flight, trip, editingMode, reservedSeats } = props;
-  const [counter, setCounter] = useState(reservedSeats.length || 0);
+
+  let temp = 0;
+  if (reservedSeats) {
+    temp = reservedSeats.length;
+  }
+  const [counter, setCounter] = useState(temp);
   const [chosenSeats, setChosenSeats] = useState([]);
   // const seats = flight.SeatsAvailable;
 

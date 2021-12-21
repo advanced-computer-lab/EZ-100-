@@ -27,7 +27,12 @@ export const LoginPage = (props) => {
 
     if (resData.success) {
       authCtx.login(resData.token, resData.data);
-      history.replace("/home");
+      // history.replace("/home");
+      if (props.nextPage) {
+        history.replace(props.nextPage);
+      } else {
+        props.hideModal();
+      }
     } else {
       console.log(resData.error);
       setErrorMsg("Incorrect email or password");

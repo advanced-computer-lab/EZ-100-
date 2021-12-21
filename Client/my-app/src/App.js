@@ -34,7 +34,7 @@ function App() {
           </Route>
         )}
         <Route path="/login">
-          <LoginPage></LoginPage>
+          <LoginPage nextPage="/home"></LoginPage>
         </Route>
         {isLoggedIn && (
           <Route path="/new-flight">

@@ -216,7 +216,7 @@ export const Summary = (props) => {
     <>
       {showLogin && (
         <Modal onClose={toggleLoginHandler}>
-          <LoginPage inModal={true}></LoginPage>
+          <LoginPage inModal={true} hideModal={toggleLoginHandler}></LoginPage>
           {/* <Login onHideModal={toggleLoginHandler}></Login> */}
         </Modal>
       )}
