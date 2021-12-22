@@ -11,12 +11,39 @@ import Card from "../../UI/Card";
 import { FilterInput } from "../../UI/FilterInput";
 
 export const SearchForm = (props) => {
+  console.log(props.searchState);
+  const { searchState } = props;
+
   let today = new Date();
   today = today.toISOString().substring(0, 10);
 
   let todayP5 = new Date();
   todayP5.setDate(todayP5.getDate() + 5);
   todayP5 = todayP5.toISOString().substring(0, 10);
+
+  let departureDisable = false;
+  let returnDisable = false;
+  let disableDestinations = false;
+
+  let fromLabel = "From";
+  let toLabel = "To";
+
+  if (searchState) {
+    today = searchState.flightToChange.DepartureDate.substring(0, 10);
+    todayP5 = searchState.otherFlightDate.substring(0, 10);
+
+    disableDestinations = true;
+
+    if (searchState.isDepartureFlight) {
+      returnDisable = true;
+      fromLabel = searchState.flightToChange.From;
+      toLabel = searchState.flightToChange.To;
+    } else {
+      departureDisable = true;
+      fromLabel = searchState.flightToChange.To;
+      toLabel = searchState.flightToChange.From;
+    }
+  }
 
   const [fromValue, setFromValue] = useState();
   const [toValue, setToValue] = useState();
@@ -135,9 +162,10 @@ export const SearchForm = (props) => {
                 className={classes["form-control"]}
               >
                 <FilterInput
+                  disabled={disableDestinations}
                   hasError={fromHasError}
                   width={200}
-                  label="From"
+                  label={fromLabel}
                   options={options.from}
                   onChange={fromChangeHandler}
                 />
@@ -148,9 +176,10 @@ export const SearchForm = (props) => {
                 className={classes["form-control"]}
               >
                 <FilterInput
+                  disabled={disableDestinations}
                   hasError={toHasError}
                   width={200}
-                  label="To"
+                  label={toLabel}
                   options={options.to}
                   onChange={toChangeHandler}
                 />
@@ -161,6 +190,7 @@ export const SearchForm = (props) => {
               <div className={classes["form-control"]}>
                 <InputLabel>Departure date</InputLabel>
                 <input
+                  disabled={departureDisable}
                   type="date"
                   value={departureDate}
                   onChange={departureChangeHandler}
@@ -170,6 +200,7 @@ export const SearchForm = (props) => {
               <div className={classes["form-control"]}>
                 <InputLabel>Return date</InputLabel>
                 <input
+                  disabled={returnDisable}
                   type="date"
                   value={returnDate}
                   onChange={returnChangeHandler}

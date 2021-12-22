@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
+
 // import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -23,6 +25,8 @@ export default function FlightCard(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const history = useHistory();
 
   const { image, flight, cabin, seats } = props;
 
@@ -122,6 +126,17 @@ export default function FlightCard(props) {
     // Send request to backend with new seats
   };
 
+  const chooseAnotherFlightHandler = () => {
+    history.push({
+      pathname: "/search",
+      state: {
+        flightToChange: flight,
+        isDepartureFlight: props.isDeparture,
+        otherFlightDate: props.otherFlightDate,
+      },
+    });
+  };
+
   return (
     <>
       {open && (
@@ -176,7 +191,9 @@ export default function FlightCard(props) {
           <Button onClick={handleOpen} size="small">
             View seats
           </Button>
-          <Button size="small">Choose another flight</Button>
+          <Button size="small" onClick={chooseAnotherFlightHandler}>
+            Choose another flight
+          </Button>
         </CardActions>
       </Card>
     </>

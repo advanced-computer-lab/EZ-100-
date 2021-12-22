@@ -11,6 +11,9 @@ export const SearchTrip = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
+  const historyState = history.location.state;
+
+  // console.log(historyState);
 
   const fetchFlights = useCallback(async () => {
     setIsLoading(true);
@@ -44,6 +47,7 @@ export const SearchTrip = () => {
         }}
       >
         <SearchForm
+          searchState={historyState}
           onFormSubmission={formDataHandler}
           allFlights={allFlights}
         ></SearchForm>

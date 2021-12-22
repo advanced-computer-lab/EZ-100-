@@ -115,12 +115,16 @@ export const AccordionItem = (props) => {
             <FlightCard
               image="dubai"
               flight={reservation.departureFlight}
+              isDeparture={true}
+              otherFlightDate={reservation.arrivalFlight.DepartureDate}
               seats={reservation.departureSeats}
               cabin={reservation.cabin}
             ></FlightCard>
 
             <FlightCard
               flight={reservation.arrivalFlight}
+              isDeparture={false}
+              otherFlightDate={reservation.departureFlight.DepartureDate}
               seats={reservation.arrivalSeats}
               cabin={reservation.cabin}
             ></FlightCard>

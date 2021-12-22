@@ -17,6 +17,33 @@ const useStyles = makeStyles((theme) =>
 export const FilterInput = (props) => {
   const width = props.width || 150;
   const classes = useStyles();
+  if (props.disabled) {
+    return (
+      <Autocomplete
+        disabled
+        id="custom-autocomplete"
+        options={props.options}
+        style={{ width: width }}
+        renderInput={(params) => {
+          return (
+            <TextField
+              InputProps={{
+                classes: {
+                  notchedOutline: classes.notchedOutline,
+                },
+              }}
+              {...params}
+              variant="outlined"
+              label={props.label}
+              className={props.hasError ? classes.textfield : ""}
+            />
+          );
+        }}
+        onChange={props.onChange}
+      />
+    );
+  }
+
   return (
     <Autocomplete
       id="custom-autocomplete"
