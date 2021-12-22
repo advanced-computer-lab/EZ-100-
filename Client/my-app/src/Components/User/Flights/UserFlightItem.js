@@ -16,7 +16,7 @@ import { IoBagSharp } from "react-icons/io5";
 export const UserFlightItem = (props) => {
   const { flight } = props;
   const history = useHistory();
-  const trip = history.location.state;
+  const trip = history.location.state.data;
 
   const reservationCtx = useContext(ReservationContext);
 

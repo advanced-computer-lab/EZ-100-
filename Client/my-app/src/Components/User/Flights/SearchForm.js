@@ -11,7 +11,7 @@ import Card from "../../UI/Card";
 import { FilterInput } from "../../UI/FilterInput";
 
 export const SearchForm = (props) => {
-  console.log(props.searchState);
+  // console.log(props.searchState);
   const { searchState } = props;
 
   let today = new Date();
@@ -27,26 +27,32 @@ export const SearchForm = (props) => {
 
   let fromLabel = "From";
   let toLabel = "To";
+  let intitialFromVal = "";
+  let initialToVal = "";
 
   if (searchState) {
-    today = searchState.flightToChange.DepartureDate.substring(0, 10);
-    todayP5 = searchState.otherFlightDate.substring(0, 10);
-
     disableDestinations = true;
 
     if (searchState.isDepartureFlight) {
+      today = searchState.flightToChange.DepartureDate.substring(0, 10);
+      todayP5 = searchState.otherFlightDate.substring(0, 10);
       returnDisable = true;
       fromLabel = searchState.flightToChange.From;
       toLabel = searchState.flightToChange.To;
     } else {
+      today = searchState.otherFlightDate.substring(0, 10);
+      todayP5 = searchState.flightToChange.DepartureDate.substring(0, 10);
       departureDisable = true;
       fromLabel = searchState.flightToChange.To;
       toLabel = searchState.flightToChange.From;
     }
+
+    intitialFromVal = fromLabel;
+    initialToVal = toLabel;
   }
 
-  const [fromValue, setFromValue] = useState();
-  const [toValue, setToValue] = useState();
+  const [fromValue, setFromValue] = useState(intitialFromVal);
+  const [toValue, setToValue] = useState(initialToVal);
   const [departureDate, setDepartureDate] = useState(today);
   const [returnDate, setReturnDate] = useState(todayP5);
   const [adultsNum, setAdultesNum] = useState(1);

@@ -18,7 +18,7 @@ import { createReservation } from "../../../lib/api";
 import { LoginPage } from "../../../Pages/Auth/LoginPage";
 
 export const Summary = (props) => {
-  const { trip } = props;
+  const { trip, searchState } = props;
   const [showLogin, setShowLogin] = useState(false);
 
   const { sendRequest, status, error } = useHttp(createReservation);
@@ -36,18 +36,40 @@ export const Summary = (props) => {
   let departurePrice;
   let returnPrice;
   if (trip.cabin === "Economy") {
-    departurePrice = departureFlight.EconomyPrice;
-    returnPrice = returnFlight.EconomyPrice;
+    if (searchState) {
+      if (searchState.isDepartureFlight) {
+        departurePrice = departureFlight.EconomyPrice;
+      } else {
+        returnPrice = returnFlight.EconomyPrice;
+      }
+    } else {
+      departurePrice = departureFlight.EconomyPrice;
+      returnPrice = returnFlight.EconomyPrice;
+    }
   } else if (trip.cabin === "Business") {
-    departurePrice = departureFlight.BusinessPrice;
-    returnPrice = returnFlight.BusinessPrice;
+    if (searchState) {
+      if (searchState.isDepartureFlight) {
+        departurePrice = departureFlight.BusinessPrice;
+      } else {
+        returnPrice = returnFlight.BusinessPrice;
+      }
+    } else {
+      departurePrice = departureFlight.BusinessPrice;
+      returnPrice = returnFlight.BusinessPrice;
+    }
   } else {
-    departurePrice = departureFlight.FirstPrice;
-    returnPrice = returnFlight.FirstPrice;
+    if (searchState) {
+      if (searchState.isDepartureFlight) {
+        departurePrice = departureFlight.FirstPrice;
+      } else {
+        returnPrice = returnFlight.FirstPrice;
+      }
+    } else {
+      departurePrice = departureFlight.FirstPrice;
+      returnPrice = returnFlight.FirstPrice;
+    }
   }
 
-  let departureDate = new Date(departureFlight.DepartureDate);
-  let returnDate = new Date(returnFlight.DepartureDate);
   const options = {
     weekday: "short",
     year: "numeric",
@@ -55,23 +77,59 @@ export const Summary = (props) => {
     day: "numeric",
   };
 
-  departureDate = {
-    time: departureDate.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
-    longDate: departureDate.toLocaleDateString("en-US", options),
-  };
+  let departureDate = new Date();
+  let returnDate = new Date();
+  console.log(searchState);
+  if (searchState) {
+    if (searchState.isDepartureFlight) {
+      departureDate = new Date(departureFlight.DepartureDate);
+      departureDate = {
+        time: departureDate.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        longDate: departureDate.toLocaleDateString("en-US", options),
+      };
+    } else {
+      returnDate = new Date(returnFlight.DepartureDate);
+      returnDate = {
+        longDate: returnDate.toLocaleDateString("en-US", options),
+        time: returnDate.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      };
+    }
+  } else {
+    departureDate = new Date(departureFlight.DepartureDate);
+    departureDate = {
+      time: departureDate.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      longDate: departureDate.toLocaleDateString("en-US", options),
+    };
 
-  returnDate = {
-    longDate: returnDate.toLocaleDateString("en-US", options),
-    time: returnDate.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
-  };
+    returnDate = new Date(returnFlight.DepartureDate);
+    returnDate = {
+      longDate: returnDate.toLocaleDateString("en-US", options),
+      time: returnDate.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
+  }
 
-  const totalPrice = seatsNumber * departurePrice + seatsNumber * returnPrice;
+  let totalPrice = 0;
+  if (searchState) {
+    if (searchState.isDepartureFlight) {
+      totalPrice = seatsNumber * departurePrice;
+    } else {
+      totalPrice = seatsNumber * returnPrice;
+    }
+  } else {
+    totalPrice = seatsNumber * departurePrice + seatsNumber * returnPrice;
+  }
 
   useEffect(() => {
     if (status === "completed" && !error) {
@@ -112,15 +170,96 @@ export const Summary = (props) => {
     }
   };
 
-  const cartItems = (
-    <div className={classes["cart-items"]}>
-      <div
-        style={{ justifyContent: "center" }}
-        className={classes["cart-item"]}
-      >
-        <h2>Your reservation summary</h2>
-      </div>
+  let departureSummary = null;
+  let returnSummary = null;
 
+  if (searchState) {
+    if (searchState.isDepartureFlight) {
+      departureSummary = (
+        <div className={classes["cart-item"]}>
+          <h2 style={{ alignSelf: "center" }}>
+            {departureFlight.FlightNumber}
+          </h2>
+          <div className={classes["content-col"]}>
+            <label>
+              Depart <FaPlaneDeparture />
+            </label>
+            <span>{departureDate.longDate}</span>
+            <span>{departureDate.time}</span>
+          </div>
+
+          <div className={classes["content-col"]}>
+            <label>Cabin</label>
+            <span>{trip.cabin}</span>
+          </div>
+
+          <div className={classes["content-col"]}>
+            <label>
+              Chosen seats <MdEventSeat />
+            </label>
+            <div className={classes["wrap-row"]}>
+              {departureSeats.map((seat) => (
+                <span key={seat}>{seat}</span>
+              ))}
+            </div>
+          </div>
+
+          <div className={classes["content-col"]}>
+            <label>Price</label>
+            <span className={classes.price}>${departurePrice}</span>
+          </div>
+          <div className={classes["content-col"]}>
+            <label>Amount</label>
+            <span style={{ alignSelf: "center" }} className={classes.amount}>
+              x{seatsNumber}
+            </span>
+          </div>
+        </div>
+      );
+    } else {
+      returnSummary = (
+        <div className={classes["cart-item"]}>
+          <h2 style={{ alignSelf: "center" }}>{returnFlight.FlightNumber}</h2>
+          <div className={classes["content-col"]}>
+            <label>
+              Depart <FaPlaneDeparture />
+            </label>
+            <span>{returnDate.longDate}</span>
+            <span>{returnDate.time}</span>
+          </div>
+
+          <div className={classes["content-col"]}>
+            <label>Cabin</label>
+            <span>{trip.cabin}</span>
+          </div>
+
+          <div className={classes["content-col"]}>
+            <label>
+              Chosen seats <MdEventSeat />
+            </label>
+            <div className={classes["wrap-row"]}>
+              {returnSeats.map((seat) => (
+                <span key={seat}>{seat}</span>
+              ))}
+            </div>
+          </div>
+
+          <div className={classes["content-col"]}>
+            <label>Price</label>
+            <span className={classes.price}>${returnPrice}</span>
+          </div>
+
+          <div className={classes["content-col"]}>
+            <label>Amount</label>
+            <span style={{ alignSelf: "center" }} className={classes.amount}>
+              x{seatsNumber}
+            </span>
+          </div>
+        </div>
+      );
+    }
+  } else {
+    departureSummary = (
       <div className={classes["cart-item"]}>
         <h2 style={{ alignSelf: "center" }}>{departureFlight.FlightNumber}</h2>
         <div className={classes["content-col"]}>
@@ -158,7 +297,9 @@ export const Summary = (props) => {
           </span>
         </div>
       </div>
+    );
 
+    returnSummary = (
       <div className={classes["cart-item"]}>
         <h2 style={{ alignSelf: "center" }}>{returnFlight.FlightNumber}</h2>
         <div className={classes["content-col"]}>
@@ -197,6 +338,20 @@ export const Summary = (props) => {
           </span>
         </div>
       </div>
+    );
+  }
+
+  let cartItems;
+  cartItems = (
+    <div className={classes["cart-items"]}>
+      <div
+        style={{ justifyContent: "center" }}
+        className={classes["cart-item"]}
+      >
+        <h2>Your reservation summary</h2>
+      </div>
+      {departureSummary}
+      {returnSummary}
     </div>
   );
 
