@@ -181,3 +181,145 @@ exports.deleteReservation = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Email could not be send", 500));
   }
 });
+
+exports.editReservation = asyncHandler (async (req,res,next) => {
+  const { oldDFlight, oldAFlight, newDFlight, newDFlightCabin,
+     newDSeats, newASeats,  newAFlight, newAFlightCabin, newPrice} = req.body;
+  var reservation = await Reservation.find(req.params.reservationId);
+
+  if (reservation) {
+    let depSeatsCount;
+    let arrSeatsCount;
+    if(! (oldDFlight === undefined)){
+      depSeatsCount = reservation.departureSeats.length;
+
+      for (let i = 0; i < depSeatsCount; i++) {
+        if (reservation.cabin === "Economy") {
+          let seat = reservation.departureSeats[i];
+          let up = await Flight.updateOne(
+            { _id: reservation.departureFlight },
+            { $set: { [`EconomySeatsAvailable.${seat}`]: false } }
+          );
+        } else if (reservation.cabin === "Business") {
+          let seat = reservation.departureSeats[i];
+          await Flight.updateOne(
+            { _id: reservation.departureFlight },
+            { $set: { [`BusinessSeatsAvailable.${seat}`]: false } }
+          );
+        } else if (reservation.cabin === "First") {
+          let seat = reservation.departureSeats[i];
+          await Flight.updateOne(
+            { _id: reservation.departureFlight },
+            { $set: { [`FirstSeatsAvailable.${seat}`]: false } }
+          );
+        }
+      }
+    }
+
+    if(!(oldAFlight === undefined)){
+      arrSeatsCount = reservation.arrivalSeats.length;
+
+      for (let i = 0; i < arrSeatsCount; i++) {
+        if (reservation.cabin === "Economy") {
+          let seat = reservation.arrivalSeats[i];
+          await Flight.updateOne(
+            { _id: reservation.arrivalFlight },
+            { $set: { [`EconomySeatsAvailable.${seat}`]: false } }
+          );
+          console.log(reservation.arrivalFlight);
+        } else if (reservation.cabin === "Business") {
+          let seat = reservation.arrivalSeats[i];
+          await Flight.updateOne(
+            { _id: reservation.arrivalFlight },
+            { $set: { [`BusinessSeatsAvailable.${seat}`]: false } }
+          );
+        } else if (reservation.cabin === "First") {
+          let seat = rreservation.arrivalSeats[i];
+          await Flight.updateOne(
+            { _id: reservation.arrivalFlight },
+            { $set: { [`FirstSeatsAvailable.${seat}`]: false } }
+          );
+        }
+      }
+    }
+
+    if(!(newDFlight === undefined)){
+      let up = await Reservation.updateOne(
+        { _id: req.params.reservationId },
+        { $set: { departureFlight: newDFlight }}
+      );
+
+      let newDepSeatsCount;
+      newDepSeatsCount = newDSeats.length;
+
+      for (let i = 0; i < newDepSeatsCount; i++) {
+        if (newDFlightCabin === "Economy") {
+          let seat = newDSeats[i];
+          let up = await Flight.updateOne(
+            { _id: newDFlight },
+            { $set: { [`EconomySeatsAvailable.${seat}`]: true } }
+          );
+        } else if (newDFlightCabin === "Business") {
+          let seat = newDSeats[i];
+          await Flight.updateOne(
+            { _id: newDFlight },
+            { $set: { [`BusinessSeatsAvailable.${seat}`]: true } }
+          );
+        } else if (newDFlightCabin === "First") {
+          let seat = newDSeats[i];
+          await Flight.updateOne(
+            { _id: newDFlight },
+            { $set: { [`FirstSeatsAvailable.${seat}`]: true } }
+          );
+        }
+      }
+
+    }
+
+    if(!(newAFlight === undefined)){
+      let up = await Reservation.updateOne(
+        { _id: req.params.reservationId },
+        { $set: { arrivalFlight: newAFlight }}
+      );
+
+      let newArrSeatsCount;
+      newArrSeatsCount = newASeats.length;
+
+      for (let i = 0; i < newArrSeatsCount; i++) {
+        if (newAFlightCabin === "Economy") {
+          let seat = newASeats[i];
+          let up = await Flight.updateOne(
+            { _id: newAFlight },
+            { $set: { [`EconomySeatsAvailable.${seat}`]: true } }
+          );
+        } else if (newAFlightCabin === "Business") {
+          let seat = newASeats[i];
+          await Flight.updateOne(
+            { _id: newAFlight },
+            { $set: { [`BusinessSeatsAvailable.${seat}`]: true } }
+          );
+        } else if (newAFlightCabin === "First") {
+          let seat = newASeats[i];
+          await Flight.updateOne(
+            { _id: newAFlight },
+            { $set: { [`FirstSeatsAvailable.${seat}`]: true } }
+          );
+        }
+      }
+
+    }
+
+    if(! (newPrice === undefined)){
+      await Reservation.updateOne(
+        { _id: req.params.reservationId },
+        { $set: { totalPrice : newPrice }}
+      );
+    }
+
+    var newRes = await Reservation.find(req.params.reservationId);
+
+
+  }
+  res.status(200).json({ success: true, data: newRes});
+
+});
