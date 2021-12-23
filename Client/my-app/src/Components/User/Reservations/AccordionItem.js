@@ -117,6 +117,7 @@ export const AccordionItem = (props) => {
               flight={reservation.departureFlight}
               isDeparture={true}
               otherFlightDate={reservation.arrivalFlight.DepartureDate}
+              reservation={reservation}
               seats={reservation.departureSeats}
               cabin={reservation.cabin}
             ></FlightCard>
@@ -125,6 +126,7 @@ export const AccordionItem = (props) => {
               flight={reservation.arrivalFlight}
               isDeparture={false}
               otherFlightDate={reservation.departureFlight.DepartureDate}
+              reservation={reservation}
               seats={reservation.arrivalSeats}
               cabin={reservation.cabin}
             ></FlightCard>

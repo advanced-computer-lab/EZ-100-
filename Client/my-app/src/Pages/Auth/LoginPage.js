@@ -29,8 +29,10 @@ export const LoginPage = (props) => {
       authCtx.login(resData.token, resData.data);
       // history.replace("/home");
       if (props.nextPage) {
+        setIsLoading(false);
         history.replace(props.nextPage);
       } else {
+        setIsLoading(false);
         props.hideModal();
       }
     } else {
@@ -41,8 +43,6 @@ export const LoginPage = (props) => {
         setErrorMsg("");
       }, 5000);
     }
-
-    setIsLoading(false);
   };
 
   return (

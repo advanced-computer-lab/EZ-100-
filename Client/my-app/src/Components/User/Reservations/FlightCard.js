@@ -133,6 +133,7 @@ export default function FlightCard(props) {
         flightToChange: flight,
         isDepartureFlight: props.isDeparture,
         otherFlightDate: props.otherFlightDate,
+        reservation: props.reservation,
       },
     });
   };

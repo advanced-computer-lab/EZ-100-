@@ -33,7 +33,7 @@ export const SearchTrip = () => {
     console.log(data);
     history.push({
       pathname: "/results/select",
-      state: data,
+      state: { data, searchState: historyState },
     });
   };
 
