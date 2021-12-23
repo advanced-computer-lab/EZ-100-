@@ -129,9 +129,45 @@ export const Summary = (props) => {
 
     if (authCtx.isLoggedIn) {
       if (searchState) {
-        console.log(searchState.reservation);
-        console.log(reservationCtx.departureFlight);
-        console.log(reservationCtx.returnFlight);
+        const items = [];
+        let quantity = 0;
+        if (searchState.isDepartureFlight) {
+          quantity = departureSeats.length;
+          items.push({
+            name: `${departureFlight.FlightNumber} - ${trip.cabin}`,
+            price: departurePrice,
+          });
+        } else {
+          quantity = returnSeats.length;
+          items.push({
+            name: `${returnFlight.FlightNumber} - ${trip.cabin}`,
+            price: returnPrice,
+          });
+        }
+
+        setIsLoading(true);
+        fetch("http://localhost:5000/checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: items,
+            quantity: quantity,
+          }),
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            }
+            return res.json().then((json) => Promise.reject(json));
+          })
+          .then(({ url }) => {
+            window.location = url;
+            // console.log(url);
+          })
+          .catch((e) => console.error(e.error));
+        // console.log(searchState.reservation);
       } else {
         let depSeats = [];
         let arrivalSeats = [];
