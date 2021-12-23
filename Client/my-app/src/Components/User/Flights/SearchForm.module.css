@@ -67,9 +67,13 @@
   font: inherit;
   padding: 0.25rem;
   border: none;
-  border-bottom: 3px solid #ccc;
+  border-bottom: 3px solid #002f6c;
   flex: 1;
   margin-right: 2rem;
+}
+
+.form-control input[type="date"]:disabled {
+  border-bottom: 3px solid #ccc;
 }
 
 .form-control input[type="date"]:focus {

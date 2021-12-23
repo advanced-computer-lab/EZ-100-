@@ -29,9 +29,12 @@ export const SearchForm = (props) => {
   let toLabel = "To";
   let intitialFromVal = "";
   let initialToVal = "";
+  let intitialAdultSeats = 1;
 
   if (searchState) {
     disableDestinations = true;
+
+    intitialAdultSeats = searchState.reservation.departureSeats.length;
 
     if (searchState.isDepartureFlight) {
       today = searchState.flightToChange.DepartureDate.substring(0, 10);
@@ -55,7 +58,7 @@ export const SearchForm = (props) => {
   const [toValue, setToValue] = useState(initialToVal);
   const [departureDate, setDepartureDate] = useState(today);
   const [returnDate, setReturnDate] = useState(todayP5);
-  const [adultsNum, setAdultesNum] = useState(1);
+  const [adultsNum, setAdultesNum] = useState(intitialAdultSeats);
   const [childrenNum, setChildrenNum] = useState(0);
   const [cabin, setCabin] = useState("Economy");
   const [isFlexible, setIsFlexible] = useState(true);
@@ -228,6 +231,7 @@ export const SearchForm = (props) => {
               <div className={classes["form-control"]}>
                 <InputLabel>Adult(s)</InputLabel>
                 <input
+                  disabled={disableDestinations}
                   type="number"
                   min="1"
                   value={adultsNum}
@@ -238,6 +242,7 @@ export const SearchForm = (props) => {
               <div className={classes["form-control"]}>
                 <InputLabel>Children</InputLabel>
                 <input
+                  disabled={disableDestinations}
                   type="number"
                   min="0"
                   value={childrenNum}
