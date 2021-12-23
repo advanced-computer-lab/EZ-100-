@@ -22,7 +22,7 @@ export const SearchResults = () => {
   const history = useHistory();
   const historyState = history.location.state.data;
   const searchState = history.location.state.searchState;
-  console.log(searchState);
+  // console.log(searchState);
 
   const reservationCtx = useContext(ReservationContext);
 

@@ -79,7 +79,7 @@ export const Summary = (props) => {
 
   let departureDate = new Date();
   let returnDate = new Date();
-  console.log(searchState);
+  // console.log(searchState);
   if (searchState) {
     if (searchState.isDepartureFlight) {
       departureDate = new Date(departureFlight.DepartureDate);
@@ -141,30 +141,36 @@ export const Summary = (props) => {
     event.preventDefault();
 
     if (authCtx.isLoggedIn) {
-      let depSeats = [];
-      let arrivalSeats = [];
-      for (const seat of departureSeats) {
-        const temp = parseInt(seat.slice(1));
-        depSeats.push(temp);
+      if (searchState) {
+        console.log(searchState.reservation);
+        console.log(reservationCtx.departureFlight);
+        console.log(reservationCtx.returnFlight);
+      } else {
+        let depSeats = [];
+        let arrivalSeats = [];
+        for (const seat of departureSeats) {
+          const temp = parseInt(seat.slice(1));
+          depSeats.push(temp);
+        }
+
+        for (const seat of returnSeats) {
+          const temp = parseInt(seat.slice(1));
+          arrivalSeats.push(temp);
+        }
+
+        // console.log("user == " + authCtx.user._id);
+        const reservation = {
+          user: authCtx.user._id,
+          totalPrice,
+          cabin: trip.cabin !== "First class" ? trip.cabin : "First",
+          departureFlight: departureFlight._id,
+          arrivalFlight: returnFlight._id,
+          departureSeats: depSeats,
+          arrivalSeats,
+        };
+
+        sendRequest(reservation);
       }
-
-      for (const seat of returnSeats) {
-        const temp = parseInt(seat.slice(1));
-        arrivalSeats.push(temp);
-      }
-
-      // console.log("user == " + authCtx.user._id);
-      const reservation = {
-        user: authCtx.user._id,
-        totalPrice,
-        cabin: trip.cabin !== "First class" ? trip.cabin : "First",
-        departureFlight: departureFlight._id,
-        arrivalFlight: returnFlight._id,
-        departureSeats: depSeats,
-        arrivalSeats,
-      };
-
-      sendRequest(reservation);
     } else {
       setShowLogin(true);
     }
@@ -382,7 +388,7 @@ export const Summary = (props) => {
             <span>Total price = ${totalPrice}</span>
 
             <button onClick={onCreateHandler} type="button" className="btn">
-              Book trip
+              Checkout
             </button>
           </div>
         </div>
