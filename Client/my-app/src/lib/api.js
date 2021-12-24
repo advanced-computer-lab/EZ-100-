@@ -120,4 +120,9 @@ export async function editReservation(reservationId, editedReservation) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(editedReservation),
   };
+
+  await fetch(
+    `${DOMAIN}/api/reservations/editReservation/${reservationId}`,
+    requestOptions
+  );
 }
