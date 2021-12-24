@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { Layout } from "./Components/Layout/Layout";
 import NewFlight from "./Pages/NewFlight";
 import EditUser from "./Pages/User/EditUser";
+import Signup from "./Components/User/Account/Signup"
 import { LoginPage } from "./Pages/Auth/LoginPage";
 import ReservationProvider from "./store/ReservationProvider";
 
@@ -63,6 +64,10 @@ function App() {
           <ReservationProvider>
             <SearchResults></SearchResults>
           </ReservationProvider>
+        </Route>
+        <Route path="/register">
+          <Signup> </Signup>
+
         </Route>
         {isLoggedIn && (
           <Route path="/reservation">
