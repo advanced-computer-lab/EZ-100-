@@ -183,8 +183,8 @@ exports.deleteReservation = asyncHandler(async (req, res, next) => {
 });
 
 exports.editReservation = asyncHandler (async (req,res,next) => {
-  const { oldDFlight, oldAFlight, newDFlight, newDFlightCabin,
-     newDSeats, newASeats,  newAFlight, newAFlightCabin, newPrice} = req.body;
+  const { newDepartureFlightId, newDepartureCabin,
+     newDepartureSeats, newArrivalSeats,  newArrivalFlightId, newArrivalCabin, newTotalPrice} = req.body;
   var reservation = await Reservation.find(req.params.reservationId);
 
   if (reservation) {
@@ -243,32 +243,32 @@ exports.editReservation = asyncHandler (async (req,res,next) => {
       }
     }
 
-    if(!(newDFlight === undefined)){
+    if(!(newDepartureFlightId === undefined)){
       let up = await Reservation.updateOne(
         { _id: req.params.reservationId },
-        { $set: { departureFlight: newDFlight }}
+        { $set: { departureFlight: newDepartureFlightId }}
       );
 
       let newDepSeatsCount;
-      newDepSeatsCount = newDSeats.length;
+      newDepSeatsCount = newDepartureSeats.length;
 
       for (let i = 0; i < newDepSeatsCount; i++) {
-        if (newDFlightCabin === "Economy") {
-          let seat = newDSeats[i];
+        if (newDepartureCabin === "Economy") {
+          let seat = newDepartureSeats[i];
           let up = await Flight.updateOne(
-            { _id: newDFlight },
+            { _id: newDepartureFlightId },
             { $set: { [`EconomySeatsAvailable.${seat}`]: true } }
           );
-        } else if (newDFlightCabin === "Business") {
-          let seat = newDSeats[i];
+        } else if (newDepartureCabin === "Business") {
+          let seat = newDepartureSeats[i];
           await Flight.updateOne(
-            { _id: newDFlight },
+            { _id: newDepartureFlightId },
             { $set: { [`BusinessSeatsAvailable.${seat}`]: true } }
           );
-        } else if (newDFlightCabin === "First") {
-          let seat = newDSeats[i];
+        } else if (newDepartureCabin === "First") {
+          let seat = newDepartureSeats[i];
           await Flight.updateOne(
-            { _id: newDFlight },
+            { _id: newDepartureFlightId },
             { $set: { [`FirstSeatsAvailable.${seat}`]: true } }
           );
         }
@@ -276,32 +276,32 @@ exports.editReservation = asyncHandler (async (req,res,next) => {
 
     }
 
-    if(!(newAFlight === undefined)){
+    if(!(newArrivalFlightId === undefined)){
       let up = await Reservation.updateOne(
         { _id: req.params.reservationId },
-        { $set: { arrivalFlight: newAFlight }}
+        { $set: { arrivalFlight: newArrivalFlightId }}
       );
 
       let newArrSeatsCount;
-      newArrSeatsCount = newASeats.length;
+      newArrSeatsCount = newArrivalSeats.length;
 
       for (let i = 0; i < newArrSeatsCount; i++) {
-        if (newAFlightCabin === "Economy") {
-          let seat = newASeats[i];
+        if (newArrivalCabin === "Economy") {
+          let seat = newArrivalSeats[i];
           let up = await Flight.updateOne(
-            { _id: newAFlight },
+            { _id: newArrivalFlightId },
             { $set: { [`EconomySeatsAvailable.${seat}`]: true } }
           );
-        } else if (newAFlightCabin === "Business") {
-          let seat = newASeats[i];
+        } else if (newArrivalCabin === "Business") {
+          let seat = newArrivalSeats[i];
           await Flight.updateOne(
-            { _id: newAFlight },
+            { _id: newArrivalFlightId },
             { $set: { [`BusinessSeatsAvailable.${seat}`]: true } }
           );
-        } else if (newAFlightCabin === "First") {
-          let seat = newASeats[i];
+        } else if (newArrivalCabin === "First") {
+          let seat = newArrivalSeats[i];
           await Flight.updateOne(
-            { _id: newAFlight },
+            { _id: newArrivalFlightId },
             { $set: { [`FirstSeatsAvailable.${seat}`]: true } }
           );
         }
@@ -309,10 +309,10 @@ exports.editReservation = asyncHandler (async (req,res,next) => {
 
     }
 
-    if(! (newPrice === undefined)){
+    if(! (newTotalPrice === undefined)){
       await Reservation.updateOne(
         { _id: req.params.reservationId },
-        { $set: { totalPrice : newPrice }}
+        { $set: { totalPrice : newTotalPrice }}
       );
     }
 
