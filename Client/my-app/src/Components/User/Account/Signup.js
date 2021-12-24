@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-// import { useHistory } from "react-router-dom";
+import React, { useState,useNavigate } from "react";
+ import { useHistory } from "react-router-dom";
 //import AuthContext from "../store/auth-context";
 import loginUI from "../../../assets/world3.svg";
 import loginUserIcon from "../../../assets/user.png";
@@ -13,11 +13,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 export default function Signup(props) {
-  // const history = useHistory();
-  const [isLoading, setisLoading] = useState(false);
+    const history= useHistory();
+    const [isLoading, setisLoading] = useState(false);
    const [user, setUser] = useState();
-   const [error, setError] = useState("");
    
+
+   const [error, setError] = useState("");
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -57,15 +58,18 @@ export default function Signup(props) {
         },
       });
       const jsonData = await data.json();
-      // console.log();
-      // authCtx.userSetter(jsonData.data);
+    
+
       setisLoading(false);
-      if (data.success) {
+      if (jsonData.success) {
         setError("");
-      } else {
+        history.replace("/login");
+       } else {
         setError("User with this email or passport number already exists!");
 
       }
+  
+    
     },
   });
 
