@@ -114,9 +114,7 @@ exports.emailReservation = asyncHandler(async (req, res, next) => {
   const reservation = await Reservation.findById(req.params.reservationId);
   const user = await User.findById(reservation.user);
 
-  let message = `This email to confirm your flight reservation with a 
-    reservation number: ${reservation._id} and your account will be 
-    charged with an amount of ${reservation.totalPrice} `;
+  let message = `${reservation._id} summary ... From LAX To JFK (Round trip) .....`;
 
   try {
     await sendEmail({
