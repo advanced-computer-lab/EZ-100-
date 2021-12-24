@@ -19,6 +19,15 @@
   justify-content: space-around;
 }
 
+.actions-row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.actions-row button {
+  margin: 0 0.5rem;
+}
+
 .col {
   display: flex;
   flex-direction: column;
