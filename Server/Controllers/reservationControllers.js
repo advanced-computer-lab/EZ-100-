@@ -110,6 +110,28 @@ exports.viewReservation = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ success: true, data: reservation });
 });
+exports.emailReservation = asyncHandler(async (req, res, next) => {
+  const reservation = await Reservation.findById(req.params.reservationId);
+  const user = await User.findById(reservation.user);
+
+  let message = `This email to confirm your flight reservation with a 
+    reservation number: ${reservation._id} and your account will be 
+    charged with an amount of ${reservation.totalPrice} `;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: `Reservation ${reservation._id}`,
+      text: message,
+    });
+    res.status(200).json({ success: true, message: "Email sent", data: null });
+  } catch (err) {
+    console.log(err);
+    return next(new ErrorResponse("Email could not be send", 500));
+  }
+
+  //res.status(200).json({ success: true, data: reservation });
+});
 
 exports.deleteReservation = asyncHandler(async (req, res, next) => {
   const reservation = await Reservation.findByIdAndDelete(req.params.id);
