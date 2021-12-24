@@ -6,8 +6,8 @@ const User = require("../Models/User");
 const sendEmail = require("../utils/sendEmail");
 
 exports.createReservation = asyncHandler(async (req, res) => {
-  let r = req.body;
-  const reservation = await Reservation.create(req.body);
+  let r = {...req.body, departureCabin: req.body.cabin, arrivalCabin: req.body.cabin};
+  const reservation = await Reservation.create(r);
 
   if (reservation) {
     let depSeatsCount;
@@ -84,7 +84,7 @@ exports.getReservations = asyncHandler(async (req, res, next) => {
 exports.viewReservation = asyncHandler(async (req, res, next) => {
   let query;
 
-  query = Reservation.find(req.params.reservationId)
+  query = Reservation.findById(req.params.reservationId)
     .populate({
       path: "departureFlight",
       select: "FlightNumber DepartureDate ArrivalDate TerminalNumber",
@@ -185,12 +185,14 @@ exports.deleteReservation = asyncHandler(async (req, res, next) => {
 exports.editReservation = asyncHandler (async (req,res,next) => {
   const { newDepartureFlightId, newDepartureCabin,
      newDepartureSeats, newArrivalSeats,  newArrivalFlightId, newArrivalCabin, newTotalPrice} = req.body;
-  var reservation = await Reservation.find(req.params.reservationId);
+  var reservation = await Reservation.findById(req.params.reservationId);
+  
 
   if (reservation) {
     let depSeatsCount;
     let arrSeatsCount;
-    if(! (oldDFlight === undefined)){
+
+    if(newDepartureSeats){
       depSeatsCount = reservation.departureSeats.length;
 
       for (let i = 0; i < depSeatsCount; i++) {
@@ -216,7 +218,7 @@ exports.editReservation = asyncHandler (async (req,res,next) => {
       }
     }
 
-    if(!(oldAFlight === undefined)){
+    if(newArrivalSeats){
       arrSeatsCount = reservation.arrivalSeats.length;
 
       for (let i = 0; i < arrSeatsCount; i++) {
@@ -243,10 +245,11 @@ exports.editReservation = asyncHandler (async (req,res,next) => {
       }
     }
 
-    if(!(newDepartureFlightId === undefined)){
-      let up = await Reservation.updateOne(
+    if(newDepartureFlightId){
+      await Reservation.updateOne(
         { _id: req.params.reservationId },
-        { $set: { departureFlight: newDepartureFlightId }}
+        { $set: { departureFlight: newDepartureFlightId,
+           departureSeats: newDepartureSeats, departureCabin: newDepartureCabin}}
       );
 
       let newDepSeatsCount;
@@ -276,10 +279,11 @@ exports.editReservation = asyncHandler (async (req,res,next) => {
 
     }
 
-    if(!(newArrivalFlightId === undefined)){
+    if(newArrivalFlightId){
       let up = await Reservation.updateOne(
         { _id: req.params.reservationId },
-        { $set: { arrivalFlight: newArrivalFlightId }}
+        { $set: { arrivalFlight: newArrivalFlightId, arrivalSeats: newArrivalSeats,
+           arrivalCabin: newArrivalCabin }}
       );
 
       let newArrSeatsCount;
@@ -309,14 +313,14 @@ exports.editReservation = asyncHandler (async (req,res,next) => {
 
     }
 
-    if(! (newTotalPrice === undefined)){
+    if(newTotalPrice){
       await Reservation.updateOne(
         { _id: req.params.reservationId },
         { $set: { totalPrice : newTotalPrice }}
       );
     }
 
-    var newRes = await Reservation.find(req.params.reservationId);
+    var newRes = await Reservation.findById(req.params.reservationId);
 
 
   }
