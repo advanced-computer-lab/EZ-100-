@@ -6,7 +6,11 @@ const User = require("../Models/User");
 const sendEmail = require("../utils/sendEmail");
 
 exports.createReservation = asyncHandler(async (req, res) => {
-  let r = {...req.body, departureCabin: req.body.cabin, arrivalCabin: req.body.cabin};
+  let r = {
+    ...req.body,
+    departureCabin: req.body.cabin,
+    arrivalCabin: req.body.cabin,
+  };
   const reservation = await Reservation.create(r);
 
   if (reservation) {
@@ -182,33 +186,41 @@ exports.deleteReservation = asyncHandler(async (req, res, next) => {
   }
 });
 
-exports.editReservation = asyncHandler (async (req,res,next) => {
-  const { newDepartureFlightId, newDepartureCabin,
-     newDepartureSeats, newArrivalSeats,  newArrivalFlightId, newArrivalCabin, newTotalPrice} = req.body;
+exports.editReservation = asyncHandler(async (req, res, next) => {
+  const {
+    newDepartureFlightId,
+    newDepartureCabin,
+    newDepartureSeats,
+    newArrivalSeats,
+    newArrivalFlightId,
+    newArrivalCabin,
+    newTotalPrice,
+  } = req.body;
+
+  console.log(req.body);
   var reservation = await Reservation.findById(req.params.reservationId);
-  
 
   if (reservation) {
     let depSeatsCount;
     let arrSeatsCount;
 
-    if(newDepartureSeats){
+    if (newDepartureSeats) {
       depSeatsCount = reservation.departureSeats.length;
 
       for (let i = 0; i < depSeatsCount; i++) {
-        if (reservation.cabin === "Economy") {
+        if (reservation.departureCabin === "Economy") {
           let seat = reservation.departureSeats[i];
           let up = await Flight.updateOne(
             { _id: reservation.departureFlight },
             { $set: { [`EconomySeatsAvailable.${seat}`]: false } }
           );
-        } else if (reservation.cabin === "Business") {
+        } else if (reservation.departureCabin === "Business") {
           let seat = reservation.departureSeats[i];
           await Flight.updateOne(
             { _id: reservation.departureFlight },
             { $set: { [`BusinessSeatsAvailable.${seat}`]: false } }
           );
-        } else if (reservation.cabin === "First") {
+        } else if (reservation.departureCabin === "First") {
           let seat = reservation.departureSeats[i];
           await Flight.updateOne(
             { _id: reservation.departureFlight },
@@ -218,25 +230,25 @@ exports.editReservation = asyncHandler (async (req,res,next) => {
       }
     }
 
-    if(newArrivalSeats){
+    if (newArrivalSeats) {
       arrSeatsCount = reservation.arrivalSeats.length;
 
       for (let i = 0; i < arrSeatsCount; i++) {
-        if (reservation.cabin === "Economy") {
+        if (reservation.arrivalCabin === "Economy") {
           let seat = reservation.arrivalSeats[i];
           await Flight.updateOne(
             { _id: reservation.arrivalFlight },
             { $set: { [`EconomySeatsAvailable.${seat}`]: false } }
           );
           console.log(reservation.arrivalFlight);
-        } else if (reservation.cabin === "Business") {
+        } else if (reservation.arrivalCabin === "Business") {
           let seat = reservation.arrivalSeats[i];
           await Flight.updateOne(
             { _id: reservation.arrivalFlight },
             { $set: { [`BusinessSeatsAvailable.${seat}`]: false } }
           );
-        } else if (reservation.cabin === "First") {
-          let seat = rreservation.arrivalSeats[i];
+        } else if (reservation.arrivalCabin === "First") {
+          let seat = reservation.arrivalSeats[i];
           await Flight.updateOne(
             { _id: reservation.arrivalFlight },
             { $set: { [`FirstSeatsAvailable.${seat}`]: false } }
@@ -245,11 +257,16 @@ exports.editReservation = asyncHandler (async (req,res,next) => {
       }
     }
 
-    if(newDepartureFlightId){
+    if (newDepartureFlightId) {
       await Reservation.updateOne(
         { _id: req.params.reservationId },
-        { $set: { departureFlight: newDepartureFlightId,
-           departureSeats: newDepartureSeats, departureCabin: newDepartureCabin}}
+        {
+          $set: {
+            departureFlight: newDepartureFlightId,
+            departureSeats: newDepartureSeats,
+            departureCabin: newDepartureCabin,
+          },
+        }
       );
 
       let newDepSeatsCount;
@@ -276,14 +293,18 @@ exports.editReservation = asyncHandler (async (req,res,next) => {
           );
         }
       }
-
     }
 
-    if(newArrivalFlightId){
+    if (newArrivalFlightId) {
       let up = await Reservation.updateOne(
         { _id: req.params.reservationId },
-        { $set: { arrivalFlight: newArrivalFlightId, arrivalSeats: newArrivalSeats,
-           arrivalCabin: newArrivalCabin }}
+        {
+          $set: {
+            arrivalFlight: newArrivalFlightId,
+            arrivalSeats: newArrivalSeats,
+            arrivalCabin: newArrivalCabin,
+          },
+        }
       );
 
       let newArrSeatsCount;
@@ -310,20 +331,16 @@ exports.editReservation = asyncHandler (async (req,res,next) => {
           );
         }
       }
-
     }
 
-    if(newTotalPrice){
+    if (newTotalPrice) {
       await Reservation.updateOne(
         { _id: req.params.reservationId },
-        { $set: { totalPrice : newTotalPrice }}
+        { $set: { totalPrice: newTotalPrice } }
       );
     }
 
     var newRes = await Reservation.findById(req.params.reservationId);
-
-
   }
-  res.status(200).json({ success: true, data: newRes});
-
+  res.status(200).json({ success: true, data: newRes });
 });

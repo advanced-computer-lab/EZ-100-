@@ -114,15 +114,19 @@ export async function createReservation(reservation) {
   return data.data;
 }
 
-export async function editReservation(reservationId, editedReservation) {
+export async function editReservation(payload) {
+  const { editedReservation, id } = payload;
+
   const requestOptions = {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(editedReservation),
   };
 
+  console.log(editedReservation);
+
   await fetch(
-    `${DOMAIN}/api/reservations/editReservation/${reservationId}`,
+    `${DOMAIN}/api/reservations/editReservation/${id}`,
     requestOptions
   );
 }

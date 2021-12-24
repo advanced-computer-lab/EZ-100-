@@ -1,6 +1,9 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+
+import useHttp from "../../../hooks/use-http";
+import { editReservation } from "../../../lib/api";
 
 // import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -9,6 +12,7 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 import Modal from "../../UI/Modal";
 import { SeatPicker } from "../Flights/SeatPicker";
@@ -28,7 +32,15 @@ export default function FlightCard(props) {
 
   const history = useHistory();
 
+  const { sendRequest: changeSeatsRequest, status } = useHttp(editReservation);
+
   const { image, flight, seats, isDeparture } = props;
+
+  useEffect(() => {
+    if (status === "completed") {
+      window.location.reload(false);
+    }
+  }, [status]);
 
   let cabin = props.reservation.arrivalCabin;
   if (isDeparture) {
@@ -124,11 +136,32 @@ export default function FlightCard(props) {
     setEditDisable(compareSeatLists(reservedSeats, chosenSeats));
   };
 
-  const onChangeSeatsHandler = () => {
+  const onChangeSeatsHandler = async () => {
     console.log(
       `Reserved seats changed from [${reservedSeats}] to [${toBeEditedSeats}]`
     );
     // Send request to backend with new seats
+    let tempSeats = [];
+    for (const seat of toBeEditedSeats) {
+      tempSeats.push(parseInt(seat.substring(1)));
+    }
+
+    let editedReservation;
+    if (isDeparture) {
+      editedReservation = {
+        newDepartureCabin: cabin,
+        newDepartureFlightId: flight._id,
+        newDepartureSeats: tempSeats,
+      };
+    } else {
+      editedReservation = {
+        newArrivalCabin: cabin,
+        newArrivalFlightId: flight._id,
+        newArrivalSeats: tempSeats,
+      };
+    }
+    console.log(editedReservation);
+    changeSeatsRequest({ editedReservation, id: props.reservation._id });
   };
 
   const chooseAnotherFlightHandler = () => {
@@ -147,24 +180,34 @@ export default function FlightCard(props) {
     <>
       {open && (
         <Modal onClose={handleClose}>
-          <div style={{ justifyContent: "center" }} className={classes.row}>
-            <p>Your {seatsNum} seat(s) reservation.</p>
-            <button
-              disabled={editDisable}
-              className={classes.btn}
-              type="button"
-              onClick={onChangeSeatsHandler}
-            >
-              Confirm changes
-            </button>
-          </div>
-          <SeatPicker
-            flight={flight}
-            trip={{ cabin: resCabin }}
-            onSeatsChange={changeSeatsHandler}
-            editingMode={true}
-            reservedSeats={reservedSeats}
-          ></SeatPicker>
+          {status === "pending" && (
+            <div className="centered">
+              <LoadingSpinner />
+            </div>
+          )}
+
+          {status !== "pending" && (
+            <>
+              <div style={{ justifyContent: "center" }} className={classes.row}>
+                <p>Your {seatsNum} seat(s) reservation.</p>
+                <button
+                  disabled={editDisable}
+                  className={classes.btn}
+                  type="button"
+                  onClick={onChangeSeatsHandler}
+                >
+                  Confirm changes
+                </button>
+              </div>
+              <SeatPicker
+                flight={flight}
+                trip={{ cabin: resCabin }}
+                onSeatsChange={changeSeatsHandler}
+                editingMode={true}
+                reservedSeats={reservedSeats}
+              ></SeatPicker>
+            </>
+          )}
         </Modal>
       )}
       <Card sx={{ width: "45%" }}>
