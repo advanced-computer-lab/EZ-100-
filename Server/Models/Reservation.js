@@ -69,6 +69,15 @@ const reservationSchema = new Schema(
       type: String,
       enum: ["Economy", "Business", "First"],
     },
+    departureCabin: {
+      type: String,
+      enum: ["Economy", "Business", "First"],
+    },
+    arrivalCabin: {
+      type: String,
+      enum: ["Economy", "Business", "First"],
+    }
+
   },
   { timestamps: true }
 );
