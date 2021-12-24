@@ -1,33 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
 
-#registrationPage {
-  margin: 0;
-  font-family: "Roboto", sans-serif;
-  height: 100%;
-  background: #78a7ba;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: scroll;
-}
-.signupForm {
-  overflow: auto;
-  flex: 1;
-  max-width: 600px;
-  border-radius: 10px;
-  background-color: #eff0f1;
-  border: 1px solid #999;
-  margin-top: auto;
-  margin-bottom: auto;
-}
-.formHeader {
-  margin: auto;
-}
-.formHeader h1 {
-  font-size: 28px;
-  text-align: center;
-  color: #666;
-}
+
 .row {
   display: flex;
   flex-direction: row;

@@ -11,3 +11,62 @@
   margin: 1rem;
   display: flex;
 }
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.inputGroup label {
+  color: black;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.input {
+  padding: 10px 10px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid #cfcfcf;
+}
+.btn {
+  background-color: #002f6c;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 1em;
+  padding: 8px 0px;
+  font-size: 1em;
+  font-weight: lighter;
+  letter-spacing: 1px;
+  margin-bottom: 0.25em;
+}
+
+.btn:hover,
+.btn:active {
+  color: #002f6c;
+  background-color: #fff;
+  border: 2px solid #002f6c;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+.signupForm {
+  overflow: auto;
+  flex: 1;
+  max-width: 600px;
+  border-radius: 10px;
+  background-color: #eff0f1;
+  border: 1px solid #999;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.formHeader {
+  margin: auto;
+}
+.formHeader h1 {
+  font-size: 28px;
+  text-align: center;
+  color: #666;
+}
