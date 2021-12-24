@@ -61,14 +61,14 @@ const importData = async () => {
     const adminstrator = {
       firstName: "Adminstrator",
       lastName: "Adminstrator",
-      email: "mohamedrostom62@gmail.com",
+      email: "admin@gmail.com",
       passportNumber: "balabizo",
       dateOfBirth: new Date(2000, 10, 8),
       gender: "Male",
       role: "admin",
       password: "123456",
     };
-    //await User.create(adminstrator);
+    await User.create(adminstrator);
 
     await Flight.create(transformedFlights);
     console.log("Data imported...");
@@ -81,8 +81,10 @@ const importData = async () => {
 //Delete data
 const deleteData = async () => {
   try {
-    //await User.deleteMany();
+    await User.deleteMany();
     await Flight.deleteMany();
+    await Reservation.deleteMany();
+
     console.log("Data destroyed...");
     process.exit();
   } catch (error) {
