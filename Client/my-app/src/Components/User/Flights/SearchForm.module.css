@@ -67,7 +67,7 @@
   font: inherit;
   padding: 0.25rem;
   border: none;
-  border-bottom: 3px solid #002f6c;
+  border-bottom: 3px solid #ccc;
   flex: 1;
   margin-right: 2rem;
 }
@@ -78,6 +78,7 @@
 
 .form-control input[type="date"]:focus {
   outline: none;
+  border-color: #002f6c;
 }
 
 .form-control input[type="number"]:focus {
