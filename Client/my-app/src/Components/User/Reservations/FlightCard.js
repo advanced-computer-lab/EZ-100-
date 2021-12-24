@@ -28,7 +28,12 @@ export default function FlightCard(props) {
 
   const history = useHistory();
 
-  const { image, flight, cabin, seats } = props;
+  const { image, flight, seats, isDeparture } = props;
+
+  let cabin = props.reservation.arrivalCabin;
+  if (isDeparture) {
+    cabin = props.reservation.departureCabin;
+  }
 
   let usedImg = cairoImg;
   if (image === "dubai") {

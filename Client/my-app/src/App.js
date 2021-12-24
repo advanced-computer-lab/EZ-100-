@@ -17,6 +17,7 @@ import { SearchResults } from "./Pages/User/SearchResults";
 import { ViewReservedFlights } from "./Pages/ViewReservedFlights";
 
 import AuthContext from "./store/auth-context";
+import { PaymentSuccess } from "./Components/Payment/PaymentSuccess";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -25,6 +26,10 @@ function App() {
   return (
     <Layout>
       <Switch>
+        <Route path="/payment-success">
+          <PaymentSuccess></PaymentSuccess>
+        </Route>
+
         <Route path="/" exact>
           {/* <Home></Home> */}
           <Redirect to="/search" />

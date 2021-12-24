@@ -38,6 +38,7 @@ export const LoginPage = (props) => {
     } else {
       console.log(resData.error);
       setErrorMsg("Incorrect email or password");
+      setIsLoading(false);
 
       setTimeout(() => {
         setErrorMsg("");

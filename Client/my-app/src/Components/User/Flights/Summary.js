@@ -1,7 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import classes from "./Summary.module.css";
-
-import { useHistory } from "react-router-dom";
 
 import Modal from "../../UI/Modal";
 import LoadingSpinner from "../../UI/LoadingSpinner";
@@ -11,17 +9,14 @@ import { MdEventSeat } from "react-icons/md";
 
 import ReservationContext from "../../../store/reservation-context";
 import AuthContext from "../../../store/auth-context";
-
-import useHttp from "../../../hooks/use-http";
-import { createReservation } from "../../../lib/api";
-// import Login from "../Account/Login";
 import { LoginPage } from "../../../Pages/Auth/LoginPage";
 
 export const Summary = (props) => {
   const { trip, searchState } = props;
   const [showLogin, setShowLogin] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { sendRequest, status, error } = useHttp(createReservation);
+  // const { sendRequest, status, error } = useHttp(createReservation);
 
   const seatsNumber = parseInt(trip.adultsNum) + parseInt(trip.childrenNum);
 
@@ -30,8 +25,6 @@ export const Summary = (props) => {
   const reservationCtx = useContext(ReservationContext);
   const { departureFlight, returnFlight, departureSeats, returnSeats } =
     reservationCtx;
-
-  const history = useHistory();
 
   let departurePrice;
   let returnPrice;
@@ -131,20 +124,50 @@ export const Summary = (props) => {
     totalPrice = seatsNumber * departurePrice + seatsNumber * returnPrice;
   }
 
-  useEffect(() => {
-    if (status === "completed" && !error) {
-      history.push("/reservation");
-    }
-  }, [status, error, history]);
-
   const onCreateHandler = (event) => {
     event.preventDefault();
 
     if (authCtx.isLoggedIn) {
       if (searchState) {
-        console.log(searchState.reservation);
-        console.log(reservationCtx.departureFlight);
-        console.log(reservationCtx.returnFlight);
+        const items = [];
+        let quantity = 0;
+        if (searchState.isDepartureFlight) {
+          quantity = departureSeats.length;
+          items.push({
+            name: `${departureFlight.FlightNumber} - ${trip.cabin}`,
+            price: departurePrice,
+          });
+        } else {
+          quantity = returnSeats.length;
+          items.push({
+            name: `${returnFlight.FlightNumber} - ${trip.cabin}`,
+            price: returnPrice,
+          });
+        }
+
+        setIsLoading(true);
+        fetch("http://localhost:5000/checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: items,
+            quantity: quantity,
+          }),
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            }
+            return res.json().then((json) => Promise.reject(json));
+          })
+          .then(({ url }) => {
+            window.location = url;
+            // console.log(url);
+          })
+          .catch((e) => console.error(e.error));
+        // console.log(searchState.reservation);
       } else {
         let depSeats = [];
         let arrivalSeats = [];
@@ -158,7 +181,6 @@ export const Summary = (props) => {
           arrivalSeats.push(temp);
         }
 
-        // console.log("user == " + authCtx.user._id);
         const reservation = {
           user: authCtx.user._id,
           totalPrice,
@@ -169,7 +191,40 @@ export const Summary = (props) => {
           arrivalSeats,
         };
 
-        sendRequest(reservation);
+        localStorage.setItem("pendingReservation", JSON.stringify(reservation));
+        setIsLoading(true);
+
+        // Pay
+        fetch("http://localhost:5000/checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: [
+              {
+                name: `${departureFlight.FlightNumber} - ${trip.cabin}`,
+                price: departurePrice,
+              },
+              {
+                name: `${returnFlight.FlightNumber} - ${trip.cabin}`,
+                price: returnPrice,
+              },
+            ],
+            quantity: depSeats.length,
+          }),
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            }
+            return res.json().then((json) => Promise.reject(json));
+          })
+          .then(({ url }) => {
+            window.location = url;
+            // console.log(url);
+          })
+          .catch((e) => console.error(e.error));
       }
     } else {
       setShowLogin(true);
@@ -365,7 +420,7 @@ export const Summary = (props) => {
     setShowLogin(false);
   };
 
-  if (status === "pending") {
+  if (isLoading) {
     return (
       <div className="centered">
         <LoadingSpinner />
@@ -378,9 +433,9 @@ export const Summary = (props) => {
       {showLogin && (
         <Modal onClose={toggleLoginHandler}>
           <LoginPage inModal={true} hideModal={toggleLoginHandler}></LoginPage>
-          {/* <Login onHideModal={toggleLoginHandler}></Login> */}
         </Modal>
       )}
+
       <div className={classes.container}>
         <div style={{ width: "100%" }}>
           {cartItems}

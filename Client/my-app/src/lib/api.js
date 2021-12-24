@@ -113,3 +113,16 @@ export async function createReservation(reservation) {
 
   return data.data;
 }
+
+export async function editReservation(reservationId, editedReservation) {
+  const requestOptions = {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(editedReservation),
+  };
+
+  await fetch(
+    `${DOMAIN}/api/reservations/editReservation/${reservationId}`,
+    requestOptions
+  );
+}
