@@ -1,7 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../Components/UI/Modal";
+import { useFormik } from "formik";
 
+import * as Yup from "yup";
 import AuthContext from "../store/auth-context";
 
 // import flightsImg from "../assets/flights.png";
@@ -12,26 +14,38 @@ export const Home = () => {
   // const role = authCtx.user.role;
 
   const [ModalIsOpen, setModalIsOpen] = useState(false);
+  const [user, setUser] = useState();
 
- /* await fetch(
-    ``,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(Home),
-    }
-  );*/
-
-const Newpassword = '';
-const ConfirmNewPassword = '';
-
-
-
-
-
-
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      password: user ? user.password : "",
+      confirmpassword: "",
+    },
+    validationSchema: Yup.object({
+      password: Yup.string()
+        .min(6, "Password must be at least 6 charaters")
+        .required("Password is required"),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref("password"), null], "Password must match")
+        .required("Confirm password is required"),
+    }),
+    onSubmit: async (values) => {
+      const user = {
+        password: formik.values.password,
+      };
+      const data = await fetch(
+        "http://localhost:5000/api/users/${authCtx.user._id}",
+        {
+          method: "PUT",
+          body: JSON.stringify(user),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    },
+  });
 
   function changePasswordHandler() {
     setModalIsOpen(true);
@@ -90,37 +104,23 @@ const ConfirmNewPassword = '';
             </button>
           </div>
           {ModalIsOpen ? (
-            <div className={classes.signupForm}>
-            <Modal>
-              <div className={classes.row}>
-                <label>Current Password</label>
-                <input
-                  type="text"
-                  className={classes.input}
-                  placholder="Current Password"
-                />
-              </div>
-              <div className={classes.row}>
-                <label>New Password</label>
-                <input
-                  type="text"
-                  className={classes.input}
-                  placeHolder="New Password"
-                  value = {Newpassword}
-                />
-              </div>
-              <div className={classes.row}>
-                <label>Confirm Password</label>
-                <input
-                  type="text"
-                  className={classes.input}
-                  placeHolder="Confirm Password"
-                  value={ConfirmNewPassword}
-                />
-              </div>
-              <button onClick={closeModalHandler} className={classes.btn}>Confirm</button>
-              <button onClick={closeModalHandler} className={classes.btn}>Cancel</button>
-            </Modal>
+            <div>
+              <Modal>
+                <div className={classes.row}>
+                  <label>New Password</label>
+                  <input type="password" name="password"  className={classes.input} />
+                </div>
+                <div className={classes.row}>
+                  <label>Confirm Password</label>
+                  <input type="password" name="confirmpassword" className={classes.input} />
+                </div>
+                <button onClick={closeModalHandler} className={classes.btn}>
+                  Confirm
+                </button>
+                <button onClick={closeModalHandler} className={classes.btn}>
+                  Cancel
+                </button>
+              </Modal>
             </div>
           ) : null}
         </>
