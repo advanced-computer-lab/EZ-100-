@@ -131,21 +131,57 @@ export const Summary = (props) => {
       if (searchState) {
         const items = [];
         let quantity = 0;
+        let editedReservation;
+
         if (searchState.isDepartureFlight) {
           quantity = departureSeats.length;
           items.push({
             name: `${departureFlight.FlightNumber} - ${trip.cabin}`,
             price: departurePrice,
           });
+
+          let tempSeats = [];
+          for (const seat of departureSeats) {
+            tempSeats.push(parseInt(seat.substring(1)));
+          }
+
+          editedReservation = {
+            isEditing: true,
+            reservationId: searchState.reservation._id,
+            newDepartureCabin: trip.cabin,
+            newDepartureFlightId: departureFlight._id,
+            newDepartureSeats: tempSeats,
+          };
         } else {
           quantity = returnSeats.length;
           items.push({
             name: `${returnFlight.FlightNumber} - ${trip.cabin}`,
             price: returnPrice,
           });
+
+          let tempSeats = [];
+          for (const seat of returnSeats) {
+            tempSeats.push(parseInt(seat.substring(1)));
+          }
+
+          editedReservation = {
+            isEditing: true,
+            reservationId: searchState.reservation._id,
+            newArrivalCabin: trip.cabin,
+            newArrivalFlightId: returnFlight._id,
+            newArrivalSeats: tempSeats,
+          };
         }
 
+        localStorage.setItem(
+          "pendingReservation",
+          JSON.stringify(editedReservation)
+        );
+
+        console.log(editedReservation);
         setIsLoading(true);
+
+        // Pay
         fetch("http://localhost:5000/checkout", {
           method: "POST",
           headers: {
@@ -167,7 +203,6 @@ export const Summary = (props) => {
             // console.log(url);
           })
           .catch((e) => console.error(e.error));
-        // console.log(searchState.reservation);
       } else {
         let depSeats = [];
         let arrivalSeats = [];

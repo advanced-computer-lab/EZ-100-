@@ -241,7 +241,7 @@ export default function FlightCard(props) {
             View seats
           </Button>
           <Button size="small" onClick={chooseAnotherFlightHandler}>
-            Choose another flight
+            Edit flight
           </Button>
         </CardActions>
       </Card>

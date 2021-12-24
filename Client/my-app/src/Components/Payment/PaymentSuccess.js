@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import useHttp from "../../hooks/use-http";
-import { createReservation } from "../../lib/api";
+import { createReservation, editReservation } from "../../lib/api";
 
 export const PaymentSuccess = () => {
   const pendingReservation = JSON.parse(
@@ -11,17 +11,27 @@ export const PaymentSuccess = () => {
 
   const history = useHistory();
   const { sendRequest, status } = useHttp(createReservation);
+  const { sendRequest: changeReservation, status: status2 } =
+    useHttp(editReservation);
 
   useEffect(() => {
-    if (status === null) {
-      sendRequest(pendingReservation);
+    if (status === null && status2 === null) {
+      if (pendingReservation.isEditing) {
+        const { reservationId } = pendingReservation;
+        changeReservation({
+          id: reservationId,
+          editedReservation: pendingReservation,
+        });
+      } else {
+        sendRequest(pendingReservation);
+      }
     }
 
-    if (status === "completed") {
+    if (status === "completed" || status2 === "completed") {
       history.replace("/reservation");
       localStorage.removeItem("pendingReservation");
     }
-  }, [status, history, pendingReservation, sendRequest]);
+  }, [status, history, pendingReservation, sendRequest, status2]);
 
   return <div className="centered"></div>;
 };
