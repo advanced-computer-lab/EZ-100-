@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: top;
   align-items: center;
-  background-color: #e7f8f8;
+  background-color: #fff;
 }
 
 .form-wrapper {
@@ -125,8 +125,7 @@
 .terminal,
 .economy_price,
 .business_price,
-.baggage_allowance
- {
+.baggage_allowance {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
@@ -150,7 +149,7 @@
   width: 49%;
 }
 .baggage_allowance,
-.terminal{
+.terminal {
   width: 49%;
 }
 .business_seats,
@@ -158,7 +157,7 @@
   width: 49%;
 }
 .business_price,
-.economy_price{
+.economy_price {
   width: 49%;
 }
 
