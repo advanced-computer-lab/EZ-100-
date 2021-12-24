@@ -1,5 +1,5 @@
-import React, { useState,useNavigate } from "react";
- import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 //import AuthContext from "../store/auth-context";
 import loginUI from "../../../assets/world3.svg";
 import loginUserIcon from "../../../assets/user.png";
@@ -13,22 +13,21 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 export default function Signup(props) {
-    const history= useHistory();
-    const [isLoading, setisLoading] = useState(false);
-   const [user, setUser] = useState();
-   
+  const history = useHistory();
+  const [isLoading, setisLoading] = useState(false);
+  // const [user, setUser] = useState();
 
-   const [error, setError] = useState("");
+  const [error, setError] = useState("");
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      firstname: user ? user.firstName : "",
-      lastname: user ? user.lastName : "",
-      email: user ? user.email : "",
-      passport_number: user ? user.passportNumber : "",
-      gender: user ? user.gender : "",
-      password: user ? user.password : "",
-      dateofbirth: user ? user.dateOfBirth : "",
+      firstname: "",
+      lastname: "",
+      email: "",
+      passport_number: "",
+      gender: "",
+      password: "",
+      dateofbirth: "",
     },
     validationSchema: Yup.object({
       firstname: Yup.string().min(3, "min 3 characters").required("Required"),
@@ -58,24 +57,17 @@ export default function Signup(props) {
         },
       });
       const jsonData = await data.json();
-    
 
       setisLoading(false);
       if (jsonData.success) {
         setError("");
         history.replace("/login");
-       } else {
+      } else {
         setError("User with this email or passport number already exists!");
-
       }
-  
-    
     },
   });
 
-  
- 
-    
   const firstnameclass =
     formik.touched.firstname && formik.errors.firstname ? classes.error : "";
   const lastnameclass =
@@ -97,8 +89,8 @@ export default function Signup(props) {
     formik.touched.dateofbirth && formik.errors.dateofbirth
       ? classes.error
       : "";
-      const colClass1 = props.inModal ? classes["col-75"] : classes.col;
-      const containerClass = !props.inModal ? classes.container : "";
+  const colClass1 = props.inModal ? classes["col-75"] : classes.col;
+  const containerClass = !props.inModal ? classes.container : "";
 
   if (isLoading === true) {
     return (
@@ -107,7 +99,6 @@ export default function Signup(props) {
       </div>
     );
   }
-  
 
   return (
     <div className={containerClass}>
@@ -126,67 +117,73 @@ export default function Signup(props) {
                 alt="icon"
               />
               <form onSubmit={formik.handleSubmit} className={classes.form}>
-            <input
-              type="text"
-              name="firstname"
-              className={firstnameclass}
-              value={formik.values.firstname}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="First name"
-            />
-           
-            <input
-              type="text"
-              name="lastname"
-              className={lastnameclass}
-              value={formik.values.lastname}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="Last name"
-            />
-           
-     
-      <select 
-        name="gender"
-        className={genderclass}
-        value={formik.values.gender}
-       
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        style={{style : 'block' ,height: 50 ,width:385  ,padding: '0.5rem' ,
-         marginTop:0 , marginBottom:15 ,fontSize : 15 ,
-          border: '1px solid #ccc',borderRadius:'4px'}}
-        placeholder="Gender"
-      >
-       <option value="" label="Gender" fontSize= '15' textmarginLeft= '6'/>
-        <option value="Female" label="Female" />
-        <option value="Male" label="Male" />
-      </select>
-      {formik.touched.gender && formik.errors.gender && (
-                <div className={classes.error} > </div>
-              )}
-      
-             <input
-              type="text"
-              name="passport_number"
-              className={passportclass}
-              value={formik.values.passport_number}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="Passport number"
-            />
-            
-            <input
-              type="date"
-              name="dateofbirth"
-             label = "Birth date"
-              className={birthclass}
-              value={formik.values.dateofbirth}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="Birth date"
-            />
+                <input
+                  type="text"
+                  name="firstname"
+                  className={firstnameclass}
+                  value={formik.values.firstname}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="First name"
+                />
+
+                <input
+                  type="text"
+                  name="lastname"
+                  className={lastnameclass}
+                  value={formik.values.lastname}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="Last name"
+                />
+
+                <select
+                  name="gender"
+                  className={genderclass}
+                  value={formik.values.gender}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  style={{
+                    style: "block",
+                    height: 50,
+                    width: 385,
+                    padding: "0.5rem",
+                    marginTop: 0,
+                    marginBottom: 15,
+                    fontSize: 15,
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                  }}
+                  placeholder="Gender"
+                >
+                  <option value="" label="Gender" />
+                  <option value="Female" label="Female" />
+                  <option value="Male" label="Male" />
+                </select>
+                {formik.touched.gender && formik.errors.gender && (
+                  <div className={classes.error}> </div>
+                )}
+
+                <input
+                  type="text"
+                  name="passport_number"
+                  className={passportclass}
+                  value={formik.values.passport_number}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="Passport number"
+                />
+
+                <input
+                  type="date"
+                  name="dateofbirth"
+                  label="Birth date"
+                  className={birthclass}
+                  value={formik.values.dateofbirth}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="Birth date"
+                />
 
                 <input
                   id="email"
@@ -208,33 +205,30 @@ export default function Signup(props) {
                   placeholder="Password"
                 ></input>
 
-
-
                 <button className={classes["btn-primary"]} type="submit">
-                 Sign up
+                  Sign up
                 </button>
-
-                <div style={{ marginTop: "8px" }}>
-                  <a href="/register" className={classes.reset}>
-                    
-                  </a>
-                </div>
               </form>
-              
-            {error && <div className="errorMsg" style={{fontSize:15 , color:'red'}}> {error} </div>}
 
+              {error && (
+                <div
+                  className="errorMsg"
+                  style={{ fontSize: 15, color: "red" }}
+                >
+                  {" "}
+                  {error}{" "}
+                </div>
+              )}
+            </>
+          )}
+        </div>
 
-      
-      </>
-    )}
-  </div>
-
-  {!props.inModal && (
-    <div className={classes.col}>
-      <img style={{ width: "100%" }} src={loginUI} alt="UI" />
+        {!props.inModal && (
+          <div className={classes.col}>
+            <img style={{ width: "100%" }} src={loginUI} alt="UI" />
+          </div>
+        )}
+      </div>
     </div>
-  )}
-</div>
-</div>
   );
 }

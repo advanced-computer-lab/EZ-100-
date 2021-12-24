@@ -31,7 +31,14 @@ export const PaymentSuccess = () => {
       history.replace("/reservation");
       localStorage.removeItem("pendingReservation");
     }
-  }, [status, history, pendingReservation, sendRequest, status2]);
+  }, [
+    status,
+    history,
+    pendingReservation,
+    sendRequest,
+    status2,
+    changeReservation,
+  ]);
 
   return <div className="centered"></div>;
 };
