@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { Layout } from "./Components/Layout/Layout";
 import NewFlight from "./Pages/NewFlight";
 import EditUser from "./Pages/User/EditUser";
-import Signup from "./Components/User/Account/Signup"
+import Signup from "./Components/User/Account/Signup";
 import { LoginPage } from "./Pages/Auth/LoginPage";
 import ReservationProvider from "./store/ReservationProvider";
 
@@ -22,6 +22,7 @@ import { PaymentSuccess } from "./Components/Payment/PaymentSuccess";
 function App() {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
+  const role = authCtx.user.role;
 
   return (
     <Layout>
@@ -47,7 +48,7 @@ function App() {
             <NewFlight></NewFlight>
           </Route>
         )}
-        {isLoggedIn && (
+        {isLoggedIn && role === "admin" && (
           <Route path="/flights" exact>
             <AllFlightsWrapper></AllFlightsWrapper>
           </Route>
@@ -72,7 +73,6 @@ function App() {
         </Route>
         <Route path="/register">
           <Signup> </Signup>
-
         </Route>
         {isLoggedIn && (
           <Route path="/reservation">
