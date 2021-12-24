@@ -79,7 +79,7 @@ export const Login2 = (props) => {
                 <button className={classes["btn-primary"]} type="submit">
                   Login
                 </button>
-
+                
                 <div style={{ marginTop: "8px" }}>
                   <a href="/login" className={classes.reset}>
                     <small>Forgot password ?</small>
