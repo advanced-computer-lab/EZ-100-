@@ -35,12 +35,21 @@ function App() {
           {/* <Home></Home> */}
           <Redirect to="/search" />
         </Route>
-        {isLoggedIn && (
+
+        {isLoggedIn && role === "user" && (
           <Route path="/home">
             {/* <Home></Home> */}
             <Redirect to="/search" />
           </Route>
         )}
+
+        {isLoggedIn && role === "admin" && (
+          <Route path="/home">
+            {/* <Home></Home> */}
+            <Redirect to="/flights" />
+          </Route>
+        )}
+
         <Route path="/login">
           <LoginPage nextPage="/home"></LoginPage>
         </Route>
