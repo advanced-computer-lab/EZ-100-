@@ -1,4 +1,5 @@
 .col {
+  margin: 0 auto;
   width: 75%;
   display: flex;
   flex-direction: column;
@@ -7,6 +8,7 @@
 }
 
 .row {
+  text-align: center;
   margin: 0.5rem;
   width: 65%;
   display: flex;

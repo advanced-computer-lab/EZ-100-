@@ -72,8 +72,13 @@
   margin-right: 2rem;
 }
 
+.form-control input[type="date"]:disabled {
+  border-bottom: 3px solid #ccc;
+}
+
 .form-control input[type="date"]:focus {
   outline: none;
+  border-color: #002f6c;
 }
 
 .form-control input[type="number"]:focus {

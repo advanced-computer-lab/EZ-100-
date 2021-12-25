@@ -1,7 +1,9 @@
-import { Layout } from "./Components/Layout/Layout";
+import React, { useContext } from "react";
 
+import { Layout } from "./Components/Layout/Layout";
 import NewFlight from "./Pages/NewFlight";
 import EditUser from "./Pages/User/EditUser";
+import Signup from "./Components/User/Account/Signup";
 import { LoginPage } from "./Pages/Auth/LoginPage";
 import ReservationProvider from "./store/ReservationProvider";
 
@@ -14,48 +16,73 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { SearchResults } from "./Pages/User/SearchResults";
 import { ViewReservedFlights } from "./Pages/ViewReservedFlights";
 
+import AuthContext from "./store/auth-context";
+import { PaymentSuccess } from "./Components/Payment/PaymentSuccess";
+
 function App() {
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggedIn;
+  const role = authCtx.user.role;
+
   return (
     <Layout>
       <Switch>
+        <Route path="/payment-success">
+          <PaymentSuccess></PaymentSuccess>
+        </Route>
+
         <Route path="/" exact>
           {/* <Home></Home> */}
           <Redirect to="/search" />
         </Route>
-
-        <Route path="/home">
-          <Home></Home>
-        </Route>
-
+        {isLoggedIn && (
+          <Route path="/home">
+            <Home></Home>
+          </Route>
+        )}
         <Route path="/login">
-          <LoginPage></LoginPage>
+          <LoginPage nextPage="/home"></LoginPage>
         </Route>
-
-        <Route path="/new-flight">
-          <NewFlight></NewFlight>
-        </Route>
-
-        <Route path="/flights" exact>
-          <AllFlightsWrapper></AllFlightsWrapper>
-        </Route>
-
-        <Route path="/flights/:flightId">
-          <FlightDetails></FlightDetails>
-        </Route>
-        <Route path="/edit-user">
-          <EditUser></EditUser>
-        </Route>
+        {isLoggedIn && (
+          <Route path="/new-flight">
+            <NewFlight></NewFlight>
+          </Route>
+        )}
+        {isLoggedIn && role === "admin" && (
+          <Route path="/flights" exact>
+            <AllFlightsWrapper></AllFlightsWrapper>
+          </Route>
+        )}
+        {isLoggedIn && role === "admin" && (
+          <Route path="/flights/:flightId">
+            <FlightDetails></FlightDetails>
+          </Route>
+        )}
+        {isLoggedIn && (
+          <Route path="/edit-user">
+            <EditUser></EditUser>
+          </Route>
+        )}
         <Route path="/search">
           <SearchTrip></SearchTrip>
         </Route>
-
         <Route path="/results/select">
           <ReservationProvider>
             <SearchResults></SearchResults>
           </ReservationProvider>
         </Route>
-        <Route path="/reservation">
-          <ViewReservedFlights></ViewReservedFlights>
+        <Route path="/register">
+          <Signup> </Signup>
+        </Route>
+        {isLoggedIn && (
+          <Route path="/reservation">
+            <ViewReservedFlights></ViewReservedFlights>
+          </Route>
+        )}
+
+        {/* Anchor page (404 page or anything) */}
+        <Route path="*">
+          <Redirect to="/" />
         </Route>
       </Switch>
     </Layout>

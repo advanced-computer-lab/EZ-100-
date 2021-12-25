@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -36,39 +37,43 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login(props) {
+  const [errorMsg, setErrorMsg] = useState("");
   const history = useHistory();
   const authCtx = React.useContext(AuthContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
 
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
+    setErrorMsg("");
+    const data = new FormData(event.currentTarget);
 
     const user = { email: data.get("email"), password: data.get("password") };
 
-    const response = await fetch("http://localhost:5000/api/users/login", {
+    const response = await fetch("http://localhost:5000/api/auth/login", {
       method: "POST",
-      body: JSON.stringify(user), // convert movie from JS object => JSON
+      body: JSON.stringify(user),
       headers: {
         "Content-Type": "application/json",
       },
     });
     const resData = await response.json();
+    console.log(resData);
 
     if (resData.success) {
-      authCtx.login("token", resData.data);
+      authCtx.login(resData.token, resData.data);
 
       if (props.nextPage) {
         history.replace(props.nextPage);
       } else {
         props.onHideModal();
       }
-    }
+    } else {
+      setErrorMsg("Incorrect email or password");
 
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 5000);
+    }
     // Else setErroor ....
   };
 
@@ -142,6 +147,7 @@ export default function Login(props) {
             </Grid>
           </Box>
         </Box>
+        <div style={{ color: "red" }}>{errorMsg}</div>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>

@@ -4,14 +4,20 @@ import { MdEventSeat } from "react-icons/md";
 import { IconContext } from "react-icons";
 
 export const SeatBtn = (props) => {
-  const { reserved } = props;
+  const { reserved, reservedSeats } = props;
   let initialColor = reserved ? "red" : "green";
+
+  let isReserved = reserved;
+  if (reservedSeats.includes(props.id)) {
+    initialColor = "orange";
+    isReserved = false;
+  }
 
   const [color, setColor] = useState(initialColor);
 
   const clickHandler = () => {
     if (
-      reserved ||
+      isReserved ||
       (props.counter === props.max && color === "green") ||
       props.isGray
     ) {

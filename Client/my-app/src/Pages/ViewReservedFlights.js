@@ -5,7 +5,9 @@ import AuthContext from "../store/auth-context";
 
 import { useState, useEffect, useContext } from "react";
 
-import { ReservationItem } from "../Components/User/Flights/ReservationItem";
+// import { ReservationItem } from "../Components/User/Flights/ReservationItem";
+import { AccordionItem } from "../Components/User/Reservations/AccordionItem";
+
 export const ViewReservedFlights = () => {
   const [deleteId, setDeleteId] = useState("");
   const [ModalIsOpen, setModalIsOpen] = useState(false);
@@ -65,15 +67,28 @@ export const ViewReservedFlights = () => {
     }
   }, [ModalIsOpen, didDelete, initialFetch, authCtx]);
 
-  const listItems =
+  // const listItems =
+  //   reservations === [] ? null : (
+  //     <ul>
+  //       {reservations.map((reservation) => (
+  //         <ReservationItem
+  //           key={reservation._id}
+  //           reservation={reservation}
+  //           onCancel={onCancelHandler}
+  //         ></ReservationItem>
+  //       ))}
+  //     </ul>
+  //   );
+
+  const listItems2 =
     reservations === [] ? null : (
       <ul>
         {reservations.map((reservation) => (
-          <ReservationItem
+          <AccordionItem
             key={reservation._id}
             reservation={reservation}
             onCancel={onCancelHandler}
-          ></ReservationItem>
+          ></AccordionItem>
         ))}
       </ul>
     );
@@ -118,21 +133,8 @@ export const ViewReservedFlights = () => {
         <h2>Your reservations</h2>
       </div>
       <hr />
-      {listItems}
+      {/* {listItems} */}
+      {listItems2}
     </div>
   );
 };
-
-/*{ModalIsOpen ? (
-  <Modal>
-    <h2>Are you sure you want to delete this flight?</h2>
-    <button onClick={closeModalHandler}>Cancel</button>
-    <button
-      style={{ margin: "10px", fontSize: "1rem" }}
-      onClick={closeModalHandler}
-    >
-      Yes
-    </button>
-  </Modal>
-) : null}
-{ModalIsOpen && <Backdrop onClick={closeModalHandler} />}*/

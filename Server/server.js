@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const errorHandler = require("./middleware/error");
 
+const Flight = require("./Models/Flight");
+
 dotenv.config();
 
 // Connect to DB
@@ -17,6 +19,8 @@ mongoose
   .catch((err) => console.log(err));
 
 const app = express();
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 // Adding Json parser
 app.use(express.json());
@@ -31,12 +35,40 @@ app.use(cors());
 // Import Routers
 const flightRoutes = require("./Routes/flightRouter");
 const reservationRoutes = require("./Routes/reservationRouter");
+const auth = require("./Routes/auth");
 const userRoutes = require("./Routes/userRouter");
 
 // Mount Routers to their paths
+app.post("/checkout", async (req, res) => {
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: req.body.items.map((item) => {
+        return {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: item.name,
+            },
+            unit_amount: parseInt(item.price) * 100,
+          },
+          quantity: req.body.quantity,
+        };
+      }),
+      success_url: "http://localhost:3000/payment-success",
+      cancel_url: "http://localhost:3000/",
+    });
+    res.json({ url: session.url });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.use("/api/flights", flightRoutes);
 app.use("/api/reservations", reservationRoutes);
-app.use("/api/users",userRoutes);
+app.use("/api/auth", auth);
+app.use("/api/users", userRoutes);
 
 // Add ErrorHandler middleware here ... 'Must be added after mounting routers'
 app.use(errorHandler);

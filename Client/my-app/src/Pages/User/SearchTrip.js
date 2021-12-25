@@ -4,11 +4,16 @@ import { useHistory } from "react-router-dom";
 import { SearchForm } from "../../Components/User/Flights/SearchForm";
 import LoadingSpinner from "../../Components/UI/LoadingSpinner";
 
+import skyBG from "../../assets/sky4.jpg";
+
 export const SearchTrip = () => {
   const [allFlights, setAllFlights] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
+  const historyState = history.location.state;
+
+  // console.log(historyState);
 
   const fetchFlights = useCallback(async () => {
     setIsLoading(true);
@@ -28,16 +33,25 @@ export const SearchTrip = () => {
     console.log(data);
     history.push({
       pathname: "/results/select",
-      state: data,
+      state: { data, searchState: historyState },
     });
   };
 
   if (!isLoading) {
     return (
-      <SearchForm
-        onFormSubmission={formDataHandler}
-        allFlights={allFlights}
-      ></SearchForm>
+      <div
+        style={{
+          backgroundImage: `url(${skyBG})`,
+          height: "960px",
+          width: "100%",
+        }}
+      >
+        <SearchForm
+          searchState={historyState}
+          onFormSubmission={formDataHandler}
+          allFlights={allFlights}
+        ></SearchForm>
+      </div>
     );
   }
   return (

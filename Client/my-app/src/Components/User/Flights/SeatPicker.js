@@ -3,10 +3,22 @@ import { SeatBtn } from "./SeatBtn";
 import classes from "./SeatPicker.module.css";
 
 export const SeatPicker = (props) => {
-  const { flight, trip } = props;
-  const [counter, setCounter] = useState(0);
+  const { flight, trip, editingMode, reservedSeats } = props;
+
+  let temp = 0;
+  if (reservedSeats) {
+    temp = reservedSeats.length;
+  }
+  const [counter, setCounter] = useState(temp);
   const [chosenSeats, setChosenSeats] = useState([]);
   // const seats = flight.SeatsAvailable;
+
+  let resSeats = [];
+  let maximumSeats = props.max;
+  if (editingMode) {
+    resSeats = reservedSeats;
+    maximumSeats = reservedSeats.length;
+  }
 
   const addSeatsHandler = (id) => {
     setCounter((count) => count + 1);
@@ -35,12 +47,13 @@ export const SeatPicker = (props) => {
               <p>F{index}</p>
               <SeatBtn
                 isGray={isGray}
-                max={props.max}
+                max={maximumSeats}
                 counter={counter}
                 onAddSeat={addSeatsHandler}
                 onRemoveSeat={removeSeatHandler}
                 id={"F" + index}
                 reserved={seat}
+                reservedSeats={resSeats}
               ></SeatBtn>
             </div>
           );
@@ -54,12 +67,13 @@ export const SeatPicker = (props) => {
               <p>B{index}</p>
               <SeatBtn
                 isGray={isGray}
-                max={props.max}
+                max={maximumSeats}
                 counter={counter}
                 onAddSeat={addSeatsHandler}
                 onRemoveSeat={removeSeatHandler}
                 id={"B" + index}
                 reserved={seat}
+                reservedSeats={resSeats}
               ></SeatBtn>
             </div>
           );
@@ -73,12 +87,13 @@ export const SeatPicker = (props) => {
               <p>E{index}</p>
               <SeatBtn
                 isGray={isGray}
-                max={props.max}
+                max={maximumSeats}
                 counter={counter}
                 onAddSeat={addSeatsHandler}
                 onRemoveSeat={removeSeatHandler}
                 id={"E" + index}
                 reserved={seat}
+                reservedSeats={resSeats}
               ></SeatBtn>
             </div>
           );
@@ -86,43 +101,4 @@ export const SeatPicker = (props) => {
       </div>
     </div>
   );
-
-  // return (
-  //   <div className={classes.row}>
-  //     {seats.map((seat, index) => {
-  //       let isGray;
-  //       if (
-  //         trip.cabin === "Economy" &&
-  //         index + 1 < flight.FirstSeats + flight.BusinessSeats
-  //       ) {
-  //         isGray = true;
-  //       } else if (
-  //         trip.cabin === "Business" &&
-  //         (index < flight.EconomySeats ||
-  //           index + 1 > flight.EconomySeats + flight.BusinessSeats)
-  //       ) {
-  //         isGray = true;
-  //       } else if (
-  //         trip.cabin === "First class" &&
-  //         index + 1 > flight.FirstSeats
-  //       ) {
-  //         isGray = true;
-  //       }
-  //       return (
-  //         <div key={index} className={classes["row-item"]}>
-  //           <p>{index}</p>
-  //           <SeatBtn
-  //             isGray={isGray}
-  //             max={props.max}
-  //             counter={counter}
-  //             onAddSeat={addSeatsHandler}
-  //             onRemoveSeat={removeSeatHandler}
-  //             id={index}
-  //             reserved={seat}
-  //           ></SeatBtn>
-  //         </div>
-  //       );
-  //     })}
-  //   </div>
-  // );
 };

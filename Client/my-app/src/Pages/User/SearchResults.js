@@ -20,7 +20,10 @@ export const SearchResults = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const history = useHistory();
-  const historyState = history.location.state;
+  const historyState = history.location.state.data;
+  const searchState = history.location.state.searchState;
+  // console.log(searchState);
+
   const reservationCtx = useContext(ReservationContext);
 
   const { sendRequest, status, data } = useHttp(getRoundTrip, true);
@@ -30,7 +33,7 @@ export const SearchResults = () => {
   if (data) {
     departureFlights = data.departureFlights;
     returnFlights = data.returnFlights;
-    console.log(data);
+    // console.log(data);
   }
 
   useEffect(() => {
@@ -54,8 +57,25 @@ export const SearchResults = () => {
   };
 
   const onContinueHandler = () => {
+    if (selector === 1 && searchState) {
+      if (searchState.isDepartureFlight && !reservationCtx.departureFlight) {
+        setErrorMessage("Please select a flight");
+        return;
+      } else {
+        setErrorMessage("");
+      }
+
+      if (!searchState.isDepartureFlight && !reservationCtx.returnFlight) {
+        setErrorMessage("Please select a flight");
+        return;
+      } else {
+        setErrorMessage("");
+      }
+    }
+
     if (
       selector === 1 &&
+      !searchState &&
       (!reservationCtx.departureFlight || !reservationCtx.returnFlight)
     ) {
       setErrorMessage("Please select a departure flight and a return flight*");
@@ -73,8 +93,27 @@ export const SearchResults = () => {
     if (selector === 2) {
       const seatsNumber =
         parseInt(historyState.adultsNum) + parseInt(historyState.childrenNum);
-      if (
-        seatsNumber !== reservationCtx.departureSeats.length ||
+
+      if (searchState) {
+        if (
+          searchState.isDepartureFlight &&
+          seatsNumber !== reservationCtx.departureSeats.length
+        ) {
+          setErrorMessage(`Please pick ${seatsNumber} seat(s).*`);
+          return;
+        }
+        if (
+          !searchState.isDepartureFlight &&
+          seatsNumber !== reservationCtx.returnSeats.length
+        ) {
+          setErrorMessage(`Please pick ${seatsNumber} seat(s).*`);
+          return;
+        } else {
+          setErrorMessage("");
+        }
+      } else if (
+        (!searchState &&
+          seatsNumber !== reservationCtx.departureSeats.length) ||
         seatsNumber !== reservationCtx.returnSeats.length
       ) {
         setErrorMessage(`Please pick ${seatsNumber} seat(s) in BOTH flights *`);
@@ -91,57 +130,133 @@ export const SearchResults = () => {
 
   let content;
   if (selector === 1) {
-    content = (
-      <>
-        <div
-          style={{ marginBottom: "-2rem", marginTop: "-2rem" }}
-          className="centered"
-        >
-          <ItemHeader from={historyState.fromValue} to={historyState.toValue} />
-        </div>
-        <div className="centered">
-          <UserFlights flights={departureFlights}></UserFlights>
-        </div>
-        <hr></hr>
-        <div style={{ marginBottom: "-2rem" }} className="centered">
-          <ItemHeader from={historyState.toValue} to={historyState.fromValue} />
-        </div>
-        <div className="centered">
-          <UserFlights flights={returnFlights}></UserFlights>
-        </div>
-      </>
-    );
+    if (searchState) {
+      if (searchState.isDepartureFlight) {
+        content = (
+          <>
+            <div
+              style={{ marginBottom: "-2rem", marginTop: "-2rem" }}
+              className="centered"
+            >
+              <ItemHeader
+                from={historyState.fromValue}
+                to={historyState.toValue}
+              />
+            </div>
+            <div className="centered">
+              <UserFlights flights={departureFlights}></UserFlights>
+            </div>
+          </>
+        );
+      } else {
+        content = (
+          <>
+            <div style={{ marginBottom: "-2rem" }} className="centered">
+              <ItemHeader
+                from={historyState.toValue}
+                to={historyState.fromValue}
+              />
+            </div>
+            <div className="centered">
+              <UserFlights flights={returnFlights}></UserFlights>
+            </div>
+          </>
+        );
+      }
+    } else {
+      content = (
+        <>
+          <div
+            style={{ marginBottom: "-2rem", marginTop: "-2rem" }}
+            className="centered"
+          >
+            <ItemHeader
+              from={historyState.fromValue}
+              to={historyState.toValue}
+            />
+          </div>
+          <div className="centered">
+            <UserFlights flights={departureFlights}></UserFlights>
+          </div>
+          <hr></hr>
+          <div style={{ marginBottom: "-2rem" }} className="centered">
+            <ItemHeader
+              from={historyState.toValue}
+              to={historyState.fromValue}
+            />
+          </div>
+          <div className="centered">
+            <UserFlights flights={returnFlights}></UserFlights>
+          </div>
+        </>
+      );
+    }
   }
 
   if (selector === 2) {
     const seatsNumber =
       parseInt(historyState.adultsNum) + parseInt(historyState.childrenNum);
-    content = (
-      <div className="centered">
-        <div className="centered-half">
-          <h3>Choose your {seatsNumber} seat(s) in the departure flight:</h3>
-          <SeatPicker
-            trip={historyState}
-            flight={reservationCtx.departureFlight}
-            max={seatsNumber}
-            onSeatsChange={departureSeatsHandler}
-          />
+
+    if (searchState) {
+      if (searchState.isDepartureFlight) {
+        content = (
+          <div className="centered">
+            <div className="centered-half">
+              <h3>
+                Choose your {seatsNumber} seat(s) in the departure flight:
+              </h3>
+              <SeatPicker
+                trip={historyState}
+                flight={reservationCtx.departureFlight}
+                max={seatsNumber}
+                onSeatsChange={departureSeatsHandler}
+              />
+            </div>
+          </div>
+        );
+      } else {
+        content = (
+          <div className="centered">
+            <div className="centered-half">
+              <h3>Choose your {seatsNumber} seat(s) in the return flight:</h3>
+              <SeatPicker
+                trip={historyState}
+                flight={reservationCtx.returnFlight}
+                max={seatsNumber}
+                onSeatsChange={returnSeatsHandler}
+              />
+            </div>
+          </div>
+        );
+      }
+    } else {
+      content = (
+        <div className="centered">
+          <div className="centered-half">
+            <h3>Choose your {seatsNumber} seat(s) in the departure flight:</h3>
+            <SeatPicker
+              trip={historyState}
+              flight={reservationCtx.departureFlight}
+              max={seatsNumber}
+              onSeatsChange={departureSeatsHandler}
+            />
+          </div>
+          <div className="centered-half">
+            <h3>Choose your {seatsNumber} seat(s) in the return flight:</h3>
+            <SeatPicker
+              trip={historyState}
+              flight={reservationCtx.returnFlight}
+              max={seatsNumber}
+              onSeatsChange={returnSeatsHandler}
+            />
+          </div>
         </div>
-        <div className="centered-half">
-          <h3>Choose your {seatsNumber} seat(s) in the return flight:</h3>
-          <SeatPicker
-            trip={historyState}
-            flight={reservationCtx.returnFlight}
-            max={seatsNumber}
-            onSeatsChange={returnSeatsHandler}
-          />
-        </div>
-      </div>
-    );
+      );
+    }
   }
 
   if (selector === 3) {
-    content = <Summary trip={historyState}></Summary>;
+    content = <Summary trip={historyState} searchState={searchState}></Summary>;
   }
 
   if (status === "pending") {
