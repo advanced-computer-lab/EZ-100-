@@ -9,7 +9,7 @@ import ReservationProvider from "./store/ReservationProvider";
 
 import { AllFlightsWrapper } from "./Components/Flights/AllFlightsWrapper";
 import { FlightDetails } from "./Pages/FlightDetails";
-import { Home } from "./Pages/Home";
+// import { Home } from "./Pages/Home";
 import { SearchTrip } from "./Pages/User/SearchTrip";
 
 import { Route, Switch, Redirect } from "react-router-dom";
@@ -37,7 +37,8 @@ function App() {
         </Route>
         {isLoggedIn && (
           <Route path="/home">
-            <Home></Home>
+            {/* <Home></Home> */}
+            <Redirect to="/search" />
           </Route>
         )}
         <Route path="/login">

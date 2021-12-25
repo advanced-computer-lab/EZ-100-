@@ -87,6 +87,14 @@ export const Navigation = () => {
               </li>
             )}
 
+            {authCtx.isLoggedIn && authCtx.user.role === "user" && (
+              <li>
+                <NavLink activeClassName={classes.active} to="/reservation">
+                  Reservations
+                </NavLink>
+              </li>
+            )}
+
             <li>
               <NavLink activeClassName={classes.active} to="/contact-us">
                 Contact us
