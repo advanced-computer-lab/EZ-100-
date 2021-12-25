@@ -7,6 +7,11 @@
   justify-content: center;
 }
 
+.row2 {
+  display: flex;
+  justify-content: space-around;
+}
+
 .col {
   margin: 0 4rem;
   width: 25%;
