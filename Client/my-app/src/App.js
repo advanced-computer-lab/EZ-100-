@@ -46,9 +46,9 @@ function App() {
         {isLoggedIn && role === "admin" && (
           <Route path="/home">
             {/* <Home></Home> */}
-            <Redirect to="/flights" />
+             <Redirect to="/flights" />
           </Route>
-        )}
+        )}  
 
         <Route path="/login">
           <LoginPage nextPage="/home"></LoginPage>

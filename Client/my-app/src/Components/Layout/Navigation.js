@@ -71,7 +71,7 @@ export const Navigation = () => {
               </li>
             )}
 
-            {authCtx.isLoggedIn && (
+            {authCtx.isLoggedIn  && authCtx.user.role === "user" && (
               <li>
                 <NavLink activeClassName={classes.active} to="/home" exact>
                   Home
@@ -83,6 +83,13 @@ export const Navigation = () => {
               <li>
                 <NavLink activeClassName={classes.active} to="/flights">
                   Flights
+                </NavLink>
+              </li>
+            )}
+            {authCtx.isLoggedIn && authCtx.user.role === "admin" && (
+              <li>
+                <NavLink activeClassName={classes.active} to="/new-flight">
+                  Create Flight
                 </NavLink>
               </li>
             )}
