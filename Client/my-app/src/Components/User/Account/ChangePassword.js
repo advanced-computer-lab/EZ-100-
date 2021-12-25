@@ -25,6 +25,7 @@ export const ChangePassword = (props) => {
   };
 
   const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
 
   const onSubmitForm = async (event) => {
     event.preventDefault();
@@ -45,6 +46,7 @@ export const ChangePassword = (props) => {
         body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -58,6 +60,7 @@ export const ChangePassword = (props) => {
       setCurrentValue("");
       setNewValue("");
       setConfirmNewValue("");
+      props.onCloseModal();
     }
   };
 
