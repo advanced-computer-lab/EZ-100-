@@ -112,9 +112,13 @@ exports.viewReservation = asyncHandler(async (req, res, next) => {
 });
 exports.emailReservation = asyncHandler(async (req, res, next) => {
   const reservation = await Reservation.findById(req.params.reservationId);
+  const depFlight = await Flight.findById(reservation.departureFlight);
+  const arFlight = await Flight.findById(reservation.arrivalFlight);
   const user = await User.findById(reservation.user);
 
-  let message = `${reservation._id} summary ... From LAX To JFK (Round trip) .....`;
+  let message = `<h1> ${reservation._id} summary </h1>... From ${depFlight.from} on ${depFlight.DepartureDate} by selecting ${reservation.departureCabin} class with seats : ${reservation.departureSeats}
+   To ${depFlight.to} on ${depFlight.ArrivalDate} (Round trip).....and the the way back from ${arFlight.from} on ${arFlight.DepartureDate} 
+   by selecting ${reservation.arrivalCabin} class with seats : ${reservation.arrivalSeats} To ${arFlight.to} on ${arFlight.ArrivalDate} with a total cost of ${reservation.totalPrice} $`;
 
   try {
     await sendEmail({
@@ -125,10 +129,8 @@ exports.emailReservation = asyncHandler(async (req, res, next) => {
     res.status(200).json({ success: true, message: "Email sent", data: null });
   } catch (err) {
     console.log(err);
-    return next(new ErrorResponse("Email could not be send", 500));
+    return next(new ErrorResponse("Email could not be sent", 500));
   }
-
-  //res.status(200).json({ success: true, data: reservation });
 });
 
 exports.deleteReservation = asyncHandler(async (req, res, next) => {
