@@ -25,6 +25,9 @@
 }
 
 .nav li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin-left: 1.5rem;
   font-size: 1.25rem;
 }
@@ -46,6 +49,7 @@
 .nav a {
   text-decoration: none;
   color: #fff;
+  border-bottom: 4px solid transparent;
 }
 
 .nav a:hover,
