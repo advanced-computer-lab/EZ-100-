@@ -15,7 +15,7 @@ https://documenter.getpostman.com/view/13807708/UVREj4br
 
 
 ## Database population:
-  > cd Server:
+  - cd Server:
   - node Seeder -i    (To populate database)
   - node Seeder -d    (To delete everything in database)
   
