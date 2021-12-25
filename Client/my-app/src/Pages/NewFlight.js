@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+
+import AuthContext from "../store/auth-context";
 
 import classes from "./NewFlight.module.css";
 import { useFormik } from "formik";
@@ -9,6 +11,9 @@ import * as Yup from "yup";
 export default function NewFlight(props) {
   const [error, setError] = useState("");
   const history = useHistory();
+
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
 
   const formik = useFormik({
     initialValues: {
@@ -67,6 +72,7 @@ export default function NewFlight(props) {
           body: JSON.stringify(newflight), // convert movie from JS object => JSON
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );

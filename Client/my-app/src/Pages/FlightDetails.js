@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import AuthContext from "../store/auth-context";
 
 import LoadingSpinner from "../Components/UI/LoadingSpinner";
 import Modal from "../Components/UI/Modal";
@@ -17,6 +18,8 @@ export const FlightDetails = () => {
   const params = useParams();
   const history = useHistory();
   const flightId = params.flightId;
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
 
   const {
     sendRequest,
@@ -44,7 +47,7 @@ export const FlightDetails = () => {
 
   const confirmDeleteHandler = (event) => {
     event.preventDefault();
-    sendDeleteRequest(flightId);
+    sendDeleteRequest({ flightId, token });
     setShowDeleteModal(false);
   };
 
@@ -60,6 +63,9 @@ export const FlightDetails = () => {
           `http://localhost:5000/api/reservations/deleteReservation/${id}`,
           {
             method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
       };
@@ -83,7 +89,7 @@ export const FlightDetails = () => {
         deleteReservation(reservation._id);
       }
     }
-  }, [deleteStatus, deletedFlight, history]);
+  }, [deleteStatus, deletedFlight, history, token]);
 
   if (deleteStatus === "pending") {
     return (

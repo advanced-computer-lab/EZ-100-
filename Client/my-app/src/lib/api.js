@@ -47,11 +47,14 @@ export async function createFlight(newflight) {
   return data.data;
 }
 
-export async function deleteFlight(flightId) {
+export async function deleteFlight({ flightId, token }) {
   const response = await fetch(
     `${DOMAIN}/api/flights/deleteFlight/${flightId}`,
     {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 
@@ -119,7 +122,9 @@ export async function editReservation(payload) {
 
   const requestOptions = {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(editedReservation),
   };
 

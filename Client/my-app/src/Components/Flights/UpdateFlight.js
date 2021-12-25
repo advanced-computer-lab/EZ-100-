@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import classes from "./UpdateFlight.module.css";
+import AuthContext from "../../store/auth-context";
 
 export const UpdateFlight = (props) => {
   const { flight } = props;
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
 
   const dateForDateTimeInputValue = (date) =>
     new Date(date.getTime() + new Date().getTimezoneOffset() * -60 * 1000)
@@ -58,6 +61,7 @@ export const UpdateFlight = (props) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(updatedFlight),
       }
