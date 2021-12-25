@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import AuthContext from "../../../store/auth-context";
 
 import useHttp from "../../../hooks/use-http";
 import { editReservation } from "../../../lib/api";
@@ -29,6 +30,9 @@ export default function FlightCard(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
 
   const history = useHistory();
 
@@ -161,7 +165,7 @@ export default function FlightCard(props) {
       };
     }
     console.log(editedReservation);
-    changeSeatsRequest({ editedReservation, id: props.reservation._id });
+    changeSeatsRequest({ editedReservation, id: props.reservation._id, token });
   };
 
   const chooseAnotherFlightHandler = () => {

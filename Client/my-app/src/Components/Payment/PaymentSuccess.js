@@ -1,10 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import AuthContext from "../../store/auth-context";
 
 import useHttp from "../../hooks/use-http";
 import { createReservation, editReservation } from "../../lib/api";
 
 export const PaymentSuccess = () => {
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
+
   const pendingReservation = JSON.parse(
     localStorage.getItem("pendingReservation")
   );
@@ -21,9 +25,10 @@ export const PaymentSuccess = () => {
         changeReservation({
           id: reservationId,
           editedReservation: pendingReservation,
+          token,
         });
       } else {
-        sendRequest(pendingReservation);
+        sendRequest({ reservation: pendingReservation, token });
       }
     }
 
@@ -38,6 +43,7 @@ export const PaymentSuccess = () => {
     sendRequest,
     status2,
     changeReservation,
+    token,
   ]);
 
   return <div className="centered"></div>;

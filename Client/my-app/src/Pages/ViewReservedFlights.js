@@ -19,6 +19,7 @@ export const ViewReservedFlights = () => {
   const [initialFetch, setInitialFetch] = useState(false);
 
   const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
 
   function onCancelHandler(id) {
     setDeleteId(id);
@@ -31,6 +32,9 @@ export const ViewReservedFlights = () => {
       `http://localhost:5000/api/reservations/deleteReservation/${deleteId}`,
       {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
 
@@ -48,7 +52,12 @@ export const ViewReservedFlights = () => {
       const fetchData = async () => {
         setIsLoading(true);
         const response = await fetch(
-          `http://localhost:5000/api/reservations/userReservations/${authCtx.user._id}`
+          `http://localhost:5000/api/reservations/userReservations/${authCtx.user._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
 
         const data = await response.json();
@@ -65,7 +74,7 @@ export const ViewReservedFlights = () => {
         setDidDelete(false);
       }
     }
-  }, [ModalIsOpen, didDelete, initialFetch, authCtx]);
+  }, [ModalIsOpen, didDelete, initialFetch, authCtx, token]);
 
   // const listItems =
   //   reservations === [] ? null : (

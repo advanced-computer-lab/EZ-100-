@@ -6,11 +6,14 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
 
+import AuthContext from "../../../store/auth-context";
 import classes from "./AccordionItem.module.css";
 import FlightCard from "./FlightCard";
 
 export const AccordionItem = (props) => {
   const [loading, setLoading] = React.useState(false);
+  const authCtx = React.useContext(AuthContext);
+  const token = authCtx.token;
 
   const reservation = props.reservation;
   console.log(reservation);
@@ -24,7 +27,12 @@ export const AccordionItem = (props) => {
   const onEmailSummaryHandler = async () => {
     setLoading(true);
     await fetch(
-      `http://localhost:5000/api/reservations/email_me/${reservation._id}`
+      `http://localhost:5000/api/reservations/email_me/${reservation._id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     setLoading(false);
   };

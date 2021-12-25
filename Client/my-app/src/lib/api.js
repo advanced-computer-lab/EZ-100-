@@ -97,10 +97,13 @@ export async function getRoundTrip(trip) {
   return { departureFlights: data1.data, returnFlights: data2.data };
 }
 
-export async function createReservation(reservation) {
+export async function createReservation({ reservation, token }) {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(reservation),
   };
 
@@ -118,12 +121,13 @@ export async function createReservation(reservation) {
 }
 
 export async function editReservation(payload) {
-  const { editedReservation, id } = payload;
+  const { editedReservation, id, token } = payload;
 
   const requestOptions = {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(editedReservation),
   };
