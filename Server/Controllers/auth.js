@@ -59,3 +59,9 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: user, token });
   //sendTokenResponse(user, 200, res);
 });
+
+exports.getMe = asyncHandler( async(req, res, next) => {
+  user = await User.findById(req.user.id);
+
+  res.status(200).json({ success: true, data: user});
+})

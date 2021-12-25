@@ -4,19 +4,21 @@ const reservationController = require("../Controllers/reservationControllers");
 
 const router = express.Router();
 
-router.post("/createReservation", reservationController.createReservation);
+const { protect } = require('../middleware/auth');
+
+router.post("/createReservation", protect, reservationController.createReservation);
 router.get(
-  "/viewReservation/:reservationId",
+  "/viewReservation/:reservationId", protect, 
   reservationController.viewReservation
 );
-router.get("/email_me/:reservationId", reservationController.emailReservation);
-router.get("/userReservations/:id", reservationController.getReservations);
+router.get("/email_me/:reservationId", protect, reservationController.emailReservation);
+router.get("/userReservations/:id", protect, reservationController.getReservations);
 router.delete(
-  "/deleteReservation/:id",
+  "/deleteReservation/:id", protect, 
   reservationController.deleteReservation
 );
 router.put(
-  "/editReservation/:reservationId",
+  "/editReservation/:reservationId", protect,
   reservationController.editReservation
 );
 
