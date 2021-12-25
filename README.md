@@ -2,8 +2,8 @@
 
 ## Database population:
   > cd Server
-  > node Seeder -i    - To populate database
-  > node Seeder -d    - To delete everything in database
+  > node Seeder -i    (To populate database)
+  > node Seeder -d    (To delete everything in database)
   
 ## To run backend:
 - Run in terminal:
