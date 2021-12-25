@@ -22,7 +22,11 @@ import { PaymentSuccess } from "./Components/Payment/PaymentSuccess";
 function App() {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
-  const role = authCtx.user.role;
+  // const role = authCtx.user.role;
+  let role = "user";
+  if (authCtx.user) {
+    role = authCtx.user.role;
+  }
 
   return (
     <Layout>
@@ -46,9 +50,9 @@ function App() {
         {isLoggedIn && role === "admin" && (
           <Route path="/home">
             {/* <Home></Home> */}
-             <Redirect to="/flights" />
+            <Redirect to="/flights" />
           </Route>
-        )}  
+        )}
 
         <Route path="/login">
           <LoginPage nextPage="/home"></LoginPage>

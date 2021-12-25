@@ -11,6 +11,7 @@ import * as Yup from "yup";
 export default function EditUser(props) {
   // const history = useHistory();
   const [isLoading, setisLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [user, setUser] = useState();
 
   const authCtx = useContext(AuthContext);
@@ -54,6 +55,7 @@ export default function EditUser(props) {
         passportNumber: formik.values.passport_number,
       };
       setisLoading(true);
+      setErrorMessage("");
       const data = await fetch(
         `http://localhost:5000/api/users/updateUser/${authCtx.user._id}`,
         {
@@ -65,8 +67,15 @@ export default function EditUser(props) {
         }
       );
       const jsonData = await data.json();
-      // console.log();
-      authCtx.userSetter(jsonData.data);
+      if (jsonData.success) {
+        authCtx.userSetter(jsonData.data);
+      } else {
+        formik.errors.email = true;
+        setErrorMessage(
+          "This (Email or Passport number) is already being used"
+        );
+      }
+
       setisLoading(false);
     },
   });
@@ -147,6 +156,9 @@ export default function EditUser(props) {
             />
           </div>
 
+          <small style={{ color: "red", padding: "0 0.7rem" }}>
+            {errorMessage}
+          </small>
           <div className={classes["Save"]}>
             <button type="submit">Save</button>
           </div>
