@@ -174,16 +174,20 @@ export default function Signup(props) {
                   placeholder="Passport number"
                 />
 
-                <input
-                  type="date"
-                  name="dateofbirth"
-                  label="Birth date"
-                  className={birthclass}
-                  value={formik.values.dateofbirth}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  placeholder="Birth date"
-                />
+                <div className={classes.row2}>
+                  <label>Date of birth</label>
+                  <input
+                    style={{ width: "65%", margin: "1rem 0" }}
+                    type="date"
+                    name="dateofbirth"
+                    label="Birth date"
+                    className={birthclass}
+                    value={formik.values.dateofbirth}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    placeholder="Birth date"
+                  />
+                </div>
 
                 <input
                   id="email"
