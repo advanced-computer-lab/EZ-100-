@@ -53,7 +53,7 @@ function App() {
             <AllFlightsWrapper></AllFlightsWrapper>
           </Route>
         )}
-        {isLoggedIn && (
+        {isLoggedIn && role === "admin" && (
           <Route path="/flights/:flightId">
             <FlightDetails></FlightDetails>
           </Route>
